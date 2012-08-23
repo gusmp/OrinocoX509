@@ -1,0 +1,180 @@
+<!-- START SNIPPET: certificate_profile -->
+CertificateProfile certificateProfile = 
+  new CertificateProfile(" My profile", "Profile description", 4, KeySizeValues.SIZE_1024);
+<!-- END SNIPPET: certificate_profile -->
+
+<!-- START SNIPPET: certificate_field_aia  -->
+CertificateField authorityInformationAccess = 
+  new AuthorityInformationAccessField(certificateProfile, false);
+
+// Add the url of the OCSP
+authorityInformationAccess.addValue(
+  new AuthorityInformationAccessFieldValue(AIAType.ID_AD_OCSP,"my ocsp url"));
+
+// Add the url of the CRL
+authorityInformationAccess.addValue(
+  new AuthorityInformationAccessFieldValue(AIAType.ID_AD_CA_ISSUERS, "my crl url"));
+
+certificateProfile.addField(authorityInformationAccess);
+<!-- END SNIPPET: certificate_field_aia -->
+
+<!-- START SNIPPET: certificate_field_aki  -->
+CertificateField authorityKeyIdentifier 
+  = new AuthorityKeyIdentifierField(certificateProfile, false);
+
+// Add the key identifier of the CA public key 
+authorityKeyIdentifier.addValue(
+  new AuthorityKeyIdentifierFieldValue(AuthorityKeyIdentifierType.KEY_IDENTIFIER));
+
+// Add the subject and serial number of the CA certificate
+authorityKeyIdentifier.addValue(
+  new AuthorityKeyIdentifierFieldValue(AuthorityKeyIdentifierType.AUTH_CERT_ISSUER_AUTH_CERT_SERIAL_NUMBER));
+
+certificateProfile.addField(authorityKeyIdentifier);
+<!-- END SNIPPET: certificate_field_aki  -->
+
+<!-- START SNIPPET: certificate_field_cp  -->
+// OID for the certificate
+CertificateField certificatePolicy = 
+  new CertificatePolicyField(certificateProfile, oid, false);
+
+// Url with the policy information
+certificatePolicy.addValue(
+  new CertificatePolicyFieldValue(CertificatePolicyType.CPS,
+    "http://my.url.for/certificate_policy"));
+
+// User notice
+certificatePolicy.addValue(
+  new CertificatePolicyFieldValue(CertificatePolicyType.USER_NOTICE, "my user notice"));
+
+certificateProfile.addField(certificatePolicy);
+<!-- END SNIPPET: certificate_field_cp  -->
+
+<!-- START SNIPPET: certificate_field_crldp  -->
+CertificateField crlDistributionPoint = 
+  new CRLDistributionPointField(certificateProfile, false);
+
+// First crl distribution point with two url's
+crlDistributionPoint.addValue(
+  new CRLDistributionPointFieldValue(
+    Arrays.asList("url 1 crl dist. point 1", "url 2 crl dist. point 1")));
+
+// Second crl distribution point with two url's
+crlDistributionPoint.addValue(
+  new CRLDistributionPointFieldValue(
+    Arrays.asList("url 1 crl dist. point 2", "url 2 crl dist. point 2")));
+
+certificateProfile.addField(crlDistributionPoint);
+<!-- END SNIPPET: certificate_field_crldp  -->
+
+<!-- START SNIPPET: certificate_field_dt  -->
+CertificateField deviceType = 
+  new DeviceTypeField(certificateProfile, "my device type description", false);
+
+certificateProfile.addField(deviceType);
+<!-- END SNIPPET: certificate_field_dt  -->
+
+<!-- START SNIPPET: certificate_field_eku  -->
+CertificateField extendedKeyUsageField = new ExtendedKeyUsageField(certificateProfile, false);
+
+// Add my uses as required.
+// Possible values are in ExtendedKeyUsageType enumeration
+extendedKeyUsageField.addValue(
+  new ExtendedKeyUsageFieldValue(ExtendedKeyUsageType.ID_KP_CODE_SIGNING));	
+
+extendedKeyUsageField.addValue(
+  new ExtendedKeyUsageFieldValue(ExtendedKeyUsageType.ID_KP_IPSEC_IKE));
+
+certificateProfile.addField(extendedKeyUsageField);
+<!-- END SNIPPET: certificate_field_eku  -->
+
+<!-- START SNIPPET: certificate_field_issuer  -->
+CertificateField issuer = new IssuerField(certificateProfile, "C=ES, 
+  ST=Barcelona, 
+  L=Badalona, 
+  OU=CA Subordinada de primer nivel, 
+  OU=ENTERPRISE.CV, 
+  CN=testCA");
+certificateProfile.addField(issuer);
+<!-- END SNIPPET: certificate_field_issuer  -->
+
+<!-- START SNIPPET: certificate_field_ian  -->
+CertificateField issuerAlternativeName = 
+  new IssuerAlternativeNameField(certificateProfile, false);
+
+issuerAlternativeName.addValue(
+  new IssuerAlternativeNameFieldValue(AlternativeNameType.RFC822NAME, "my email address"));
+
+issuerAlternativeName.addValue(
+  new IssuerAlternativeNameFieldValue(AlternativeNameType.DIRECTORY_NAME, 
+    "cn=my directory name"));
+
+certificateProfile.addField(issuerAlternativeName);
+<!-- END SNIPPET: certificate_field_ian  -->
+
+<!-- START SNIPPET: certificate_field_ku  -->
+CertificateField keyUsageField = new KeyUsageField(certificateProfile, true);
+
+// Add the key usages for the certificate
+// The usages available are given by KeyUsageType enumeration
+keyUsageField.addValue(new KeyUsageFieldValue(KeyUsageType.CRL_SIGN));
+keyUsageField.addValue(new KeyUsageFieldValue(KeyUsageType.DIGITAL_SIGNATURE));
+certificateProfile.addField(keyUsageField);
+<!-- END SNIPPET: certificate_field_ku  -->
+
+<!-- START SNIPPET: certificate_field_nct  -->
+CertificateField netscapeCertificateTypeField = 
+  new NetscapeCertificateTypeField(certificateProfile, false);
+
+// Add the Netscape cert types for the certificate
+// The types available are given by NetscapeCertificateTypeType enumeration
+netscapeCertificateTypeField.addValue(
+  new NetscapeCertificateTypeFieldValue(NetscapeCertificateTypeType.OBJECT_SIGNING));
+
+netscapeCertificateTypeField.addValue(
+  new NetscapeCertificateTypeFieldValue(NetscapeCertificateTypeType.SMIME));
+
+certificateProfile.addField(netscapeCertificateTypeField);
+<!-- END SNIPPET: certificate_field_nct  -->
+
+<!-- START SNIPPET: certificate_field_subject  -->
+CertificateField subject = new SubjectField(profile, "C=$country, 
+  OU=$ou2, 
+  OU=$ou1, 
+  SURNAME=$surname, 
+  GIVENNAME=$given_name, 
+  serialnumber=$serial_number, 
+  CN=$cn");
+certificateProfile.addField(subject);
+<!-- END SNIPPET: certificate_field_subject  -->
+
+<!-- START SNIPPET: certificate_field_san  -->
+CertificateField subjectAlternativeName = 
+  new SubjectAlternativeNameField(certificateProfile, false);
+
+subjectAlternativeName.addValue(
+  new SubjectAlternativeNameFieldValue(AlternativeNameType.RFC822NAME));
+
+subjectAlternativeName.addValue(
+  new SubjectAlternativeNameFieldValue(AlternativeNameType.DIRECTORY_NAME, 
+  "C=ES, O=Organization, OU=Organizational Unit, SN=$serial_number, CN=$cn"));
+
+certificateProfile.addField(subjectAlternativeName);
+<!-- END SNIPPET: certificate_field_san  -->
+
+<!-- START SNIPPET: certificate_field_ski  -->
+CertificateField subjectKeyIdentifier = 
+  new SubjectKeyIdentifierField(certificateProfile, false);
+
+certificateProfile.addField(subjectKeyIdentifier);
+<!-- END SNIPPET: certificate_field_ski  -->
+
+
+<!-- START SNIPPET: delete_certificate_profile  -->
+engine.deleteCertificateProfile(certificateProfile);
+<!-- END SNIPPET: delete_certificate_profile -->
+
+<!-- START SNIPPET: update_certificate_profile  -->
+engine.saveCertificateProfile(certificateProfile);
+<!-- END SNIPPET: update_certificate_profile -->
+

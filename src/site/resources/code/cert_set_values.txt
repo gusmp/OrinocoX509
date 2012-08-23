@@ -1,0 +1,52 @@
+<!-- START SNIPPET: subject_values -->
+
+CertificateValues certificateValues = new CertificateValues();
+
+// do not forget to add the request
+values.setRequest("your request here");
+
+// Create the main map		
+Map<FieldType,Map<String,String>> mapValues = new HashMap<FieldType, Map<String,String>>(1);
+
+// Create the map for subject field
+Map<String,String> subjectValues = new HashMap<String, String>(7);
+		
+subjectValues.put("country", "ES");
+subjectValues.put("ou2", "My Organizational Unit 2");
+subjectValues.put("ou1", "My Organizational Unit 1");
+subjectValues.put("surname", "surname");
+subjectValues.put("given_name", "name");
+subjectValues.put("serial_number", "00000000H");		
+subjectValues.put("cn", "name surname");
+
+// Add the subject values		
+mapValues.put(FieldType.SUBJECT, subjectValues);
+
+// Add as many maps as required
+
+// Set the map values into the CertificateValues object
+certificateValues.setValues(mapValues);
+
+...
+
+
+// Finally generates the certificate with this values
+engine.generateCertificate(myCertificateProfile, certificateValues); 
+
+<!-- END SNIPPET: subject_values -->
+
+<!-- START SNIPPET: subject_alt_name -->
+
+Map<String, String> subjectAltNameValues = new HashMap<String, String>(3);
+
+// Use the RFC822NAME as place holder
+subjectAltNameValues.put("RFC822NAME", "subject@email.com");
+
+// Regular way to set parameters
+subjectAltNameValues.put("cn", "common name");
+subjectAltNameValues.put("serial_number", "12345678Z");
+
+certificateValues.getValues().put(FieldType.SUBJECT_ALTERNATIVE_NAME, subjectAltNameValues);
+
+<!-- END SNIPPET: subject_alt_name -->
+

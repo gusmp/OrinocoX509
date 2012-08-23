@@ -1,0 +1,88 @@
+CRL profile and extensions in detail
+
+* Introduction
+
+ Dealing with CRL profiles requires the use of the class <CRLProfile>. This class allow create a profile and add the required fields.
+ Once the profile is completed, this can be stored, modified or deleted with the methods available in the class <OrinocoX509Engine>. 
+
+* Create the profile
+
+  As it was described in the {{{../overview/get_started.html} get starting}} section, the main class for creating CRL profiles 
+  is <CRLProfile>.
+	
+  The constructor of this class requires 2 parameters:
+	
+    * Profile name. Must be unique
+	
+    * Profile description
+	
+	[]
+	
+%{snippet|id=crl_profile|file=src\site\resources\code\crl_detail.txt}
+
+* How to add fields
+	
+  As is, this profile enable the generation of CRL. However, the information given is scarcely. Orinoco X509 support the following
+  fields:
+  
+    * Authority Key Identifier
+    
+    * Issuing Distribution Point
+    
+    * CRL Number
+    
+    * Next update
+    
+    []
+    
+  The general rule for adding fields into the crl profile is using the method <addField> with any object extended from the base 
+  class <CRLField>.  
+    
+** Authority Key Identifier
+
+  This field add some information of the public key of the CA in the crl. This information can be:
+  
+  * Key identifier plus subject
+  
+  * Serial Number
+  
+  []
+  
+  In the constructor of the class <AuthorityKeyIdentifierCRLField> can specify if you want to and one or the other.
+
+%{snippet|id=crl_field_aki|file=src\site\resources\code\crl_detail.txt}
+  
+** CRL Number
+
+  This field add a counter into the crl. No parameters are required.
+
+%{snippet|id=crl_field_crl_number|file=src\site\resources\code\crl_detail.txt}
+
+** Issuing Distribution Point
+
+  This fields add a set of url's from which can be downloaded the crl.
+  
+%{snippet|id=crl_field_idp|file=src\site\resources\code\crl_detail.txt}
+
+** Next update
+
+  This field add into the CRL when will be the next update, if no changes are force to generate a newer before. The only parameter 
+  required is the number of days. 
+  
+%{snippet|id=crl_field_nextUpdate|file=src\site\resources\code\crl_detail.txt}
+
+  <<NOTE:>> Orinoco X509 do not generate crl's automatically. 
+
+* Delete a profile
+
+ Delete a profile (and all its fields) can be done by the method <deleteCRLProfile> from the <OrinocoX509Engine> object.
+ 
+%{snippet|id=delete_crl_profile|file=src\site\resources\code\crl_detail.txt}
+
+* Modify a profile
+
+ Adding and modifying uses the same method <saveCRLProfile> from <OrinocoX509Engine> object.
+  
+%{snippet|id=update_crl_profile|file=src\site\resources\code\crl_detail.txt}
+     
+

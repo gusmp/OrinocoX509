@@ -1,0 +1,42 @@
+Before starting
+
+  Orinoco X509, as any other piece of software, has some requirements. Some of them might clash 
+  with your software. Before adding Orinoco X509 in your project keep in mind this 
+  <<important>> points.
+  
+  * <Spring Framework 3.1>. From 3.1 on, entity scanning is available and therefore not required. If you use a lower version of it, 
+  you will need to add in your persistence.xml all the classes in the package org.orinocoX509.entity.  
+  
+  * <EclipseLink>. In theory, any other JPA 2 provider will work such as Hibernate.
+  
+  * <EHCache> for local cache. If for any reason you cannot use it you can:
+  
+    * Do not use second level of cache. This options means go to database more times
+    
+    * Use an external cache (Memcached)
+    
+    []
+   
+  []
+  
+  Once known the above steps you need:
+  
+  * JDBC driver for your database. The list of supported database manufacturers is {{{http://wiki.eclipse.org/EclipseLink/FAQ/JPA} here.}}
+  
+  * A database
+  
+    * Database user
+    
+    * Database password
+    
+    * Schema
+    
+    * Permission for creating objects
+    
+    []
+    
+  * In case you use an HSM, it is mandatory to install the JCA (Java Cryptographic API) libraries. Check the HSM manufacture to get further details about how to do this.
+
+
+
+

@@ -1,0 +1,36 @@
+Introduction
+
+  Orinoco X509 is a Java library whose main purpose is to make easier the development of certificate authorities (CA). In Java world 
+  there are full CAs (i.e {{{http://www.ejbca.org/}ejbCA}}) or low level libraries such as 
+  {{{http://www.bouncycastle.org}Bouncy Castle}} or {{{http://www.jce.iaik.tugraz.at/}IAIK}}. However, there wasn't any in the midle point.
+  Orinoco fills this space. 
+  
+  
+General features
+
+  * Certificate profiles management
+  
+  * CRL profiles management
+  
+  * X509 certificate life cycle
+  
+    * Issue certificates version 3
+    
+    * Revoke certificates
+    
+    * Suspend certificates
+    
+    * Resume certificates   
+  
+  * Issue X509 crl version 2
+  
+  * Certificate validation against third OCSP parties
+  
+  * CRL certificate validation (local and / or outer)
+  
+  * HSM integration
+   
+License
+
+  This software is licensed under the GNU LGPL v3 terms.
+  

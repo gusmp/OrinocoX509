@@ -1,0 +1,278 @@
+Certificate profile and extensions in detail
+
+* Introduction
+
+ The main class to work with certificate profiles is <CertificateProfile>. This class is the container for all the field required
+ and values or patters as it could be see in the different fields examples.
+ 
+ Because one CA can issue more than one type of certificates (personal, for application and so on) it is possible to save as many
+ profile as it was required. However, all of them will be signed by the same private key.
+ 
+ An instance of the class <OrinocoX509Engine> is created by the dependency injection for you. This class have all the methods for 
+ saving, updating or deleting profiles. 
+  
+
+* Create the profile
+
+  The class to create certificate profiles is <CertificateProfile>. This class requires 4 parameters in its constructor:
+  
+    * Profile name. Must be unique
+    
+    * Profile description
+    
+    * Period of validity (in years)
+    
+    * Key size valid to issue a certificate. This parameter is important, because any request whose key do not meet this size
+    will be rejected.
+    
+    []
+    
+%{snippet|id=certificate_profile|file=src\site\resources\code\cert_detail.txt}
+    
+* How to add fields
+
+  To add fields in a certificate profile use the method <addField> of the class <CertificateProfile>. Any class whose base
+  class is <CertificateField> can be used for that purpose.
+  
+  The fields supported by Orinoco are:
+  
+    * Authority information access
+    
+	* Authority key identifier
+	
+	* Certificate policy
+	
+	* Crl distribution point
+	
+	* Device type
+	
+	* Extended key usage
+	
+	* Issuer (Required)
+	
+	* Issuer Alternative name
+	
+	* Key Usage
+	
+	* Netscape certificate type
+	
+	* Subject (Required)        
+	
+	* Subject alternative name
+	
+	* Subject key identifier
+	
+	[]
+	
+  Most of them are optional. However, Issuer and subject are <<compulsory>>. Next section will give a close approach of each of them.
+  
+
+** Authority information access
+
+%{snippet|id=certificate_field_aia|file=src\site\resources\code\cert_detail.txt}
+    
+** Authority key identifier
+
+%{snippet|id=certificate_field_aki|file=src\site\resources\code\cert_detail.txt}
+	
+** Certificate policy
+
+%{snippet|id=certificate_field_cp|file=src\site\resources\code\cert_detail.txt}
+
+** Crl distribution point
+
+%{snippet|id=certificate_field_crldp|file=src\site\resources\code\cert_detail.txt}
+	
+** Device type
+
+%{snippet|id=certificate_field_dt|file=src\site\resources\code\cert_detail.txt}
+	
+** Extended key usage
+
+%{snippet|id=certificate_field_eku|file=src\site\resources\code\cert_detail.txt}
+	
+** Issuer (Required)
+
+%{snippet|id=certificate_field_issuer|file=src\site\resources\code\cert_detail.txt}
+	
+** Issuer Alternative name
+
+%{snippet|id=certificate_field_ian|file=src\site\resources\code\cert_detail.txt}
+	
+** Key Usage
+
+%{snippet|id=certificate_field_ku|file=src\site\resources\code\cert_detail.txt}
+	
+** Netscape certificate type
+
+%{snippet|id=certificate_field_nct|file=src\site\resources\code\cert_detail.txt}
+	
+** Subject (Required)
+
+%{snippet|id=certificate_field_subject|file=src\site\resources\code\cert_detail.txt}
+
+  See the subjection <Patterns expressions> in this section to learn more about patterns.
+	
+** Subject alternative name
+
+%{snippet|id=certificate_field_san|file=src\site\resources\code\cert_detail.txt}
+	
+** Subject key identifier
+
+%{snippet|id=certificate_field_ski|file=src\site\resources\code\cert_detail.txt}
+
+* Patterns expressions
+
+ Some fields such as subject can not be fixed from the profile. That is the reason why it is required to build an expression with 
+ place holders (started with the symbol <$>). This expression can be any valid Velocity template allowing you to include flow control structures.
+ 
+ Said that it is important to keep in mind that subject must be a directory name. Valid fields are:
+ 
+   * BUSINESS_CATEGORY
+   
+   * businesscategory
+   
+   * c
+   
+   * C
+   
+   * cn
+   
+   * CN
+   
+   * COUNTRY_OF_CITIZENSHIP
+   
+   * COUNTRY_OF_RESIDENCE
+   
+   * countryofcitizenship
+   
+   * countryofresidence
+   
+   * DATE_OF_BIRTH
+   
+   * dateofbirth
+   
+   * DC
+   
+   * dc
+   
+   * dn
+   
+   * DN_QUALIFIER
+   
+   * e
+   
+   * EmailAddress
+   
+   * emailaddress
+   
+   * GENDER
+   
+   * gender
+   
+   * GENERATION
+   
+   * generation
+   
+   * GIVENNAME
+   
+   * givenname
+   
+   * INITIALS
+   
+   * initials
+   
+   * l
+   
+   * L
+   
+   * NAME
+   
+   * name
+     
+   * NAME_AT_BIRTH
+   
+   * nameofbirth
+   
+   * o
+   
+   * O
+   
+   * ou
+   
+   * OU
+   
+   * PLACE_OF_BIRTH
+   
+   * placeofbirth
+   
+   * POSTAL_ADDRESS
+   
+   * POSTAL_CODE
+   
+   * postaladdress
+   
+   * postalcode
+   
+   * PSEUDONYM
+   
+   * pseudonym
+   
+   * serialnumber
+   
+   * SN
+   
+   * sn
+   
+   * ST
+   
+   * st
+   
+   * STREET
+   
+   * street
+   
+   * SURNAME
+   
+   * surname
+   
+   * t
+   
+   * T
+   
+   * TELEPHONE_NUMBER
+   
+   * telephonenumber
+   
+   * UID
+   
+   * uid
+   
+   * UNIQUE_IDENTIFIER
+   
+   * uniqueidentifier
+   
+   * UnstructuredAddress
+   
+   * unstructuredaddress
+   
+   * UnstructuredName
+   
+   * unstructuredname
+
+
+* Delete a profile
+
+ Delete a profile (and all its fields) can be done by the method <deleteCertificateProfile> from the <OrinocoX509Engine> object.
+ 
+%{snippet|id=delete_certificate_profile|file=src\site\resources\code\cert_detail.txt}
+
+* Modify a profile
+
+ Adding and modifying uses the same method <saveCertificateProfile> from <OrinocoX509Engine> object.
+  
+%{snippet|id=update_certificate_profile|file=src\site\resources\code\cert_detail.txt}
+
+
+
+

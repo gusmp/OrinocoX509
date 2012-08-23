@@ -1,0 +1,45 @@
+Issuing a certificate in detail
+
+  Once your certificate profile is ready it is time to use it generating a new certificate. Before calling the method 
+  <OrinocoX509Engine.generateCertificate> it is required to load a <CertificateValues> object with the data required to issue 
+  a certificate. This data can be:
+  
+  * Not after
+  
+  * Not before
+  
+  * Certificate request
+  
+  * Map with values
+  
+  []
+  
+* Not after / not before
+
+  By default, the time in which the certificate will be valid is from today until today plus the number of years defined in the 
+  certificate profile. However, these dates can be different if notAfter or notBefore are set. 
+     
+* Certificate request
+
+  Issue a certificate requires a public key. The way to send this key is in PKCS#10 format coded in base 64.
+
+* Map with values
+
+  There are some fields which requires extra data. Subject might require the name or surname of the owner according to your pattern. 
+  Supply this data is achieved by adding a key/value map to the Map\<FieldType,Map\<String,String\>\> structure of the
+  <CertificateValues> object.
+  
+  Next example illustrates how pass the values required for the subject field.
+  
+%{snippet|id=subject_values|file=src\site\resources\code\cert_set_values.txt}
+
+** Special case
+
+  In general terms the former explanation applies to all fields. However, there is one exception: the subjet alternative name 
+  extension. While the directory name follows the same rules, the way to supply the subject mail is using a non-existing place holder
+  called <RFC822NAME>.
+  
+  Next code show how to do this.
+  
+%{snippet|id=subject_alt_name|file=src\site\resources\code\cert_set_values.txt}
+

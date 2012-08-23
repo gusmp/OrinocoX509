@@ -1,0 +1,48 @@
+Project structure
+
+  Orinoco X509 is based in two main layers:
+  
+  * Service
+  
+  * Repository
+  
+  []
+  
+  In both cases, the methods and its implementation are loosely coupled
+  
+  * Service layer
+  
+    * Interface (org.orinocoX509.service)
+    
+    * Implementation (org.orinocoX509.service.impl)
+    
+    []
+    
+  * Repository layer
+  
+    * Interface (org.orinocoX509.repository)
+    
+    * Implementation (org.orinocoX509.repository.impl.jpa)
+    
+    []
+  
+  []
+  
+  Both layers share the objects of the package <org.orinocoX509.entity>.
+  
+  <CertificateProfile> and <CRLProfile> both have a list of fields (fields property). These fields are instances of the classes contained 
+  in the packages <org.orinocoX509.entity.field.certificate> / <org.orinocoX509.entity.field.crl>. All of these classes extend from the 
+  base class <CertificateField> / <CRLField>.
+  
+  Most of the extensions require one of more values. This values can be added to the <values> property. In the same way to the fields, values 
+  follow the same approach. All possible values are in the packages <orinocoX509.entity.value.certificate> / 
+  <org.orinocoX509.entity.value.crl> extending from <CertificateFieldValue> / <CRLFieldValue>.
+  
+  Next figure shows all these classes.
+ 
+
+[..\images\development\structure.png] Class diagram
+  
+  Finally, for making easier the process of integration, all services can be accessed by the class <OrinocoX509Engine>. 
+  
+   

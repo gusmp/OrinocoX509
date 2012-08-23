@@ -1,0 +1,134 @@
+Get started
+
+* Add Orinoco X509 in your project
+
+  If you use maven just add the dependency. This dependency will work if you have add Orinoco X509 in your local 
+  maven repository as it is show {{{../development/compile.html} here}}
+
+%{snippet|id=orinoco_dependency|file=src\site\resources\code\get_started.txt}
+
+  In case of not using Maven add Orinoco X509 dependency and the required described in 
+  {{{../dependencies.html} Project Information -> Dependencies}}
+  
+* Prepare the context
+
+  Create an empty application context like this:
+
+%{snippet|id=basic_context|file=src\site\resources\code\get_started.txt}
+
+ The former code has all the namespaces but not very useful.
+
+* Add database support
+
+  First, add the configuration required to communicate with a database. Next snippet shows an example about how configure the database.
+
+%{snippet|id=db_configuration|file=src\site\resources\code\get_started.txt}
+
+  Keep in mind, this configuration assumes you create the connection not being injected from the container. This is up to you and 
+  it is shown as example. Remember to change the place holders with your own data.
+  
+  The first time set the property <eclipselink.ddl-generation> with the value <true> to create the tables. Later on, you should set 
+  to <false>.    
+
+* Configure the engine
+
+  It is needed to create some classes. This job is done for you by Spring adding the following line into your context:
+  
+%{snippet|id=engine_configuration|file=src\site\resources\code\get_started.txt}
+
+  Now specify where the private key is located either in software or in a HSM. 
+
+** Software environment
+
+  If the private key of your CA is in software add the following lines:
+  
+%{snippet|id=engine_configuration_sw|file=src\site\resources\code\get_started.txt}
+
+  Notice that:
+
+  * <keyStoreType> is the type of the certificate. Normally, <PKCS12> or <JKS>
+  
+  * <privateKeyAlias, publicKeyAlias, caCertificateAlias> can be the same in all cases
+  
+  []
+
+
+** HSM integration
+
+  In real environments where security is a must, the use of HSM is required by law (at least in Spain). See the section 
+  {{{../advanced/hsm.html} HSM support}} to which and how to use HSM with Orinoco X509. 
+
+* Second cache level subsystem
+
+  Adding a second cache level is <<not>> compulsory. Therefore, you can skip it safely although it is highly recommended. See
+  {{{../advanced/cache.html} cache subsystem}} for getting the details about how activate it.
+
+* Create a certificate profile
+
+  Before issuing a certificate, you need to define which fields and what information will be included in it. The class to create 
+  certificate profile is, as it can not in other way, <CertificateProfile>. Instantiating this class requires:
+  
+  * Profile name
+  
+  * Profile description
+  
+  * Duration of the certificate (in years)
+  
+  * Key size
+   
+  []
+  
+  Once create, you can add the compulsory fields issuer and subject. Issuer normally is a fixed string while subject is a pattern 
+  whose place holders will be replaced by the concrete data of the owner of the certificate.
+  
+  Later on, you can add as many extension as you need, if you want to add any of course. Next code show all these steps.
+
+%{snippet|id=certificate_profile_example|file=src\site\resources\code\get_started.txt}
+
+  See the section {{{../advanced/cert_detail.html} Certificate profile and extensions in detail}} for further details.
+
+* Dealing with certificates
+
+  Once the certificate profile is configured you can issue certificates. The main steps are:
+  
+  * Get it (in case you do not already have the profile)
+  
+  * Define the data to be used in the process of creation. For example, the personal data of the owner of the certificate such as 
+    their name
+  
+  * Generate it
+  
+  []
+  
+  See next code.  
+  
+%{snippet|id=issue_certificate_example|file=src\site\resources\code\get_started.txt}
+
+  See the section {{{../advanced/cert_set_values.html} Issuing a certificate in detail}} for more details.
+  
+* Create a crl profile
+
+  Create a crl profile follows the same steps we did for certificate profile. In this case, the main class is <CRLProfile>.
+  The same principles for certificate profiles can be applied to CRL profiles:
+  
+  * Create the profile
+  
+  * Add the required fields (optional)
+  
+  * Save it
+  
+  []
+  
+  Next code shows all these points.
+  
+%{snippet|id=crl_profile_example|file=src\site\resources\code\get_started.txt}
+  
+  See the section {{{../advanced/crl_detail.html} CRL profile and extensions in detail}} for a full explanation.
+
+* Issue a crl
+
+  To issue an CRL just call the method <generateCRL> from <OrinocoX509Engine> instance. 
+
+%{snippet|id=issue_crl_example|file=src\site\resources\code\get_started.txt}
+
+  In comparison to issuing certificates there is not possibility to send values.   

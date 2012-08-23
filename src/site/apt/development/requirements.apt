@@ -1,0 +1,31 @@
+Requirements
+
+  Compiling Orinoco X509 from source code requires the following dependencies:
+
+  * {{{http://www.maven.org} Maven 2}} or above.
+  
+  * {{{http://www.oracle.com/} Java 1.6}} or better.
+  
+  * {{{http://www.oracle.com/} Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files}}. Otherwise the Java virtual machine can only deal with minor key sizes.
+  
+  * JDBC driver for your database.   
+  
+  * Database. Orinoco X509 uses EclipseLink to store the required data. The list of databases supported can be found {{{http://wiki.eclipse.org/EclipseLink/FAQ/JPA} here.}}
+    
+    * Database user.
+    
+    * Database password.
+    
+    * Schema.
+    
+    * Permission for creating objects.
+    
+    []
+  
+  * (Optional). If you plan to use Orinoco in a cluster environment and want to enable the second level of cache, {{{memcached.org} Memcached}} is required. 
+   
+  []
+
+  In case you use an HSM, it is mandatory to install the JCA (Java Cryptographic API) libraries. Check the HSM manufacture to get further details about how to do this. 
+
+

@@ -1,0 +1,42 @@
+
+<!-- START SNIPPET: crl_profile -->
+@Autowired
+OrinocoX509Engine engine;
+
+CRLProfile crlProfile = new CRLProfile("My CRL profile", "Profile description");
+engine.saveCRLProfile(crlProfile);
+<!-- END SNIPPET: crl_profile -->
+
+<!-- START SNIPPET: crl_field_aki -->
+crlProfile.addField(new AuthorityKeyIdentifierCRLField(crlProfile, critical, 
+  authorityKeyIdentifier, authorityIssuerSerialNumber));
+<!-- END SNIPPET: crl_field_aki -->
+
+<!-- START SNIPPET: crl_field_crl_number -->
+crlProfile.addField(new CRLNumberField(crlProfile, critical));
+<!-- END SNIPPET: crl_field_crl_number -->
+
+<!-- START SNIPPET: crl_field_idp -->
+IssuingDistributionPointField issuingDistributionPoint 
+  = new IssuingDistributionPointField(crlProfile, critical);
+
+// Specify if these crl's only contain user certificates or CA certificates
+issuingDistributionPoint.addValue(new IssuingDistributionPointFieldValue
+  (Arrays.asList(crl_url_1, crl_url_2), onlyUserCertificates, onlyCaCertificates));
+crlProfile.addField(issuingDistributionPoint);
+<!-- END SNIPPET: crl_field_idp -->
+
+<!-- START SNIPPET: crl_field_nextUpdate -->
+crlProfile.addField(new TimeNextUpdateField(crlProfile, daysNextUpdate));
+<!-- END SNIPPET: crl_field_nextUpdate -->
+
+<!-- START SNIPPET: delete_crl_profile -->
+engine.deleteCRLProfile(crlProfile);
+<!-- END SNIPPET: delete_crl_profile -->
+
+<!-- START SNIPPET: update_crl_profile -->
+
+// do the modifications
+
+engine.saveCRLProfile(crlProfile);
+<!-- END SNIPPET: update_crl_profile -->

@@ -1,0 +1,92 @@
+<!-- START SNIPPET: local_cache -->
+
+<!-- Scan annotations -->
+<cache:annotation-driven />
+	
+<!--  EH cache configuration -->
+<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager" 
+  p:cache-manager-ref="ehcache" />
+	
+<bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" 
+  p:config-location="classpath:ehcache.xml" p:shared="true"  />
+
+<!-- END SNIPPET: local_cache -->
+
+
+<!-- START SNIPPET: local_cache_eh_cache -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ehcache>
+	
+  <diskStore path="java.io.tmpdir"/>
+
+  <defaultCache 
+    maxEntriesLocalHeap="10000"
+    eternal="true"
+    timeToIdleSeconds="0"
+    timeToLiveSeconds="0"
+    overflowToDisk="true"
+    maxEntriesLocalDisk="10000000"
+    diskPersistent="false"
+    diskExpiryThreadIntervalSeconds="120"
+    memoryStoreEvictionPolicy="LRU" />
+	
+  <cache name="crlCache" 
+    maxEntriesLocalHeap="5"
+    eternal="true"
+    diskPersistent="false"
+    memoryStoreEvictionPolicy="LRU" />
+
+  <cache name="certificateProfile" 
+    maxEntriesLocalHeap="20"
+    eternal="true"
+    diskPersistent="false"
+    memoryStoreEvictionPolicy="LRU" />
+	
+  <cache name="crlProfile" 
+    maxEntriesLocalHeap="20"
+    eternal="true"
+    diskPersistent="false"
+    memoryStoreEvictionPolicy="LRU" />
+
+</ehcache>
+
+<!-- END SNIPPET: local_cache_eh_cache -->
+
+
+<!-- START SNIPPET: distributed_cache -->
+
+<aop:aspectj-autoproxy />
+	
+<bean id="memcachedClient" class="net.spy.memcached.spring.MemcachedClientFactoryBean">
+  <property name="servers" 
+      value="__MEMCACHED_SERVER_1__:__PORT_1__, ... __MEMCACHED_SERVER_N__:__PORT_N__"/>
+  <property name="protocol" value="BINARY"/>
+  <property name="transcoder">
+    <bean class="net.spy.memcached.transcoders.SerializingTranscoder">
+      <property name="compressionThreshold" value="1024"/>
+    </bean>
+  </property>
+  <property name="opTimeout" value="1000"/>
+  <property name="timeoutExceptionThreshold" value="1998"/>
+  <property name="hashAlg">
+    <!-- Based on MD5 -->
+    <value type="net.spy.memcached.DefaultHashAlgorithm">KETAMA_HASH</value>
+  </property>
+  <property name="locatorType" value="CONSISTENT"/> 
+  <property name="failureMode" value="Redistribute"/>
+  <property name="useNagleAlgorithm" value="false"/>
+</bean>
+	
+<!-- Enable CRL cache -->
+<bean class="org.orinocoX509.aspect.cache.memcached.CacheableCRLMemcachedAspect" />
+	
+<!-- Enable cache for CRL profiles -->
+<bean class="org.orinocoX509.aspect.cache.memcached.CacheableCertificateProfileMemcachedAspect" />
+	
+<!-- Enable cache for certificate profiles -->
+<bean class="org.orinocoX509.aspect.cache.memcached.CacheableCRLProfileMemcachedAspect" />
+	
+<!-- END SNIPPET: distributed_cache -->
+

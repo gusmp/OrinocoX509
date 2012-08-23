@@ -1,0 +1,210 @@
+<!-- START SNIPPET: orinoco_dependency -->
+<dependency> 
+  <groupId>org</groupId>
+  <artifactId>orinocoX509</artifactId>
+  <version>0.0.1</version>
+</dependency>
+<!-- END SNIPPET: orinoco_dependency -->
+
+<!-- START SNIPPET: basic_context -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/cache 
+		http://www.springframework.org/schema/cache/spring-cache.xsd
+		">
+		
+	<!-- Database support -->
+	
+	<!-- Orinoco x509 configuration -->
+	
+	<!-- Second level of cache -->
+	
+</beans>
+<!-- END SNIPPET: basic_context -->
+
+<!-- START SNIPPET: db_configuration -->
+
+<!-- Pool db connections -->
+<bean id="datasource" class="com.mchange.v2.c3p0.ComboPooledDataSource" 
+    destroy-method="close">
+  <property name="driverClass" value="__DB_JDBC_DRIVER__" /> 
+  <property name="jdbcUrl" value="__DB_URL__" />
+  <property name="user" value="__DB_USER__" />
+  <property name="password" value="__DB_PASSWORD__" />
+  <property name="minPoolSize" value="5" />
+</bean>
+	
+ 
+<!-- Entity manager factory -->
+<bean id="entityManagerFactory" 
+  class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+  <property name="jpaVendorAdapter">
+    <bean class="org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter">
+      <property name="showSql" value="false" />
+    </bean>
+  </property>
+  <property name="packagesToScan" value="org.orinocoX509.entity" />
+  <property name="persistenceUnitName" value="persistenceUnit" /> 
+  <property name="dataSource" ref="datasource"/>
+  <property name="jpaPropertyMap">
+    <props>
+      <prop key="eclipselink.weaving">false</prop>
+      <prop key="eclipselink.ddl-generation">create-tables</prop>
+				
+      <!--  no cache -->
+      <prop key="eclipselink.cache.shared.default">false</prop>
+      <prop key="eclipselink.cache.size.default">0</prop>
+      <prop key="eclipselink.cache.type.default">none</prop>
+    </props>
+  </property>
+</bean>
+    
+<!-- Transaction manager  -->
+<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+  <property name="entityManagerFactory" ref="entityManagerFactory"/>
+</bean>
+	
+<!-- Scan annotations -->
+<tx:annotation-driven transaction-manager="transactionManager" />
+
+<!-- END SNIPPET: db_configuration -->
+
+<!-- START SNIPPET: engine_configuration -->
+<context:component-scan base-package="org.orinocoX509" />
+<!-- END SNIPPET: engine_configuration -->
+
+
+<!-- START SNIPPET: engine_configuration_sw -->
+<bean class="org.orinocoX509.service.impl.sw.CAKeyServiceSwImpl">
+  <constructor-arg name="keyStorePath" value="__PATH_CERTIFICATE__" />
+  <constructor-arg name="keyStoreType" value="__CERTIFICATE_TYPE__" />
+  <constructor-arg name="keyStorePin" value="__CERTIFICATE_PIN__" />
+  <constructor-arg name="privateKeyAlias" value="__ALIAS_PRIVATE_KEY__" />
+  <constructor-arg name="publicKeyAlias" value="__ALIAS_PUBLIC_KEY__" />
+  <constructor-arg name="caCertificateAlias" value="__ALIAS_CERTIFICATE__" />
+</bean>
+<!-- END SNIPPET: engine_configuration_sw -->
+
+<!-- START SNIPPET: certificate_profile_example -->
+
+@Autowired
+OrinocoX509Engine engine;
+
+...
+
+// Create the certificate profile
+CertificateProfile profile = new CertificateProfile("My profile","Profile Description",4, 1024);
+
+// Create and add the subject and issuer
+CertificateField subject = new SubjectField(profile, 
+  "C=$country, OU=$ou2, OU=$ou1, SURNAME=$surname, GIVENNAME=$given_name, 
+   serialnumber=$serial_number, CN=$cn");
+
+// fixed literal
+CertificateField issuer = new IssuerField(profile, 
+  "C=ES, ST=Barcelona, L=Badalona, 
+   OU=CA Subordinada de primer nivel, OU=ENTERPRISE.CV, CN=testCA");
+profile.addField(subject);
+profile.addField(issuer);
+
+// Add KeyUsage extension
+CertificateField keyUsageField = new KeyUsageField(profile, true);
+keyUsageField.addValue(new KeyUsageFieldValue(KeyUsageType.CRL_SIGN));
+keyUsageField.addValue(new KeyUsageFieldValue(KeyUsageType.DIGITAL_SIGNATURE));
+profile.addField(keyUsageField);
+
+// Save the profile
+engine.saveCertificateProfile(profile);
+<!-- END SNIPPET: certificate_profile_example -->
+
+
+<!-- START SNIPPET: issue_certificate_example -->
+
+@Autowired
+OrinocoX509Engine engine;
+
+...
+
+// Find the certificate profile
+CertificateProfile profile = new CertificateProfile();
+profile.setProfileName(__PROFILE_NAME__); 
+profile = engine.getCertificateProfile(profile);
+
+// Set the required data
+CertificateValues values = new CertificateValues();
+values.setRequest(__PKCS10_REQUEST__);
+		
+Map<FieldType,Map<String,String>> values = new HashMap<FieldType, Map<String,String>>(1);
+
+// Subject values
+Map<String,String> subjectValues = new HashMap<String, String>(7);
+		
+subjectValues.put("country", "ES");
+subjectValues.put("ou2", "My Organizational Unit 2");
+subjectValues.put("ou1", "My Organizational Unit 1");
+subjectValues.put("surname", "surname");
+subjectValues.put("given_name", "name");
+subjectValues.put("serial_number", "00000000H");		
+subjectValues.put("cn", "name surname");
+		
+values.put(FieldType.SUBJECT, subjectValues);
+
+// Issuer and KeyUsage do not required parameters
+// due to are provide by the certificate profile  
+
+// Issue the certificate
+CertificateInfo certificateInfo = engine.generateCertificate(profile, values);
+
+// You can save your certificate to disk saving 
+// the content of certificateInfo.getPemCertificate() 
+
+<!-- END SNIPPET: issue_certificate_example -->
+
+<!-- START SNIPPET: crl_profile_example -->
+
+@Autowired
+CRLProfileService  crlProfileService;
+
+...
+
+// create the profile
+// Revoked certificates longer than 60 days will be evicted from CRL
+CRLProfile crlProfile = new CRLProfile("My CRL profile", "Profile description", 60);
+
+// add the CRL Number field
+crlProfile.addField(new CRLNumberField(crlProfile, false));
+
+// Save it
+crlProfileService.saveProfile(crlProfile);
+
+<!-- END SNIPPET: crl_profile_example -->
+
+<!-- START SNIPPET: issue_crl_example -->
+
+import java.security.cert.X509CRL;
+...
+
+@Autowired
+OrinocoX509Engine engine;
+...
+
+X509CRL crl = crlService.generateCRL(crlProfile);
+
+<!-- END SNIPPET: issue_crl_example -->
+

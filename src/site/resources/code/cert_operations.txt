@@ -1,0 +1,25 @@
+<!-- START SNIPPET: get_status -->
+@Autowired
+OrinocoX509Engine engine;
+
+...
+
+// Get the status
+CertificateStatus certificateStatus = engine.getCertificateStatus(certificateSerialNumber);
+
+// Status is in certificateStatus property
+certificateStatus.getCertificateStatus();
+<!-- END SNIPPET: get_status -->
+
+
+<!-- START SNIPPET: suspend_certificate -->
+engine.suspendCertificate(certificateSerialNumber);
+<!-- END SNIPPET: suspend_certificate -->
+
+<!-- START SNIPPET: restore_certificate -->
+engine.restoreCertificate(certificateSerialNumber);
+<!-- END SNIPPET: restore_certificate -->
+
+<!-- START SNIPPET: revoke_certificate -->
+engine.revokeCertificate(certificateSerialNumber);
+<!-- END SNIPPET: revoke_certificate -->

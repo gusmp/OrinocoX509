@@ -1,0 +1,50 @@
+HSM support
+
+  Orinoco X509 can use an HSM as long as the manufacturer provides a JCA provider. After installing the drivers you will need to add some dependencies
+  (jar file). After that, check you know:
+  
+    * Provider class. This class implements <java.security.Provider>
+    
+    * Key store type
+    
+    * Key store provider
+    
+    * Key store pin
+    
+    * Alias public key
+    
+    * Alias private key
+    
+    * Alias CA certificate
+    
+    []
+    
+    Add into your application context the next couple of beans:
+
+%{snippet|id=hsm_general|file=src\site\resources\code\hsm.txt}
+
+* ProtectHost Orange (Eracom technologies now Safenet)
+
+  For using this HSM the values to use are:
+
+*----------------------*----------------------------------------------*
+| Property             | Value                                        |
+*----------------------*----------------------------------------------*
+| Provider class       | au.com.eracom.crypto.provider.ERACOMProvider |
+*----------------------*----------------------------------------------*
+| Key store type       | CRYPTOKI                                     |
+*----------------------*----------------------------------------------*
+| Key store provider   | ERACOM                                       |
+*----------------------*----------------------------------------------*
+| Key store pin        | your pin                                     |
+*----------------------*----------------------------------------------*
+| Alias public key     | your alias                                   |
+*----------------------*----------------------------------------------*
+| Alias private key    | your alias                                   |
+*----------------------*----------------------------------------------*
+| Alias CA certificate | your alias                                   |
+*----------------------*----------------------------------------------*
+
+
+
+

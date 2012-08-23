@@ -1,0 +1,53 @@
+Operating over certificates
+
+  Once a certificate has been issued by the method <OrinocoX509Engine.generateCertificate> the certificate has the status of valid. Certificates 
+  can be in the following status:
+  
+  * Valid: The certificated can be used. This is the status after generating it
+  
+  * Suspended: The certificate is not valid (appear in CRL or OCSP request as invalid) but it id possible to become valid again 
+  
+  * Revoked: The certificate is invalid and there is not way to make it valid. It is a definitive state
+  
+  * Expired: The certificate is invalid, because the validity period is out of date   
+  
+  []
+  
+* Get the status of the certificate
+
+  Get the status of a certificate is as easy as use the method <OrinocoX509Engine.getCertificateStatus> with the serial of the certificate.
+
+%{snippet|id=get_status|file=src\site\resources\code\cert_operations.txt}
+
+  This method returns an <CertificateStatus> object. The most important method is <getCertificateStatus> which returns a 
+  <CertificateStatusValues> value. The possible values are:
+  
+  * V for valid
+  
+  * R for revoked
+  
+  * S for suspended
+  
+  * U for unknown
+  
+  * E for expired
+  
+  []
+   
+
+* Suspend a certificate
+
+%{snippet|id=suspend_certificate|file=src\site\resources\code\cert_operations.txt}
+
+* Restore a certificate
+
+%{snippet|id=restore_certificate|file=src\site\resources\code\cert_operations.txt}
+
+* Revoke a certificate
+
+%{snippet|id=revoke_certificate|file=src\site\resources\code\cert_operations.txt}
+
+ 
+
+
+

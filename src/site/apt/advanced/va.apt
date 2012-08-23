@@ -1,0 +1,48 @@
+Orinoco X509 as a Validation Authority (VA)
+
+  Orinoco X509 can validate third party certificates by two means:
+  
+    * CRL
+    
+    * OCSP
+    
+    [] 
+
+* Validation via CRL
+
+  The class <OrinocoX509Engine> offers 3 ways to validate certificates using CRL's:
+  
+    * getCertificateStatusByCRL(certificateToValidate)
+    
+    * getCertificateStatusByCRL(serialNumberCertificateToValidate, listCrlDistibutionPoints)
+    
+    * getCertificateStatusByCRL(certificateToValidate, listCrlDistibutionPoints)
+    
+    []
+    
+*----------------------------------------------------------------------------------------------------------------------------------------------------------*
+| <<NOTE:>> The method <getCertificateStatusByCRL(serialNumberCertificateToValidate, listCrlDistibutionPoints)> do not check if the certificate is expired |                                                         
+*----------------------------------------------------------------------------------------------------------------------------------------------------------*
+  
+  First method get the crl distributions points from the certificate itself, download the crl and verify if the certificate is inside the crl. The other 
+  two methods validate the certificate against a list of crl distribution points regardless of the ones in the certificate.
+  
+  In any cases, an <CertificateStatus> object will be returned. See {{{../overview/cert_operations.html}Operating over certificates}} to know more about 
+  <CertificateStatus> class.  
+    
+
+* Validation via OCSP
+
+  <OrinocoX509Engine> has two methods:
+  
+    * getCertificateStatusByOCSP(issuerCertificate, certificateToGetStatus)
+    
+    * getCertificateStatusByOCSP(issuerCertificate, certificateToGetStatus, ocspUrl)
+    
+    []
+
+  First method will send an OCSP request to the url obtained from the authority information access of the issuer certificate. The second option, will 
+  omit the authority information access and will use the ocsp url instead.
+  
+  In both cases, an <CertificateStatus> object will be returned. See {{{../overview/cert_operations.html}Operating over certificates}} to know more about 
+  <CertificateStatus> class.

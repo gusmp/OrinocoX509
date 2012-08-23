@@ -1,0 +1,17 @@
+FAQ
+
+  <<Does Orinoco X509 have full support for RFC 5280?>>
+
+  Unfortunately not. It is not far, but it cannot be said Orinoco X509 fulfill RFC 5280.
+  
+  <<How can I configure the log?>>
+  
+  Orinoco X509 uses {{{http://www.slf4j.org}slf4j}} and below uses {{{http://logging.apache.org/log4j/}log4j}}. See Log4j 
+  web site to learn how configure it. 
+  
+
+
+
+
+
+

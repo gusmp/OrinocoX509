@@ -1,0 +1,44 @@
+Cache subsystem
+
+  Out of the box, Orinoco X509 two kinds of second cache level:
+  
+    * <Local cache> provided by EHCache
+    
+    * <Distributed cache> provided by MemCached
+    
+    []
+    
+  The decision to choose one of another depends on your infrastructure:
+  
+    * If Orinoco X509 only runs in only one node both caches can be used
+    
+    * If Orinoco X509 runs in a cluster environments, it is to say, there are more than one 
+    node, MemCached is the <<only>> option. Using EHache will make your nodes out of sync. 
+    Imagine for a moment one node revoke a certificate. Its cache will be updated but not the ones
+    of the other nodes. Future CRL request can answer different CRL according to which node receives 
+    the request
+    
+    []
+    
+* Local Cache
+
+  Enabling the local cache is as simple as:
+  
+%{snippet|id=local_cache|file=src\site\resources\code\cache.txt}
+
+  Notice we have configured but it still remains the configuration of the cache itself. To do that it is required to create the file
+  <eh-cache.xml> in which all cache are configured. Create an empty text file in your <resources> folder and paste the following 
+  configuration. 
+
+%{snippet|id=local_cache_eh_cache|file=src\site\resources\code\cache.txt}
+
+  This settings should work fine in most environments. It might be possible to do minor adjustments. 
+
+* Distributed Cache
+
+  Adding support for distributed cache is as simple as add the following lines in your context and define the MemCached servers.
+  
+  <<NOTE:>> Before starting Orinoco X509 check your MemCached servers are up and running. 
+
+%{snippet|id=distributed_cache|file=src\site\resources\code\cache.txt}
+

@@ -1,0 +1,20 @@
+Compile
+
+  Once all {{{requirements.html}requirements}} are up and working, just type:
+
+%{snippet|id=compile|file=src\site\resources\code\compile.txt}
+
+  If you want to skip the tests type:
+  
+%{snippet|id=compile_no_tests|file=src\site\resources\code\compile.txt}
+
+  First compilation will take longer due to the process of downloading all dependencies. If there are no problems, 
+  you can install the artifact in your local maven repository:
+ 
+%{snippet|id=install|file=src\site\resources\code\compile.txt}
+  
+  Documentation is bundled with the source code. Generating it from source code is as difficult as executing: 
+
+%{snippet|id=site|file=src\site\resources\code\compile.txt}
+
+  Documentation can be accessed from \target\site\index.html. 
