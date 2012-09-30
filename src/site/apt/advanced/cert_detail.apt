@@ -37,31 +37,35 @@ Certificate profile and extensions in detail
   The fields supported by Orinoco are:
   
     * Authority information access
-    
-	* Authority key identifier
-	
-	* Certificate policy
-	
-	* Crl distribution point
-	
-	* Device type
-	
-	* Extended key usage
-	
-	* Issuer (Required)
-	
-	* Issuer Alternative name
-	
-	* Key Usage
-	
-	* Netscape certificate type
-	
-	* Subject (Required)        
-	
-	* Subject alternative name
-	
-	* Subject key identifier
-	
+
+    * Authority key identifier
+
+    * Certificate policy
+
+    * Crl distribution point
+
+    * Device type
+
+    * Extended key usage
+
+    * Issuer (Required)
+
+    * Issuer Alternative name
+
+    * Key Usage
+
+    * Netscape certificate type
+
+    * Qualified certificate statement
+
+    * Subject (Required)        
+
+    * Subject alternative name
+
+    * Subject directory attributes (COUNTRY_OF_CITIZENSHIP and COUNTRY_OF_RESIDENCE only)
+
+    * Subject key identifier
+
 	[]
 	
   Most of them are optional. However, Issuer and subject are <<compulsory>>. Next section will give a close approach of each of them.
@@ -106,6 +110,10 @@ Certificate profile and extensions in detail
 ** Netscape certificate type
 
 %{snippet|id=certificate_field_nct|file=src\site\resources\code\cert_detail.txt}
+
+** Qualified certificate statement
+
+%{snippet|id=certificate_field_qcs|file=src\site\resources\code\cert_detail.txt}
 	
 ** Subject (Required)
 
@@ -117,6 +125,10 @@ Certificate profile and extensions in detail
 
 %{snippet|id=certificate_field_san|file=src\site\resources\code\cert_detail.txt}
 	
+** Subject directory attributes
+
+%{snippet|id=certificate_field_sda|file=src\site\resources\code\cert_detail.txt}
+
 ** Subject key identifier
 
 %{snippet|id=certificate_field_ski|file=src\site\resources\code\cert_detail.txt}

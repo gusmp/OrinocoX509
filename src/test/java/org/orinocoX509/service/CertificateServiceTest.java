@@ -12,9 +12,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import org.bouncycastle.asn1.ASN1InputStream;
+import org.bouncycastle.asn1.ASN1Integer;
+import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.ASN1Sequence;
 import org.bouncycastle.asn1.DERBitString;
 import org.bouncycastle.asn1.DEROctetString;
+import org.bouncycastle.asn1.DERSet;
+import org.bouncycastle.asn1.DLSequence;
+import org.bouncycastle.asn1.DLSet;
 import org.bouncycastle.asn1.misc.NetscapeCertType;
 import org.bouncycastle.asn1.x509.AccessDescription;
 import org.bouncycastle.asn1.x509.AuthorityKeyIdentifier;
@@ -26,6 +31,7 @@ import org.bouncycastle.asn1.x509.PolicyInformation;
 import org.bouncycastle.asn1.x509.PolicyQualifierId;
 import org.bouncycastle.asn1.x509.PolicyQualifierInfo;
 import org.bouncycastle.asn1.x509.UserNotice;
+import org.bouncycastle.asn1.x509.qualified.QCStatement;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,7 +50,9 @@ import org.orinocoX509.entity.field.certificate.FieldType;
 import org.orinocoX509.entity.field.certificate.IssuerAlternativeNameField;
 import org.orinocoX509.entity.field.certificate.KeyUsageField;
 import org.orinocoX509.entity.field.certificate.NetscapeCertificateTypeField;
+import org.orinocoX509.entity.field.certificate.QCStatementField;
 import org.orinocoX509.entity.field.certificate.SubjectAlternativeNameField;
+import org.orinocoX509.entity.field.certificate.SubjectDirectoryAttributeField;
 import org.orinocoX509.entity.field.certificate.SubjectKeyIdentifierField;
 import org.orinocoX509.entity.value.certificate.AuthorityInformationAccessFieldValue;
 import org.orinocoX509.entity.value.certificate.AuthorityKeyIdentifierFieldValue;
@@ -54,6 +62,10 @@ import org.orinocoX509.entity.value.certificate.ExtendedKeyUsageFieldValue;
 import org.orinocoX509.entity.value.certificate.IssuerAlternativeNameFieldValue;
 import org.orinocoX509.entity.value.certificate.KeyUsageFieldValue;
 import org.orinocoX509.entity.value.certificate.NetscapeCertificateTypeFieldValue;
+import org.orinocoX509.entity.value.certificate.QCStatementFieldValue;
+import org.orinocoX509.entity.value.certificate.SubjectDirectoryAttributeFieldValue;
+import org.orinocoX509.entity.value.certificate.QCStatementFieldValue.QCStatementType;
+import org.orinocoX509.entity.value.certificate.SubjectDirectoryAttributeFieldValue.SubjectDirectoryAttributeType;
 import org.orinocoX509.entity.value.certificate.SubjectAlternativeNameFieldValue;
 import org.orinocoX509.entity.value.certificate.AlternativeNameFieldValue.AlternativeNameType;
 import org.orinocoX509.entity.value.certificate.AuthorityInformationAccessFieldValue.AIAType;
@@ -487,6 +499,57 @@ public class CertificateServiceTest
 		}
 	}
 	
+	// Qualified Certificate Statements
+	
+	@Test
+	public void generateCertificateQualifiedCertificateStatementsTest()
+	{
+		int RETENTION_PERIOD = 15; 
+		profile = testSupport.generateBaseProfile("generateQualifiedCertificateStatementsExtensionTest", TestConst.PROFILE_DESCRIPTION);
+		CertificateField qcStatements = new QCStatementField(profile, false);
+		qcStatements.addValue(new QCStatementFieldValue(QCStatementType.ID_ETSI_QCS_QCCOMPILANCE));
+		qcStatements.addValue(new QCStatementFieldValue(QCStatementType.ID_ETSI_QCS_RETENTION_PERIOD,RETENTION_PERIOD));
+		profile.addField(qcStatements);
+		
+		CertificateValues values = testSupport.generateBaseValues();
+		CertificateInfo certificateInfo = certificateService.generateCertificate(profile, values);
+		
+		//testSupport.saveCertificate("qcStatements.cer", certificateInfo.getPemCertificate());
+		
+		try
+		{
+			byte[] qcStatementsExtension = testSupport.getCertificate(certificateInfo.getPemCertificate()).getExtensionValue("1.3.6.1.5.5.7.1.3");
+			assertNotNull(qcStatementsExtension);
+			
+			DEROctetString oct = (DEROctetString) (new ASN1InputStream(new ByteArrayInputStream(qcStatementsExtension)).readObject());
+			DLSequence qcsSeq = (DLSequence) (new ASN1InputStream(new ByteArrayInputStream(oct.getOctets())).readObject());
+			
+			for(int i=0; i < qcsSeq.size(); i++)
+			{
+				DLSequence qcsItemSeq = (DLSequence) qcsSeq.getObjectAt(i);
+				QCStatement qcs = new QCStatement((ASN1ObjectIdentifier) qcsItemSeq.getObjectAt(0));
+				if ((qcs.getStatementId().toString().equals(QCStatement.id_etsi_qcs_QcCompliance.toString())  == false) &&
+						(qcs.getStatementId().toString().equals(QCStatement.id_etsi_qcs_RetentionPeriod.toString())  == false))
+				{
+					fail();
+				}
+				else
+				{
+					if (qcs.getStatementId().toString().equals(QCStatement.id_etsi_qcs_RetentionPeriod.toString())  == true)
+					{
+						ASN1Integer retentionPeriod = (ASN1Integer) qcsItemSeq.getObjectAt(1);
+						assertEquals(RETENTION_PERIOD, retentionPeriod.getValue().intValue());
+					}
+				}
+			}
+		}
+		catch(Exception exc)
+		{
+			//System.out.println(exc.toString());
+			fail();
+		}
+	}
+	
 	// Netscape Certificate Type
 	
 	@Test
@@ -572,7 +635,64 @@ public class CertificateServiceTest
 		}
 	}
 	
+	// Subject Directory Attributes
+	
+	@Test
+	public void generateCertificateSubjectDirectoryAttributesExtensionTest()
+	{
+		String COUNTRY_OF_CITIZENSHIP = "ES";
+		String COUNTRY_OF_RESIDENCE = "UK";
+		
+		profile = testSupport.generateBaseProfile("generateCertificateSubjectDirectoryAttributesExtensionTest", TestConst.PROFILE_DESCRIPTION);
+		
+		CertificateField subjectDirectoryAttributes = new SubjectDirectoryAttributeField(profile, false);
+		subjectDirectoryAttributes.addValue(new SubjectDirectoryAttributeFieldValue(SubjectDirectoryAttributeType.COUNTRY_OF_CITIZENSHIP, COUNTRY_OF_CITIZENSHIP));
+		subjectDirectoryAttributes.addValue(new SubjectDirectoryAttributeFieldValue(SubjectDirectoryAttributeType.COUNTRY_OF_RESIDENCE, COUNTRY_OF_RESIDENCE));
+		profile.addField(subjectDirectoryAttributes);
+		
+		CertificateValues values = testSupport.generateBaseValues();
+		CertificateInfo certificateInfo = certificateService.generateCertificate(profile, values);
+		
+		testSupport.saveCertificate("sdaExtention.cer", certificateInfo.getPemCertificate());
+		
+		try
+		{
+			byte[] sdaExtension = testSupport.getCertificate(certificateInfo.getPemCertificate()).getExtensionValue("2.5.29.9");
+			assertNotNull(sdaExtension);
+			
+			DEROctetString oct = (DEROctetString) (new ASN1InputStream(new ByteArrayInputStream(sdaExtension)).readObject());
+			DLSequence sdaSeq = (DLSequence) (new ASN1InputStream(new ByteArrayInputStream(oct.getOctets())).readObject());
+			
+			for(int i=0; i < sdaSeq.size(); i++)
+			{
+				DLSequence sdaItemSeq = (DLSequence) sdaSeq.getObjectAt(i);
+				
+				ASN1ObjectIdentifier oid = (ASN1ObjectIdentifier) sdaItemSeq.getObjectAt(0);
+				DLSet valueSet = (DLSet) sdaItemSeq.getObjectAt(1);
+				
+				if (oid.toString().compareTo(SubjectDirectoryAttributeType.COUNTRY_OF_CITIZENSHIP.toString()) == 0)
+				{
+					assertEquals(COUNTRY_OF_CITIZENSHIP, valueSet.getObjectAt(0).toString());
+				}
+				else if (oid.toString().compareTo(SubjectDirectoryAttributeType.COUNTRY_OF_RESIDENCE.toString()) == 0)
+				{
+					assertEquals(COUNTRY_OF_RESIDENCE, valueSet.getObjectAt(0).toString());
+				}
+				else
+				{
+					fail();
+				}
+			}
+		}
+		catch(Exception exc)
+		{
+			System.out.println(exc.toString());
+			fail();
+		}
+	}
+	
 	// Subject Key Identifier
+	
 	@Test
 	public void generateCertificateSubjectKeyIdentifierExtensionTest()
 	{

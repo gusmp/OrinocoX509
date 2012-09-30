@@ -27,7 +27,9 @@ import org.orinocoX509.entity.field.certificate.IssuerAlternativeNameField;
 import org.orinocoX509.entity.field.certificate.IssuerField;
 import org.orinocoX509.entity.field.certificate.KeyUsageField;
 import org.orinocoX509.entity.field.certificate.NetscapeCertificateTypeField;
+import org.orinocoX509.entity.field.certificate.QCStatementField;
 import org.orinocoX509.entity.field.certificate.SubjectAlternativeNameField;
+import org.orinocoX509.entity.field.certificate.SubjectDirectoryAttributeField;
 import org.orinocoX509.entity.field.certificate.SubjectField;
 import org.orinocoX509.entity.field.certificate.SubjectKeyIdentifierField;
 import org.orinocoX509.entity.value.certificate.AuthorityInformationAccessFieldValue;
@@ -39,7 +41,11 @@ import org.orinocoX509.entity.value.certificate.IssuerAlternativeNameFieldValue;
 import org.orinocoX509.entity.value.certificate.IssuerFieldValue;
 import org.orinocoX509.entity.value.certificate.KeyUsageFieldValue;
 import org.orinocoX509.entity.value.certificate.NetscapeCertificateTypeFieldValue;
+import org.orinocoX509.entity.value.certificate.QCStatementFieldValue;
+import org.orinocoX509.entity.value.certificate.QCStatementFieldValue.QCStatementType;
 import org.orinocoX509.entity.value.certificate.SubjectAlternativeNameFieldValue;
+import org.orinocoX509.entity.value.certificate.SubjectDirectoryAttributeFieldValue;
+import org.orinocoX509.entity.value.certificate.SubjectDirectoryAttributeFieldValue.SubjectDirectoryAttributeType;
 import org.orinocoX509.entity.value.certificate.SubjectFieldValue;
 import org.orinocoX509.entity.value.certificate.AlternativeNameFieldValue.AlternativeNameType;
 import org.orinocoX509.entity.value.certificate.AuthorityInformationAccessFieldValue.AIAType;
@@ -497,6 +503,46 @@ public class CertificateProfileServiceTest
 		}
 	}
 	
+	// Qualified Certificate Statements
+	
+	@Test
+	public void addQualifiedCertificateStatementsTest()
+	{
+		Boolean CRITICAL = false;
+		String CURRENCY_CODE = "EUR";
+		Integer VALUE = 100;
+		
+		profile = testSupport.createEmptyProfile("addQCStatementsTest",TestConst.PROFILE_DESCRIPTION);
+		CertificateField qcStatements = new QCStatementField(profile, CRITICAL);
+		qcStatements.addValue(new QCStatementFieldValue(QCStatementType.ID_QCS_PKIXQCSYNTAX_V1));
+		qcStatements.addValue(new QCStatementFieldValue(QCStatementType.ID_ETSI_QCS_LIMITE_VALUE,CURRENCY_CODE, VALUE));
+		
+		profile.addField(qcStatements);
+		certificateProfileService.saveProfile(profile);
+		
+		profile = certificateProfileService.getProfile(profile);
+		qcStatements = profile.getField(FieldType.QUALIFIED_CERTIFICATE_STATEMENT);
+		
+		assertEquals(CRITICAL, qcStatements.getCritical());
+		for(int i=0; i < qcStatements.getValues().size(); i++)
+		{
+			QCStatementFieldValue qcsValue = (QCStatementFieldValue) qcStatements.getValues().get(i);
+			if ((qcsValue.getQCStatement() != QCStatementType.ID_QCS_PKIXQCSYNTAX_V1) && 
+					(qcsValue.getQCStatement() != QCStatementType.ID_ETSI_QCS_LIMITE_VALUE))
+			{
+				fail();
+			}
+			else
+			{
+				if (qcsValue.getQCStatement() == QCStatementType.ID_ETSI_QCS_LIMITE_VALUE)
+				{
+					assertEquals(CURRENCY_CODE, qcsValue.getCurrencyCode());
+					assertEquals(VALUE, qcsValue.getLimiteValue());
+				}
+			}
+		}
+	}
+	
 	// Subject Alternative Name
 	
 	@Test
@@ -535,6 +581,45 @@ public class CertificateProfileServiceTest
 			fail();
 		}
 	}
+	
+	// Subject directory attributes
+	
+	@Test
+	public void addSubjectDirectoryAttributesFieldTest()
+	{
+		Boolean CRITICAL = false;
+		String RESIDENCE_COUNTRY_CODE = "ES";
+		String NATIVE_COUNTRY_CODE = "UK";
+		profile = testSupport.createEmptyProfile("addSubjectDirectoryAttributesFieldTest",TestConst.PROFILE_DESCRIPTION);
+		
+		CertificateField subjectDirectoryAttributes = new SubjectDirectoryAttributeField(profile, CRITICAL);
+		subjectDirectoryAttributes.addValue(new SubjectDirectoryAttributeFieldValue(SubjectDirectoryAttributeType.COUNTRY_OF_CITIZENSHIP, RESIDENCE_COUNTRY_CODE));
+		subjectDirectoryAttributes.addValue(new SubjectDirectoryAttributeFieldValue(SubjectDirectoryAttributeType.COUNTRY_OF_RESIDENCE, NATIVE_COUNTRY_CODE));
+		profile.addField(subjectDirectoryAttributes);
+		
+		certificateProfileService.saveProfile(profile);
+		
+		profile = certificateProfileService.getProfile(profile);
+		subjectDirectoryAttributes = profile.getField(FieldType.SUBJECT_DIRECTORY_ATTRIBUTE);
+		
+		for(int i=0; i < subjectDirectoryAttributes.getValues().size(); i++)
+		{
+			SubjectDirectoryAttributeFieldValue sdaFieldValue = (SubjectDirectoryAttributeFieldValue) subjectDirectoryAttributes.getValues().get(i);
+			if (sdaFieldValue.getSubjectDirectoryAttribute() == SubjectDirectoryAttributeType.COUNTRY_OF_CITIZENSHIP)
+			{
+				assertEquals(RESIDENCE_COUNTRY_CODE, sdaFieldValue.getValue());
+			}
+			else if (sdaFieldValue.getSubjectDirectoryAttribute() == SubjectDirectoryAttributeType.COUNTRY_OF_RESIDENCE)
+			{
+				assertEquals(NATIVE_COUNTRY_CODE, sdaFieldValue.getValue());
+			}
+			else
+			{
+				fail();
+			}
+		}
+	}
+
 	
 	// Subject Key Identifier
 	

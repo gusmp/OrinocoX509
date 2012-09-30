@@ -137,6 +137,18 @@ netscapeCertificateTypeField.addValue(
 certificateProfile.addField(netscapeCertificateTypeField);
 <!-- END SNIPPET: certificate_field_nct  -->
 
+
+<!-- START SNIPPET: certificate_field_qcs  -->
+CertificateField qcStatements = new QCStatementField(certificateProfile, false);
+
+// Add as many Qyalified certificate statements as you need 
+qcStatements.addValue(new QCStatementFieldValue(QCStatementType.ID_QCS_PKIXQCSYNTAX_V1));
+qcStatements.addValue(
+  new QCStatementFieldValue(QCStatementType.ID_ETSI_QCS_LIMITE_VALUE,"EUR", 200));
+
+certificateProfile.addField(qcStatements);
+<!-- END SNIPPET: certificate_field_qcs  -->
+
 <!-- START SNIPPET: certificate_field_subject  -->
 CertificateField subject = new SubjectField(profile, "C=$country, 
   OU=$ou2, 
@@ -161,6 +173,21 @@ subjectAlternativeName.addValue(
 
 certificateProfile.addField(subjectAlternativeName);
 <!-- END SNIPPET: certificate_field_san  -->
+
+<!-- START SNIPPET: certificate_field_sda  -->
+CertificateField subjectDirectoryAttributes = 
+  new SubjectDirectoryAttributeField(certificateProfile, false);
+
+subjectDirectoryAttributes.addValue(
+  new SubjectDirectoryAttributeFieldValue(
+    SubjectDirectoryAttributeType.COUNTRY_OF_CITIZENSHIP, "ES"));
+subjectDirectoryAttributes.addValue(
+  new SubjectDirectoryAttributeFieldValue(
+    SubjectDirectoryAttributeType.COUNTRY_OF_RESIDENCE, "UK"));
+
+certificateProfile.addField(subjectDirectoryAttributes);
+
+<!-- END SNIPPET: certificate_field_sda  -->
 
 <!-- START SNIPPET: certificate_field_ski  -->
 CertificateField subjectKeyIdentifier = 

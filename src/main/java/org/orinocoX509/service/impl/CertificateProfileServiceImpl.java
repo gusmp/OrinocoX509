@@ -83,7 +83,9 @@ public class CertificateProfileServiceImpl implements CertificateProfileService
 		checkParameterNumber(profile, FieldType.ISSUER_ALTERNATIVE_NAME, 1);
 		checkParameterNumber(profile, FieldType.KEY_USAGE, 1);
 		checkParameterNumber(profile, FieldType.NETSCAPE_CERTIFICATE_TYPE, 1);
+		checkParameterNumber(profile, FieldType.QUALIFIED_CERTIFICATE_STATEMENT, 1);
 		checkParameterNumber(profile, FieldType.SUBJECT_ALTERNATIVE_NAME, 1);
+		checkParameterNumber(profile, FieldType.SUBJECT_DIRECTORY_ATTRIBUTE, 1);
 		
 		return;
 	}

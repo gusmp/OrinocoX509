@@ -45,6 +45,7 @@
 				<prop key="eclipselink.cache.shared.default">false</prop>
 				<prop key="eclipselink.cache.size.default">0</prop>
 				<prop key="eclipselink.cache.type.default">none</prop>
+				<prop key="eclipselink.ddl-generation.table-creation-suffix">engine=InnoDB</prop>
 			</props>
 		</property>
 	</bean>

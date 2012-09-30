@@ -47,7 +47,9 @@ import org.orinocoX509.service.impl.extensions.ExtendedKeyUsageExtension;
 import org.orinocoX509.service.impl.extensions.IssuerAlternativeNameExtension;
 import org.orinocoX509.service.impl.extensions.KeyUsageExtension;
 import org.orinocoX509.service.impl.extensions.NetscapeCertificateTypeExtension;
+import org.orinocoX509.service.impl.extensions.QualifiedCertificateStatementsExtension;
 import org.orinocoX509.service.impl.extensions.SubjectAlternativeNameExtension;
+import org.orinocoX509.service.impl.extensions.SubjectDirectoryAttributeExtension;
 import org.orinocoX509.service.impl.extensions.SubjectKeyIdentifierExtension;
 import org.orinocoX509.service.impl.extensions.VelocitySupport;
 import org.orinocoX509.util.CryptographicUtil;
@@ -306,9 +308,13 @@ public class CertificateServiceImpl implements CertificateService
 			{
 				extension = new IssuerAlternativeNameExtension(currentField);
 			}
-			if (currentField.getFieldType() == FieldType.KEY_USAGE)
+			else if (currentField.getFieldType() == FieldType.KEY_USAGE)
 			{
 				extension = new KeyUsageExtension(currentField.getValues(), currentField.getCritical());
+			}
+			else if (currentField.getFieldType() == FieldType.QUALIFIED_CERTIFICATE_STATEMENT)
+			{
+				extension = new QualifiedCertificateStatementsExtension(currentField.getValues(), currentField.getCritical());
 			}
 			else if (currentField.getFieldType() == FieldType.NETSCAPE_CERTIFICATE_TYPE)
 			{
@@ -317,6 +323,10 @@ public class CertificateServiceImpl implements CertificateService
 			else if (currentField.getFieldType() == FieldType.SUBJECT_ALTERNATIVE_NAME)
 			{
 				extension = new SubjectAlternativeNameExtension(currentField, certificateValues.getValues().get(FieldType.SUBJECT_ALTERNATIVE_NAME), velocitySupport);
+			}
+			else if (currentField.getFieldType() == FieldType.SUBJECT_DIRECTORY_ATTRIBUTE)
+			{
+				extension = new SubjectDirectoryAttributeExtension(currentField.getValues(), currentField.getCritical());
 			}
 			else if (currentField.getFieldType() == FieldType.SUBJECT_KEY_IDENTIFIER)
 			{
