@@ -18,7 +18,7 @@
 	<!-- Pool db connections -->
 	<bean id="datasource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
         <property name="driverClass" value="com.mysql.jdbc.Driver" /> 
-        <property name="jdbcUrl" value="jdbc:mysql://localhost/idcatgt" />
+        <property name="jdbcUrl" value="jdbc:mysql://localhost/orinoco" />
         <property name="user" value="root" />
         <property name="password" value="" />
         <property name="minPoolSize" value="5" />

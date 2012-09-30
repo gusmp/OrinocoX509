@@ -555,6 +555,8 @@ public class CertificateProfileServiceTest
 		assertEquals(CRITICAL, subjectKeyIdentifier.getCritical());
 	}
 	
+	//
+	
 
 	
 	@Test
