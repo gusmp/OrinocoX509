@@ -33,6 +33,16 @@ authorityKeyIdentifier.addValue(
 certificateProfile.addField(authorityKeyIdentifier);
 <!-- END SNIPPET: certificate_field_aki  -->
 
+<!-- START SNIPPET: certificate_field_bc -->
+
+// if isCA is false, the path length constraint is not taken into account
+CertificateField basicConstraint = 
+  new BasicConstraintField(certificateProfile, false, 0, false);
+
+profile.addField(basicConstraint);
+
+<!-- END SNIPPET: certificate_field_bc  -->
+
 <!-- START SNIPPET: certificate_field_cp  -->
 // OID for the certificate
 CertificateField certificatePolicy = 

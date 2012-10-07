@@ -17,6 +17,7 @@ import org.orinocoX509.TestSupport;
 import org.orinocoX509.entity.CertificateProfile;
 import org.orinocoX509.entity.field.certificate.AuthorityInformationAccessField;
 import org.orinocoX509.entity.field.certificate.AuthorityKeyIdentifierField;
+import org.orinocoX509.entity.field.certificate.BasicConstraintField;
 import org.orinocoX509.entity.field.certificate.CRLDistributionPointField;
 import org.orinocoX509.entity.field.certificate.CertificateField;
 import org.orinocoX509.entity.field.certificate.CertificatePolicyField;
@@ -287,6 +288,29 @@ public class CertificateProfileServiceTest
 			}
 			fail();
 		}
+	}
+	
+	// Basic constraints
+	
+	@Test
+	public void addBasicConstraintTest()
+	{
+		Boolean CRITICAL = false;
+		Boolean ISCA = false;
+		Integer PATH_LENGTH = 0;
+		profile = testSupport.createEmptyProfile("addCertificatePolicyFieldTest",TestConst.PROFILE_DESCRIPTION);
+		
+		CertificateField basicConstraint = new BasicConstraintField(profile, ISCA, PATH_LENGTH, CRITICAL);
+
+		profile.addField(basicConstraint);
+		certificateProfileService.saveProfile(profile);
+		
+		profile = certificateProfileService.getProfile(profile);
+		basicConstraint = profile.getField(FieldType.BASIC_CONSTRAINT);
+		
+		assertEquals(ISCA, ((BasicConstraintField) basicConstraint).getIsCA());
+		assertEquals(PATH_LENGTH, ((BasicConstraintField) basicConstraint).getPathLength());
+		assertEquals(CRITICAL, basicConstraint.getCritical());
 	}
 	
 	

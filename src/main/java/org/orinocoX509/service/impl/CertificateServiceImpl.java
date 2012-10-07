@@ -39,6 +39,7 @@ import org.orinocoX509.service.CertificateService;
 import org.orinocoX509.service.CertificateStatusService;
 import org.orinocoX509.service.impl.extensions.AuthorityInformationAccessExtension;
 import org.orinocoX509.service.impl.extensions.AuthorityKeyIdentifierExtension;
+import org.orinocoX509.service.impl.extensions.BasicConstraintExtension;
 import org.orinocoX509.service.impl.extensions.CRLDistributionPointExtension;
 import org.orinocoX509.service.impl.extensions.CertificatePoliciesExtension;
 import org.orinocoX509.service.impl.extensions.DeviceTypeExtension;
@@ -287,6 +288,10 @@ public class CertificateServiceImpl implements CertificateService
 			else if (currentField.getFieldType() == FieldType.AUTHORITY_KEY_IDENTIFIER)
 			{
 				extension = new AuthorityKeyIdentifierExtension(currentField, CAKeyService.getCAPublicKey(), CAKeyService.getCACertificate());
+			}
+			else if (currentField.getFieldType() == FieldType.BASIC_CONSTRAINT)
+			{
+				extension = new BasicConstraintExtension(currentField);
 			}
 			else if (currentField.getFieldType() == FieldType.CERTIFICATE_POLICY)
 			{

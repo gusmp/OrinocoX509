@@ -18,6 +18,7 @@ import org.orinocoX509.entity.CertificateStatus;
 import org.orinocoX509.entity.CertificateStatus.CertificateStatusValues;
 import org.orinocoX509.entity.field.certificate.AuthorityInformationAccessField;
 import org.orinocoX509.entity.field.certificate.AuthorityKeyIdentifierField;
+import org.orinocoX509.entity.field.certificate.BasicConstraintField;
 import org.orinocoX509.entity.field.certificate.CRLDistributionPointField;
 import org.orinocoX509.entity.field.certificate.CertificateField;
 import org.orinocoX509.entity.field.certificate.CertificatePolicyField;
@@ -104,6 +105,10 @@ public class OrinocoX509EngineTest
 		authorityKeyIdentifier.addValue(new AuthorityKeyIdentifierFieldValue(AuthorityKeyIdentifierType.KEY_IDENTIFIER));
 		authorityKeyIdentifier.addValue(new AuthorityKeyIdentifierFieldValue(AuthorityKeyIdentifierType.AUTH_CERT_ISSUER_AUTH_CERT_SERIAL_NUMBER));
 		profile.addField(authorityKeyIdentifier);
+		
+		// Basic constraint
+		CertificateField basicConstraint = new BasicConstraintField(profile, false, 0, false);
+		profile.addField(basicConstraint);
 		
 		// Certificate Policy
 		CertificateField certificatePolicy = new CertificatePolicyField(profile, TestConst.POLICY_OID, false);

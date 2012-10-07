@@ -40,6 +40,7 @@ import org.orinocoX509.TestSupport;
 import org.orinocoX509.entity.CertificateProfile;
 import org.orinocoX509.entity.field.certificate.AuthorityInformationAccessField;
 import org.orinocoX509.entity.field.certificate.AuthorityKeyIdentifierField;
+import org.orinocoX509.entity.field.certificate.BasicConstraintField;
 import org.orinocoX509.entity.field.certificate.CRLDistributionPointField;
 import org.orinocoX509.entity.field.certificate.CertificateField;
 import org.orinocoX509.entity.field.certificate.CertificatePolicyField;
@@ -258,7 +259,41 @@ public class CertificateServiceTest
 		}
 	}
 	
+	// Basic constraint
+	
+	@Test
+	public void generateCertificateBasicConstrainTest()
+	{
+		Boolean CRITICAL = false;
+		Boolean ISCA = true;
+		Integer PATH_LENGTH = 1;
+		
+		profile = testSupport.generateBaseProfile("generateCertificateBasicConstrainTest", TestConst.PROFILE_DESCRIPTION);
+		
+		CertificateField basicConstraint = new BasicConstraintField(profile, ISCA, PATH_LENGTH, CRITICAL);
+
+		profile.addField(basicConstraint);
+		
+		CertificateValues values = testSupport.generateBaseValues();
+		CertificateInfo certificateInfo = certificateService.generateCertificate(profile, values);
+		
+		testSupport.saveCertificate("bcExtension.cer", certificateInfo.getPemCertificate());
+		
+		try
+		{
+			Integer pathLength = testSupport.getCertificate(certificateInfo.getPemCertificate()).getBasicConstraints();
+			// If isCA is false pathLength is -1 because it is not a CA certificate!
+			assertEquals(PATH_LENGTH, pathLength);
+		}
+		catch(Exception exc)
+		{
+			System.out.println(exc.toString());
+			fail();
+		}
+	}	
+	
 	// Certificate Policies
+	
 	@Test
 	public void generateCertificateCertificatePoliciesExtensionTest()
 	{
