@@ -27,7 +27,9 @@ import org.orinocoX509.entity.field.certificate.FieldType;
 import org.orinocoX509.entity.field.certificate.IssuerAlternativeNameField;
 import org.orinocoX509.entity.field.certificate.KeyUsageField;
 import org.orinocoX509.entity.field.certificate.NetscapeCertificateTypeField;
+import org.orinocoX509.entity.field.certificate.QCStatementField;
 import org.orinocoX509.entity.field.certificate.SubjectAlternativeNameField;
+import org.orinocoX509.entity.field.certificate.SubjectDirectoryAttributeField;
 import org.orinocoX509.entity.field.certificate.SubjectKeyIdentifierField;
 import org.orinocoX509.entity.value.certificate.AuthorityInformationAccessFieldValue;
 import org.orinocoX509.entity.value.certificate.AuthorityKeyIdentifierFieldValue;
@@ -37,7 +39,9 @@ import org.orinocoX509.entity.value.certificate.ExtendedKeyUsageFieldValue;
 import org.orinocoX509.entity.value.certificate.IssuerAlternativeNameFieldValue;
 import org.orinocoX509.entity.value.certificate.KeyUsageFieldValue;
 import org.orinocoX509.entity.value.certificate.NetscapeCertificateTypeFieldValue;
+import org.orinocoX509.entity.value.certificate.QCStatementFieldValue;
 import org.orinocoX509.entity.value.certificate.SubjectAlternativeNameFieldValue;
+import org.orinocoX509.entity.value.certificate.SubjectDirectoryAttributeFieldValue;
 import org.orinocoX509.entity.value.certificate.AlternativeNameFieldValue.AlternativeNameType;
 import org.orinocoX509.entity.value.certificate.AuthorityInformationAccessFieldValue.AIAType;
 import org.orinocoX509.entity.value.certificate.AuthorityKeyIdentifierFieldValue.AuthorityKeyIdentifierType;
@@ -45,6 +49,8 @@ import org.orinocoX509.entity.value.certificate.CertificatePolicyFieldValue.Cert
 import org.orinocoX509.entity.value.certificate.ExtendedKeyUsageFieldValue.ExtendedKeyUsageType;
 import org.orinocoX509.entity.value.certificate.KeyUsageFieldValue.KeyUsageType;
 import org.orinocoX509.entity.value.certificate.NetscapeCertificateTypeFieldValue.NetscapeCertificateTypeType;
+import org.orinocoX509.entity.value.certificate.QCStatementFieldValue.QCStatementType;
+import org.orinocoX509.entity.value.certificate.SubjectDirectoryAttributeFieldValue.SubjectDirectoryAttributeType;
 import org.orinocoX509.holder.CertificateInfo;
 import org.orinocoX509.holder.CertificateValues;
 import org.orinocoX509.service.CRLProfileService;
@@ -139,11 +145,26 @@ public class OrinocoX509EngineTest
 		netscapeCertificateTypeField.addValue(new NetscapeCertificateTypeFieldValue(NetscapeCertificateTypeType.SMIME));
 		profile.addField(netscapeCertificateTypeField);
 		
+		// Qualified Certificate Statements 
+		Integer RETENTION_PERIOD = 15;
+		CertificateField qcStatements = new QCStatementField(profile, false);
+		qcStatements.addValue(new QCStatementFieldValue(QCStatementType.ID_ETSI_QCS_QCCOMPILANCE));
+		qcStatements.addValue(new QCStatementFieldValue(QCStatementType.ID_ETSI_QCS_RETENTION_PERIOD,RETENTION_PERIOD));
+		profile.addField(qcStatements);
+		
 		// Subject alternative Name
 		CertificateField subjectAlternativeName = new SubjectAlternativeNameField(profile, false);
 		subjectAlternativeName.addValue(new SubjectAlternativeNameFieldValue(AlternativeNameType.RFC822NAME));
 		subjectAlternativeName.addValue(new SubjectAlternativeNameFieldValue(AlternativeNameType.DIRECTORY_NAME, TestConst.SAN_DIRECTORY_NAME_PATTERN));
 		profile.addField(subjectAlternativeName);
+		
+		// Subject Directory Attributes
+		String COUNTRY_OF_CITIZENSHIP = "ES";
+		String COUNTRY_OF_RESIDENCE = "UK";
+		CertificateField subjectDirectoryAttributes = new SubjectDirectoryAttributeField(profile, false);
+		subjectDirectoryAttributes.addValue(new SubjectDirectoryAttributeFieldValue(SubjectDirectoryAttributeType.COUNTRY_OF_CITIZENSHIP, COUNTRY_OF_CITIZENSHIP));
+		subjectDirectoryAttributes.addValue(new SubjectDirectoryAttributeFieldValue(SubjectDirectoryAttributeType.COUNTRY_OF_RESIDENCE, COUNTRY_OF_RESIDENCE));
+		profile.addField(subjectDirectoryAttributes);
 		
 		// Subject Key Identifier
 		CertificateField subjectKeyIdentifier = new SubjectKeyIdentifierField(profile, false);
