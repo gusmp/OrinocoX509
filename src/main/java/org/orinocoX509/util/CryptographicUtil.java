@@ -66,13 +66,21 @@ public class CryptographicUtil
 		}
 		else
 		{
+			/*
 			String reverseDn = "";
 			for(int i=dnArray.length-1; i>=0;i--)
 			{
 				if (i >0) { reverseDn += dnArray[i].trim() + ", "; }
 				else {reverseDn += dnArray[i]; }
 			}
-			return(reverseDn);
+			*/
+			StringBuffer reverseDn = new StringBuffer();
+			for(int i=dnArray.length-1; i>=0;i--)
+			{
+				if (i >0) { reverseDn.append(dnArray[i].trim() + ", "); }
+				else {reverseDn.append(dnArray[i]); }
+			}
+			return(reverseDn.toString());
 		}
 	}
 }

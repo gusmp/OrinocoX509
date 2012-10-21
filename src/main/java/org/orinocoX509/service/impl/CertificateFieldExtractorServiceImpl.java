@@ -1,6 +1,7 @@
 package org.orinocoX509.service.impl;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOError;
 import java.io.IOException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class CertificateFieldExtractorServiceImpl implements CertificateFieldExt
 	{
 		String ocsp_url = null;
 		byte[] aiaExtensionDER = certificate.getExtensionValue("1.3.6.1.5.5.7.1.1");
+		ASN1InputStream asn1InputStream = null;
 		
 		if (aiaExtensionDER == null)
 		{
@@ -39,8 +41,9 @@ public class CertificateFieldExtractorServiceImpl implements CertificateFieldExt
 		try
 		{
 			DEROctetString derObjectString = (DEROctetString) (new ASN1InputStream(new ByteArrayInputStream(aiaExtensionDER)).readObject());
-			ASN1InputStream asn1InputStream = new ASN1InputStream(derObjectString.getOctets());
+			asn1InputStream = new ASN1InputStream(derObjectString.getOctets());
 			ASN1Sequence asn1Sequence = (ASN1Sequence) asn1InputStream.readObject();
+			asn1InputStream.close();
 			AccessDescription accessDescription = null;
 			
 			for(int i=0; i < asn1Sequence.size(); i++)
@@ -65,12 +68,24 @@ public class CertificateFieldExtractorServiceImpl implements CertificateFieldExt
 		{
 			throw new EngineException(EngineErrorCodes.IO_ERROR,"It was an error while getting extension in order to get the OCSP url.\n" + exc.toString());
 		}
+		finally
+		{
+			if (asn1InputStream != null) 
+			{ 	
+				try 
+				{ 
+					asn1InputStream.close(); 
+				} 
+				catch (IOException excIO) {}
+			}
+		}
 	}
 	
 	public List<String> getCRLDistributionsPoints(X509Certificate certificate) throws EngineException
 	{
 		List<String> crldpList = new ArrayList<String>(5);
 		byte[] crldpExtension = certificate.getExtensionValue("2.5.29.31");
+		ASN1InputStream asn1InputStream = null;
 		
 		if (crldpExtension == null)
 		{
@@ -82,8 +97,10 @@ public class CertificateFieldExtractorServiceImpl implements CertificateFieldExt
 		try
 		{
 			DEROctetString derOctetString = (DEROctetString) (new ASN1InputStream(new ByteArrayInputStream(crldpExtension)).readObject());
-			ASN1InputStream asn1InputStream = new ASN1InputStream(derOctetString.getOctets());
+			asn1InputStream = new ASN1InputStream(derOctetString.getOctets());
 			ASN1Sequence seq =  (ASN1Sequence) asn1InputStream.readObject();
+			asn1InputStream.close();
+			
 			for(int i=0; i < seq.size(); i++)
 			{
 				DistributionPoint crldp = new DistributionPoint((ASN1Sequence) seq.getObjectAt(i).toASN1Primitive());
@@ -100,6 +117,17 @@ public class CertificateFieldExtractorServiceImpl implements CertificateFieldExt
 		{
 			log.error("Error reading CRL Distribution point extension.\nDetails:\n" + exc.toString());
 			throw new EngineException(EngineErrorCodes.IO_ERROR, "Error reading CRL Distribution point extension.\nDetails:\n" + exc.toString());
+		}
+		finally 
+		{
+			if (asn1InputStream != null) 
+			{ 	
+				try 
+				{ 
+					asn1InputStream.close(); 
+				} 
+				catch (IOException excIO) {}
+			}
 		}
 	}
 	
