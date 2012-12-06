@@ -277,7 +277,7 @@ public class CertificateServiceTest
 		CertificateValues values = testSupport.generateBaseValues();
 		CertificateInfo certificateInfo = certificateService.generateCertificate(profile, values);
 		
-		testSupport.saveCertificate("bcExtension.cer", certificateInfo.getPemCertificate());
+		//testSupport.saveCertificate("bcExtension.cer", certificateInfo.getPemCertificate());
 		
 		try
 		{
@@ -687,7 +687,7 @@ public class CertificateServiceTest
 		CertificateValues values = testSupport.generateBaseValues();
 		CertificateInfo certificateInfo = certificateService.generateCertificate(profile, values);
 		
-		testSupport.saveCertificate("sdaExtention.cer", certificateInfo.getPemCertificate());
+		//testSupport.saveCertificate("sdaExtention.cer", certificateInfo.getPemCertificate());
 		
 		try
 		{

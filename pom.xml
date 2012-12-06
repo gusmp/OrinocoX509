@@ -1,275 +1,290 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.orinoco</groupId>
-  <artifactId>orinocoX509</artifactId>
-  <version>0.0.1</version>
-  <packaging>jar</packaging>
-  <description>OrinocoX509 is a X509 certificate engine for Java.</description>
-  
-  <organization>
-    <name>GUS technologies</name>
-    <url>http://dhost.info/gusmp</url>
-  </organization>
-  
-  <licenses>
-    <license>
-      <name>Gnu lesser general public license, Version 3</name>
-      <url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
-      <distribution></distribution>
-      <comments></comments>
-  	</license>
-  </licenses>
+	<groupId>org.orinoco</groupId>
+	<artifactId>orinocoX509</artifactId>
+	<version>0.0.1</version>
+	<packaging>jar</packaging>
+	<description>OrinocoX509 is a X509 certificate engine for Java.</description>
 
-  <name>OrinocoX509</name>
-  <url>http://dhost.info/gusmp/dev/orinocoX509/index.html</url>
+	<organization>
+		<name>GUS technologies</name>
+		<url>http://dhost.info/gusmp</url>
+	</organization>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <org.springframework-version>3.1.2.RELEASE</org.springframework-version>
-  </properties>
-  
-  <repositories>
-    <repository>
-      <id>springsource-repo</id>
-      <name>SpringSource Repository</name>
-      <url>http://repo.springsource.org/release</url>
-    </repository>
-    <repository>
-      <id>EclipseLink Repo</id>
-      <url>http://www.eclipse.org/downloads/download.php?r=1&amp;nf=1&amp;file=/rt/eclipselink/maven.repo</url>
-    </repository>
-    <repository>
-      <id>BouncyCastle Repo</id>
-      <url>http://repo2.maven.org/maven2/org/bouncycastle/</url>
-    </repository>
-    <repository>
-      <id>spy</id>
-      <name>Spy Repository</name>
-      <layout>default</layout>
-      <url>http://files.couchbase.com/maven2/</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-  </repositories>
+	<licenses>
+		<license>
+			<name>Gnu lesser general public license, Version 3</name>
+			<url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
+			<distribution></distribution>
+			<comments></comments>
+		</license>
+	</licenses>
 
-  <dependencies>
-    
-	<!-- Bouncy castle -->
-	<dependency>
-	  <groupId>org.bouncycastle</groupId>
-      <artifactId>bcprov-ext-jdk15on</artifactId>
-      <version>1.47</version>
-	</dependency>
-	<dependency>
-      <groupId>org.bouncycastle</groupId>
-      <artifactId>bcmail-jdk15on</artifactId>
-      <version>1.47</version>
-	</dependency>
-	
-    <!--  Lombok -->
-    <dependency> 
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <version>0.11.0</version>
-    </dependency>
-    
-    <!-- Logging -->
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <version>1.6.4</version>
-    </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
-      <version>1.6.4</version>
-    </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>jcl-over-slf4j</artifactId>
-      <version>1.6.4</version>
-   </dependency>
-    <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <version>1.2.16</version>
-    </dependency>
-    
-    <!-- Spring -->
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context</artifactId>
-      <version>${org.springframework-version}</version>
-      <exclusions>
-        <!-- Exclude Commons Logging in favor of SLF4j -->
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
+	<name>OrinocoX509</name>
+	<url>http://dhost.info/gusmp/dev/orinocoX509/index.html</url>
 
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-expression</artifactId>
-      <version>${org.springframework-version}</version>
-    </dependency>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<org.springframework-version>3.1.2.RELEASE</org.springframework-version>
+		<org.bouncycastle-version>1.47</org.bouncycastle-version>
+		<org.projectlombok-version>0.11.0</org.projectlombok-version>
+		<org.slf4j-version>1.6.4</org.slf4j-version>
+		<log4j-version>1.2.16</log4j-version>
+		<cglib-version>2.2.2</cglib-version>
+		<javax.persistence-version>2.0.0</javax.persistence-version>
+		<org.eclipse.persistence-version>2.3.2</org.eclipse.persistence-version>
+		<c3p0-version>0.9.1.2</c3p0-version>
+		<mysql-version>5.1.18</mysql-version>
+		<org.apache.velocity-version>1.7</org.apache.velocity-version>
+		<net.sf.ehcache-version>2.5.2</net.sf.ehcache-version>
+		<spymemcached-version>2.8.1</spymemcached-version>
+		<org.aspectj-version>1.6.12</org.aspectj-version>
+		<junit-version>4.8.2</junit-version>
+		<eracom-version>1.0.0</eracom-version>
+	</properties>
 
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-beans</artifactId>
-      <version>${org.springframework-version}</version>
-    </dependency>
+	<repositories>
+		<repository>
+			<id>springsource-repo</id>
+			<name>SpringSource Repository</name>
+			<url>http://repo.springsource.org/release</url>
+		</repository>
+		<repository>
+			<id>EclipseLink Repo</id>
+			<url>http://www.eclipse.org/downloads/download.php?r=1&amp;nf=1&amp;file=/rt/eclipselink/maven.repo</url>
+		</repository>
+		<repository>
+			<id>BouncyCastle Repo</id>
+			<url>http://repo2.maven.org/maven2/org/bouncycastle/</url>
+		</repository>
+		<repository>
+			<id>spy</id>
+			<name>Spy Repository</name>
+			<layout>default</layout>
+			<url>http://files.couchbase.com/maven2/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-aop</artifactId>
-      <version>${org.springframework-version}</version>
-    </dependency>
+	<dependencies>
 
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-tx</artifactId>
-      <version>${org.springframework-version}</version>
-    </dependency>
+		<!-- Bouncy castle -->
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-ext-jdk15on</artifactId>
+			<version>${org.bouncycastle-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcmail-jdk15on</artifactId>
+			<version>${org.bouncycastle-version}</version>
+		</dependency>
 
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-orm</artifactId>
-      <version>${org.springframework-version}</version>
-    </dependency>
-    
-    <dependency>
-     <groupId>org.springframework</groupId>
-      <artifactId>spring-test</artifactId>
-      <version>${org.springframework-version}</version>
-      <scope>test</scope>
-    </dependency>
-	
-	<!-- @Inject (required by Spring) -->
-    <dependency>
-      <groupId>javax.inject</groupId>
-      <artifactId>javax.inject</artifactId>
-      <version>1</version>
-    </dependency>
-    
-    <!-- Cglib (required by Spring) -->
-    <dependency>
-      <groupId>cglib</groupId>
-      <artifactId>cglib</artifactId>
-      <version>2.2.2</version>
-    </dependency>
-    
-    <!-- JPA provider  -->
-    <dependency> 
-      <groupId>javax.persistence</groupId>
-      <artifactId>javax.persistence</artifactId>
-      <version>2.0.0</version>
-    </dependency>
-    <dependency>
-	  <groupId>org.eclipse.persistence</groupId>
-	  <artifactId>eclipselink</artifactId>
-	  <version>2.3.2</version> 
-    </dependency>
-    
-    <!-- Pool db connections -->
-    <dependency>
-      <groupId>c3p0</groupId>
-      <artifactId>c3p0</artifactId>
-      <version>0.9.1.2</version>
-    </dependency>
-    
-    <!--  Mysql JDBC driver -->
-    <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>5.1.18</version>
-    </dependency>
-    
-    <!-- Velocity -->
-    <dependency>
-	  <groupId>org.apache.velocity</groupId>
-	  <artifactId>velocity</artifactId>
-	  <version>1.7</version>
-    </dependency>
-    
-    <!-- EHcache -->
-    <dependency>
-      <groupId>net.sf.ehcache</groupId>
-      <artifactId>ehcache</artifactId>
-      <version>2.5.2</version>
-      <type>pom</type>
-    </dependency>
-    
-    <!-- MemCached client -->
-    <dependency>
-      <groupId>spy</groupId>
-      <artifactId>spymemcached</artifactId>
-      <version>2.8.1</version>
-    </dependency>
-    
-    <!-- Required for Aspects (AOP) -->
-    <dependency>
-	  <groupId>org.aspectj</groupId>
-	  <artifactId>aspectjrt</artifactId>
-	  <version>1.6.12</version>
-    </dependency>
-    
-    <dependency>
-	  <groupId>org.aspectj</groupId>
-	  <artifactId>aspectjweaver</artifactId>
-	  <version>1.6.12</version>
-    </dependency>
-    
-    <!--  Testing -->
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.8.2</version>
-      <scope>test</scope>
-    </dependency>
-    
-    <!-- Support for HSM Eracom -->
-    <!--
-    <dependency>
-      <groupId>eracom</groupId>
-      <artifactId>jprov</artifactId>
-      <version>1.0.0</version>
-    </dependency>
-    -->
-    
-  </dependencies>
-  
-  <build>
-    <plugins>
-      
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
-        </configuration>
-      </plugin>
-      
-      <!-- Exclude support classes for testing -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.12</version>
-        <configuration>
-          <excludes>
-            <exclude>**/TestConst.java</exclude>
-            <exclude>**/TestSupport.java</exclude>
-          </excludes>
-        </configuration>
-      </plugin>
+		<!-- Lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${org.projectlombok-version}</version>
+		</dependency>
 
-    </plugins>
-  </build>
-  
+		<!-- Logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${org.slf4j-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${org.slf4j-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${org.slf4j-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j-version}</version>
+		</dependency>
+
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${org.springframework-version}</version>
+			<exclusions>
+				<!-- Exclude Commons Logging in favor of SLF4j -->
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-expression</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${org.springframework-version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- @Inject (required by Spring) -->
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>1</version>
+		</dependency>
+
+		<!-- Cglib (required by Spring) -->
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>${cglib-version}</version>
+		</dependency>
+
+		<!-- JPA provider -->
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>javax.persistence</artifactId>
+			<version>${javax.persistence-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.persistence</groupId>
+			<artifactId>eclipselink</artifactId>
+			<version>${org.eclipse.persistence-version}</version>
+		</dependency>
+
+		<!-- Pool db connections -->
+		<dependency>
+			<groupId>c3p0</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>${c3p0-version}</version>
+		</dependency>
+
+		<!-- Mysql JDBC driver -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql-version}</version>
+		</dependency>
+
+		<!-- Velocity -->
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity</artifactId>
+			<version>${org.apache.velocity-version}</version>
+		</dependency>
+
+		<!-- EHcache -->
+		<dependency>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache</artifactId>
+			<version>${net.sf.ehcache-version}</version>
+			<type>pom</type>
+		</dependency>
+
+		<!-- MemCached client -->
+		<dependency>
+			<groupId>spy</groupId>
+			<artifactId>spymemcached</artifactId>
+			<version>${spymemcached-version}</version>
+		</dependency>
+
+		<!-- Required for Aspects (AOP) -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${org.aspectj-version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>${org.aspectj-version}</version>
+		</dependency>
+
+		<!-- Testing -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit-version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Support for HSM Eracom -->
+		<!--
+		<dependency>
+			<groupId>eracom</groupId>
+			<artifactId>jprov</artifactId>
+			<version>${eracom-version}</version>
+		</dependency>
+		-->
+
+	</dependencies>
+
+	<build>
+		<plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+
+			<!-- Exclude support classes for testing -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.12</version>
+				<configuration>
+					<excludes>
+						<exclude>**/TestConst.java</exclude>
+						<exclude>**/TestSupport.java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+
 </project>
