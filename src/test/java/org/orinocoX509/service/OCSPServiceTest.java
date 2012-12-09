@@ -19,10 +19,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import static org.junit.Assert.fail;
 import static org.junit.Assert.assertEquals;
 
-
-
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration
+@ContextConfiguration(locations="../applicationContext-Test.xml")
 public class OCSPServiceTest 
 {
 	@Autowired

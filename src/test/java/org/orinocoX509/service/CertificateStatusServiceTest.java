@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration
+@ContextConfiguration(locations="../applicationContext-Test.xml")
 public class CertificateStatusServiceTest 
 {
 	@Autowired

@@ -41,7 +41,7 @@ import static org.junit.Assert.assertArrayEquals;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration
+@ContextConfiguration(locations="../applicationContext-Test.xml")
 public class CRLServiceTest 
 {
 	@Autowired

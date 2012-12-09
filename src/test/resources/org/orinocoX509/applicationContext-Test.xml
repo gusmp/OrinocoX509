@@ -15,8 +15,8 @@
 		http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
 		">
 
-	<import resource="../applicationContext-dao.xml"/>
-	<import resource="../applicationContext-engine.xml"/>
-	<import resource="../applicationContext-localCache.xml"/>
+	<import resource="applicationContext-dao.xml"/>
+	<import resource="applicationContext-engine.xml"/>
+	<import resource="applicationContext-localCache.xml"/>
 	
 </beans>
