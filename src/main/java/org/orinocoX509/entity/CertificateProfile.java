@@ -64,17 +64,6 @@ public class CertificateProfile implements Serializable
 	}
     }
 
-    /*
-     * @TableGenerator(name="CertificateProfileId",
-     * table="GENERATOR_TABLE",
-     * pkColumnName="SEQUENCE_NAME",
-     * valueColumnName="SEQUENCE_VALUE")
-     * 
-     * @Id
-     * 
-     * @GeneratedValue(strategy=GenerationType.TABLE,generator=
-     * "CertificateProfileId")
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "CertificateProfileIdGenerator")
     @SequenceGenerator(name = "CertificateProfileIdGenerator", sequenceName = "CERTIFICATE_PROFILE_ID_SEQUENCE")

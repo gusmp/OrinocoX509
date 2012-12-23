@@ -35,17 +35,6 @@ public class CertificateStatus
 	E, // 4
     }
 
-    /*
-     * @TableGenerator(name="CertificateStatusId",
-     * table="GENERATOR_TABLE",
-     * pkColumnName="SEQUENCE_NAME",
-     * valueColumnName="SEQUENCE_VALUE")
-     * 
-     * @Id
-     * 
-     * @GeneratedValue(strategy=GenerationType.TABLE,generator="CertificateStatusId"
-     * )
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "CertificateStatusIdGenerator")
     @SequenceGenerator(name = "CertificateStatusIdGenerator", sequenceName = "CERTIFICATE_STATUS_ID_SEQUENCE")
