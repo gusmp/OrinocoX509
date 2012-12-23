@@ -1,11 +1,14 @@
 package org.orinocoX509.service;
 
+import org.orinocoX509.bean.CertificateInfoBean;
+import org.orinocoX509.bean.CertificateValuesBean;
 import org.orinocoX509.entity.CertificateProfile;
-import org.orinocoX509.holder.CertificateInfo;
-import org.orinocoX509.holder.CertificateValues;
+import org.orinocoX509.entity.CertificateProfile.KeySizeValues;
 
-public interface CertificateService 
+public interface CertificateService
 {
-	public CertificateInfo generateCertificate(CertificateProfile certificateProfile, CertificateValues certificateValues);
-	
+    public CertificateInfoBean generateCertificate(CertificateProfile certificateProfile, CertificateValuesBean certificateValues);
+
+    public CertificateInfoBean generateCACertificate(CertificateProfile certificateProfile, CertificateValuesBean certificateValues, KeySizeValues keySize);
+
 }

@@ -8,11 +8,13 @@ import java.util.List;
 import org.orinocoX509.entity.CRLProfile;
 import org.orinocoX509.entity.CertificateStatus.CertificateStatusValues;
 
-
-public interface CRLService 
+public interface CRLService
 {
-	public X509CRL generateCRL(CRLProfile crlProfile);
-	public CertificateStatusValues getStatus(BigInteger serialNumber, List<String> crlDistrubutionPoints);
-	public CertificateStatusValues getStatus(X509Certificate certificate);
-	public CertificateStatusValues getStatus(X509Certificate certificate, List<String> crlDistrubutionPoints);
+    public X509CRL generateCRL(CRLProfile crlProfile);
+
+    public CertificateStatusValues getStatus(BigInteger serialNumber, List<String> crlDistrubutionPoints);
+
+    public CertificateStatusValues getStatus(X509Certificate certificate);
+
+    public CertificateStatusValues getStatus(X509Certificate certificate, List<String> crlDistrubutionPoints);
 }

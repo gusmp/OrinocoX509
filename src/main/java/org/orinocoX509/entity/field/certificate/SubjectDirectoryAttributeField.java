@@ -9,19 +9,22 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name="CER_SUBJECT_DIRECTORY_ATTRIBUTE_FIELD")
-@DiscriminatorValue(value=DiscriminatorValues.SUBJECT_DIRECTORY_ATTRIBUTE)
-@Getter @Setter
-public class SubjectDirectoryAttributeField extends CertificateField 
+@Table(name = "CER_SUBJECT_DIRECTORY_ATTRIBUTE_FIELD")
+@DiscriminatorValue(value = DiscriminatorValues.SUBJECT_DIRECTORY_ATTRIBUTE)
+@Getter
+@Setter
+public class SubjectDirectoryAttributeField extends BaseCertificateField
 {
-	private static final long serialVersionUID = -5141806943290855915L;
-	
-	public SubjectDirectoryAttributeField() {}
-	
-	public SubjectDirectoryAttributeField(CertificateProfile certificateProfile, Boolean critical) 
-	{
-		this.certificateProfile = certificateProfile;
-		this.fieldType = FieldType.SUBJECT_DIRECTORY_ATTRIBUTE;
-		this.critical = critical;
-	}
+    private static final long serialVersionUID = -5141806943290855915L;
+
+    public SubjectDirectoryAttributeField()
+    {
+    }
+
+    public SubjectDirectoryAttributeField(CertificateProfile certificateProfile, Boolean critical)
+    {
+	this.certificateProfile = certificateProfile;
+	this.fieldType = FieldType.SUBJECT_DIRECTORY_ATTRIBUTE;
+	this.critical = critical;
+    }
 }

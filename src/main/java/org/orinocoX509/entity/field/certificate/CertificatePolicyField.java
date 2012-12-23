@@ -11,25 +11,27 @@ import org.orinocoX509.entity.consts.DiscriminatorValues;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Entity
-@Table(name="CER_CERTIFICATE_POLICY_FIELD")
-@DiscriminatorValue(value=DiscriminatorValues.CERTIFICATE_POLICY)
-@Getter @Setter
-public class CertificatePolicyField extends CertificateField 
+@Table(name = "CER_CERTIFICATE_POLICY_FIELD")
+@DiscriminatorValue(value = DiscriminatorValues.CERTIFICATE_POLICY)
+@Getter
+@Setter
+public class CertificatePolicyField extends BaseCertificateField
 {
-	private static final long serialVersionUID = 4086830377044391667L;
-	
-	@Column(name="POLICY_OID")
-	String policyOid;
- 
-	public CertificatePolicyField()  {}
-	
-	public CertificatePolicyField(CertificateProfile certificateProfile, String policyOid, Boolean critical)  
-	{
-		this.certificateProfile = certificateProfile;
-		this.fieldType = FieldType.CERTIFICATE_POLICY;
-		this.critical = critical;
-		this.policyOid = policyOid;
-	}
+    private static final long serialVersionUID = 4086830377044391667L;
+
+    @Column(name = "POLICY_OID")
+    String policyOid;
+
+    public CertificatePolicyField()
+    {
+    }
+
+    public CertificatePolicyField(CertificateProfile certificateProfile, String policyOid, Boolean critical)
+    {
+	this.certificateProfile = certificateProfile;
+	this.fieldType = FieldType.CERTIFICATE_POLICY;
+	this.critical = critical;
+	this.policyOid = policyOid;
+    }
 }

@@ -131,4 +131,12 @@ Get started
 
 %{snippet|id=issue_crl_example|file=src\site\resources\code\get_started.txt}
 
-  In comparison to issuing certificates there is not possibility to send values.   
+  In comparison to issuing certificates there is not possibility to send values.
+  
+* Generate your own root
+
+  Until now, what we have been doing is use another certificate as a root to generate the end user certificates. OrincoX509 let you 
+  create your root certificate and use it without the need to use an external one. First you need to define the profile of the root 
+  certificate as was described before. Once created you only need to call the method <generateCACertificate> instead of <generateCertificate>.  
+  
+%{snippet|id=generate_ca_example|file=src\site\resources\code\get_started.txt}

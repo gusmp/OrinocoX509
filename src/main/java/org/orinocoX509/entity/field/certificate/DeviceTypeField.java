@@ -11,26 +11,28 @@ import lombok.Setter;
 import org.orinocoX509.entity.CertificateProfile;
 import org.orinocoX509.entity.consts.DiscriminatorValues;
 
-
 @Entity
-@Table(name="CER_DEVICE_TYPE_FIELD")
-@DiscriminatorValue(value=DiscriminatorValues.DEVICE_TYPE)
-@Getter @Setter
-public class DeviceTypeField extends CertificateField 
+@Table(name = "CER_DEVICE_TYPE_FIELD")
+@DiscriminatorValue(value = DiscriminatorValues.DEVICE_TYPE)
+@Getter
+@Setter
+public class DeviceTypeField extends BaseCertificateField
 {
-	
-	private static final long serialVersionUID = 952236551092152163L;
-	
-	@Column(name="DEVICE_TYPE")
-	String deviceType;
-	
- 	public DeviceTypeField()  { }
-	
-	public DeviceTypeField(CertificateProfile certificateProfile, String deviceType, Boolean critical) 
-	{
-		this.certificateProfile = certificateProfile;
-		this.fieldType = FieldType.DEVICE_TYPE;
-		this.deviceType = deviceType;
-		this.critical = critical;
-	}
+
+    private static final long serialVersionUID = 952236551092152163L;
+
+    @Column(name = "DEVICE_TYPE")
+    String deviceType;
+
+    public DeviceTypeField()
+    {
+    }
+
+    public DeviceTypeField(CertificateProfile certificateProfile, String deviceType, Boolean critical)
+    {
+	this.certificateProfile = certificateProfile;
+	this.fieldType = FieldType.DEVICE_TYPE;
+	this.deviceType = deviceType;
+	this.critical = critical;
+    }
 }

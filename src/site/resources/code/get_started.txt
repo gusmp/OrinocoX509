@@ -208,3 +208,60 @@ X509CRL crl = crlService.generateCRL(crlProfile);
 
 <!-- END SNIPPET: issue_crl_example -->
 
+
+<!-- START SNIPPET: generate_ca_example -->
+
+CertificateProfile profile = new CertificateProfile("caProfile", "caProfile Description", TestConst.PROFILE_YEARS, TestConst.PROFILE_KEY_SIZE);
+BaseCertificateField subject = new SubjectField(profile, TestConst.ISSUER_PATTERN);
+BaseCertificateField issuer = new IssuerField(profile, TestConst.ISSUER_PATTERN);
+profile.addField(subject);
+profile.addField(issuer);
+
+// Basic constraint
+BaseCertificateField basicConstraint = new BasicConstraintField(profile, true, 0, false);
+profile.addField(basicConstraint);
+
+// Certificate Policy
+BaseCertificateField certificatePolicy = new CertificatePolicyField(profile, TestConst.POLICY_OID, false);
+certificatePolicy.addValue(new CertificatePolicyFieldValue(CertificatePolicyType.CPS, TestConst.CPS));
+certificatePolicy.addValue(new CertificatePolicyFieldValue(CertificatePolicyType.USER_NOTICE, TestConst.USER_NOTICE));
+profile.addField(certificatePolicy);
+
+// CRL Distribution Point
+BaseCertificateField crlDistributionPoint = new CRLDistributionPointField(profile, false);
+crlDistributionPoint.addValue(new CRLDistributionPointFieldValue(Arrays.asList(TestConst.CRLDP1_URL1, TestConst.CRLDP1_URL2)));
+crlDistributionPoint.addValue(new CRLDistributionPointFieldValue(Arrays.asList(TestConst.CRLDP2_URL1, TestConst.CRLDP2_URL2)));
+profile.addField(crlDistributionPoint);
+
+// Issuer Alternative Name
+BaseCertificateField issuerAlternativeName = new IssuerAlternativeNameField(profile, false);
+issuerAlternativeName.addValue(new IssuerAlternativeNameFieldValue(AlternativeNameType.RFC822NAME, TestConst.IAN_RFC822NAME_VALUE));
+profile.addField(issuerAlternativeName);
+
+// Key Usage
+BaseCertificateField keyUsageField = new KeyUsageField(profile, true);
+keyUsageField.addValue(new KeyUsageFieldValue(KeyUsageType.KEY_CERT_SIGN));
+keyUsageField.addValue(new KeyUsageFieldValue(KeyUsageType.CRL_SIGN));
+profile.addField(keyUsageField);
+
+// Subject alternative Name
+BaseCertificateField subjectAlternativeName = new SubjectAlternativeNameField(profile, false);
+subjectAlternativeName.addValue(new SubjectAlternativeNameFieldValue(AlternativeNameType.RFC822NAME));
+profile.addField(subjectAlternativeName);
+
+// Subject Key Identifier
+BaseCertificateField subjectKeyIdentifier = new SubjectKeyIdentifierField(profile, false);
+profile.addField(subjectKeyIdentifier);
+
+// Values
+CertificateValuesBean values = new CertificateValuesBean();
+
+Map<String, String> subjectAltNameValues = new HashMap<String, String>(2);
+subjectAltNameValues.put("RFC822NAME", "mail@cadomain.com");
+values.getValues().put(FieldType.SUBJECT_ALTERNATIVE_NAME, subjectAltNameValues);
+
+// Generate certificate
+// In this case a key pair will be created. That is why the key size is required when creating the root certificate
+CertificateInfoBean certificateInfo = engine.generateCACertificate(profile, values, KeySizeValues.SIZE_1024);
+
+<!-- END SNIPPET: generate_ca_example -->

@@ -10,35 +10,35 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
-public class VelocitySupport 
+public class VelocitySupport
 {
-	private VelocityEngine velocityEngine;
-	
-	private static final Logger log = LoggerFactory.getLogger(VelocitySupport.class);
-	
-	public VelocitySupport()
+    private VelocityEngine velocityEngine;
+
+    private static final Logger log = LoggerFactory.getLogger(VelocitySupport.class);
+
+    public VelocitySupport()
+    {
+	this.velocityEngine = new VelocityEngine();
+	velocityEngine.init();
+    }
+
+    public String applyTemplate(String template, Map<String, String> templateValues, String logDescription)
+    {
+	if (templateValues == null)
 	{
-		this.velocityEngine = new VelocityEngine();
-		velocityEngine.init();
+	    log.debug("No values for template " + template + "were given. No change was done");
+	    return (template);
 	}
-	
-	public String applyTemplate(String template, Map<String,String> templateValues,String logDescription)
+
+	VelocityContext context = new VelocityContext();
+	for (Entry<String, String> entry : templateValues.entrySet())
 	{
-		if (templateValues == null)
-		{
-			log.debug("No values for template " + template + "were given. No change was done");
-			return(template);
-		}
-		
-		VelocityContext context = new VelocityContext();
-		for(Entry<String, String> entry : templateValues.entrySet())
-		{
-			context.put(entry.getKey(), entry.getValue());
-		}
-		
-		StringWriter outputParser = new StringWriter();
-		velocityEngine.evaluate(context, outputParser, logDescription, template);
-		log.debug("Result for template " + template + " was " + outputParser.toString());
-		return(outputParser.toString());
+	    context.put(entry.getKey(), entry.getValue());
 	}
+
+	StringWriter outputParser = new StringWriter();
+	velocityEngine.evaluate(context, outputParser, logDescription, template);
+	log.debug("Result for template " + template + " was " + outputParser.toString());
+	return (outputParser.toString());
+    }
 }

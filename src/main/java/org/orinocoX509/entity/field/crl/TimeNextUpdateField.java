@@ -10,23 +10,25 @@ import lombok.Setter;
 import org.orinocoX509.entity.CRLProfile;
 import org.orinocoX509.entity.consts.CRLDiscriminatorValues;
 
-
 @Entity
-@Table(name="CRL_TIME_NEXT_UPDATE_FIELD")
-@DiscriminatorValue(value=CRLDiscriminatorValues.TIME_NEXT_UPDATE)
-@Getter @Setter
-public class TimeNextUpdateField extends CRLField implements Serializable
+@Table(name = "CRL_TIME_NEXT_UPDATE_FIELD")
+@DiscriminatorValue(value = CRLDiscriminatorValues.TIME_NEXT_UPDATE)
+@Getter
+@Setter
+public class TimeNextUpdateField extends BaseCRLField implements Serializable
 {
-	private static final long serialVersionUID = -7656094660850572586L;
-	
-	private Integer daysNextUpdate;
-	
-	public TimeNextUpdateField() {}
-	
-	public TimeNextUpdateField(CRLProfile crlProfile, Integer daysNextUpdate)
-	{
-		this.crlFieldType = CRLFieldType.TIME_NEXT_UPDATE;
-		this.crlProfile = crlProfile;
-		this.daysNextUpdate = daysNextUpdate;
-	}
+    private static final long serialVersionUID = -7656094660850572586L;
+
+    private Integer daysNextUpdate;
+
+    public TimeNextUpdateField()
+    {
+    }
+
+    public TimeNextUpdateField(CRLProfile crlProfile, Integer daysNextUpdate)
+    {
+	this.crlFieldType = CRLFieldType.TIME_NEXT_UPDATE;
+	this.crlProfile = crlProfile;
+	this.daysNextUpdate = daysNextUpdate;
+    }
 }

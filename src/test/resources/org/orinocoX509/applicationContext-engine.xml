@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:aop="http://www.springframework.org/schema/aop"
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
@@ -14,14 +12,13 @@
 		http://www.springframework.org/schema/aop 
 		http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
 		">
-	
+
 	<!-- Scan annotations -->
 	<context:component-scan base-package="org.orinocoX509" />
-	
+
 	<!-- This beans are an example about configuring and HSM (Eracom Protect Host) -->
 	<!--
 	<bean id="eracomProvider" class="au.com.eracom.crypto.provider.ERACOMProvider" />
- 
 	<bean class="org.orinocoX509.service.impl.hsm.CAKeyServiceGenericHSM">
 		<constructor-arg name="provider" ref="eracomProvider" />
 		<constructor-arg name="keyStoreType" value="CRYPTOKI" />
@@ -32,11 +29,12 @@
 		<constructor-arg name="caCertificateAlias" value="cer_idcatgt" />
 	</bean>
 	-->
-	
-	<!-- Use this bean if your CA is based on software  -->
+
+	<!-- Use this bean if your CA is based on software -->
 	<!-- -->
 	<bean class="org.orinocoX509.service.impl.sw.CAKeyServiceSwImpl">
-		<constructor-arg name="keyStorePath" value="./src/test/resources/testCA.p12" />
+		<constructor-arg name="keyStorePath"
+			value="./src/test/resources/testCA.p12" />
 		<constructor-arg name="keyStoreType" value="PKCS12" />
 		<constructor-arg name="keyStorePin" value="1234" />
 		<constructor-arg name="privateKeyAlias" value="testca" />
@@ -44,5 +42,5 @@
 		<constructor-arg name="caCertificateAlias" value="testca" />
 	</bean>
 	<!-- -->
-	
+
 </beans>

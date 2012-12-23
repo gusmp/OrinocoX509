@@ -22,80 +22,86 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class CRLProfileServiceImpl implements CRLProfileService 
+public class CRLProfileServiceImpl implements CRLProfileService
 {
-	@Autowired
-	CRLProfileRepository crlProfileRepository;
-	
-	private static final Logger log = LoggerFactory.getLogger(CRLProfileServiceImpl.class);
+    @Autowired
+    CRLProfileRepository crlProfileRepository;
 
-	@CacheEvict(value="crlProfile", key="#crlProfile.profileId")
-	@Transactional(readOnly = false)
-	public CRLProfile saveProfile(CRLProfile crlProfile)
-	{
-		log.debug("Save CRL profile " + crlProfile.toString());
-		return(crlProfileRepository.saveProfile(crlProfile));
-	}
+    private static final Logger log = LoggerFactory.getLogger(CRLProfileServiceImpl.class);
 
-	@CacheEvict(value="crlProfile", key="#crlProfile.profileId")
-	@Transactional(readOnly = false)
-	public void deleteProfile(CRLProfile crlProfile) 
-	{
-		log.debug("Delete CRL profile " + crlProfile.toString());
-		crlProfileRepository.deleteProfile(crlProfile);
-	}
+    @Override
+    @CacheEvict(value = "crlProfile", key = "#crlProfile.profileId")
+    @Transactional(readOnly = false)
+    public CRLProfile saveProfile(CRLProfile crlProfile)
+    {
+	log.debug("Save CRL profile " + crlProfile.toString());
+	return (crlProfileRepository.saveProfile(crlProfile));
+    }
 
-	@Cacheable(value="crlProfile", key="#crlProfile.profileId")
-	@Transactional(readOnly = true)
-	public CRLProfile getProfile(CRLProfile crlProfile) 
+    @Override
+    @CacheEvict(value = "crlProfile", key = "#crlProfile.profileId")
+    @Transactional(readOnly = false)
+    public void deleteProfile(CRLProfile crlProfile)
+    {
+	log.debug("Delete CRL profile " + crlProfile.toString());
+	crlProfileRepository.deleteProfile(crlProfile);
+    }
+
+    @Override
+    @Cacheable(value = "crlProfile", key = "#crlProfile.profileId")
+    @Transactional(readOnly = true)
+    public CRLProfile getProfile(CRLProfile crlProfile)
+    {
+	log.debug("Get CRL profile " + crlProfile.getProfileId());
+	return (crlProfileRepository.getProfile(crlProfile));
+    }
+
+    @Override
+    public void validateProfile(CRLProfile crlProfile) throws EngineException
+    {
+	TimeNextUpdateField timeNextUpdateField = (TimeNextUpdateField) crlProfile.getField(CRLFieldType.TIME_NEXT_UPDATE);
+	if (timeNextUpdateField != null)
 	{
-		log.debug("Get CRL profile " + crlProfile.getProfileId());
-		return(crlProfileRepository.getProfile(crlProfile));
-	}
-	
-	public void validateProfile(CRLProfile crlProfile) throws EngineException
-	{
-		TimeNextUpdateField timeNextUpdateField = (TimeNextUpdateField)crlProfile.getField(CRLFieldType.TIME_NEXT_UPDATE);
-		if (timeNextUpdateField != null)
-		{
-			if (timeNextUpdateField.getDaysNextUpdate() < 1)
-			{
-				throw new EngineException(EngineErrorCodes.PROFILE_MALFORMED, "The time for the next update must be greater than 0");
-			}
-		}
-		
-		AuthorityKeyIdentifierCRLField authorityKeyIdentifier =  (AuthorityKeyIdentifierCRLField) crlProfile.getField(CRLFieldType.AUTHORITY_KEY_IDENTIFIER);
-		if (authorityKeyIdentifier != null)
-		{
-			if ((authorityKeyIdentifier.getAuthorityKeyIdentifier() == false) && (authorityKeyIdentifier.getAuthorityIssuerSerialNumberCertificate() == false))
-			{
-				throw new EngineException(EngineErrorCodes.PROFILE_MALFORMED, "To add the authority key identifier extension, key identifier or issuer and serial number must be true");
-			}
-		}
-		
-		IssuingDistributionPointField crlDistributionPointField = (IssuingDistributionPointField) crlProfile.getField(CRLFieldType.ISSUING_DISTRIBUTION_POINT);
-		if (crlDistributionPointField != null)
-		{
-			if (crlDistributionPointField.getValues().size() == 0)
-			{
-				throw new EngineException(EngineErrorCodes.PROFILE_MALFORMED, "CRL distributions points extension requires a value, but in the profile there is not");
-			}
-		}
-	}
-	
-	@Transactional(readOnly = true)
-	public CRLProfile updateCrlNumber(CRLProfile crlProfile)
-	{
-		CRLNumberField crlNumberField = (CRLNumberField) crlProfile.getField(CRLFieldType.CRL_NUMBER);
-		crlNumberField.setCrlNumber(crlNumberField.getCrlNumber().add(BigInteger.ONE));
-		crlProfileRepository.saveProfile(crlProfile);
-		return(crlProfile);
+	    if (timeNextUpdateField.getDaysNextUpdate() < 1)
+	    {
+		throw new EngineException(EngineErrorCodes.PROFILE_MALFORMED, "The time for the next update must be greater than 0");
+	    }
 	}
 
-	@Transactional(readOnly = true)
-	public List<CRLProfile> getProfiles() 
+	AuthorityKeyIdentifierCRLField authorityKeyIdentifier = (AuthorityKeyIdentifierCRLField) crlProfile.getField(CRLFieldType.AUTHORITY_KEY_IDENTIFIER);
+	if (authorityKeyIdentifier != null)
 	{
-		return(crlProfileRepository.getProfiles());
+	    if ((authorityKeyIdentifier.getAuthorityKeyIdentifier() == false) && (authorityKeyIdentifier.getAuthorityIssuerSerialNumberCertificate() == false))
+	    {
+		throw new EngineException(EngineErrorCodes.PROFILE_MALFORMED, "To add the authority key identifier extension, key identifier or issuer and serial number must be true");
+	    }
 	}
-	
+
+	IssuingDistributionPointField crlDistributionPointField = (IssuingDistributionPointField) crlProfile.getField(CRLFieldType.ISSUING_DISTRIBUTION_POINT);
+	if (crlDistributionPointField != null)
+	{
+	    if (crlDistributionPointField.getValues().size() == 0)
+	    {
+		throw new EngineException(EngineErrorCodes.PROFILE_MALFORMED, "CRL distributions points extension requires a value, but in the profile there is not");
+	    }
+	}
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public CRLProfile updateCrlNumber(CRLProfile crlProfile)
+    {
+	CRLNumberField crlNumberField = (CRLNumberField) crlProfile.getField(CRLFieldType.CRL_NUMBER);
+	crlNumberField.setCrlNumber(crlNumberField.getCrlNumber().add(BigInteger.ONE));
+	crlProfileRepository.saveProfile(crlProfile);
+	return (crlProfile);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<CRLProfile> getProfiles()
+    {
+	return (crlProfileRepository.getProfiles());
+    }
+
 }

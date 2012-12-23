@@ -1,10 +1,12 @@
 /.settings/*
 /target/*
+/db
 /ext/*
 /.checkstyle
 /.classpath
 /.project
 /tdd.txt
+/*.log
 
 
 

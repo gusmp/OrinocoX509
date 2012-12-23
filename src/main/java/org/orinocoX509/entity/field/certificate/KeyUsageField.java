@@ -7,21 +7,22 @@ import javax.persistence.Table;
 import org.orinocoX509.entity.CertificateProfile;
 import org.orinocoX509.entity.consts.DiscriminatorValues;
 
-
 @Entity
-@Table(name="CER_KEY_USAGE_FIELD")
-@DiscriminatorValue(value=DiscriminatorValues.KEY_USAGE)
-public class KeyUsageField extends CertificateField 
+@Table(name = "CER_KEY_USAGE_FIELD")
+@DiscriminatorValue(value = DiscriminatorValues.KEY_USAGE)
+public class KeyUsageField extends BaseCertificateField
 {
- 	
-	private static final long serialVersionUID = 4169501820865199294L;
 
-	public KeyUsageField()  { }
-	
-	public KeyUsageField(CertificateProfile certificateProfile, Boolean critical) 
-	{
-		this.certificateProfile = certificateProfile;
-		this.fieldType = FieldType.KEY_USAGE;
-		this.critical = critical;
-	}
+    private static final long serialVersionUID = 4169501820865199294L;
+
+    public KeyUsageField()
+    {
+    }
+
+    public KeyUsageField(CertificateProfile certificateProfile, Boolean critical)
+    {
+	this.certificateProfile = certificateProfile;
+	this.fieldType = FieldType.KEY_USAGE;
+	this.critical = critical;
+    }
 }
