@@ -210,8 +210,10 @@ public class CertificateServiceTest
 
 	    ad = AccessDescription.getInstance((ASN1Sequence) seq.getObjectAt(1).toASN1Primitive());
 	    gn = ad.getAccessLocation();
+	    asn1is.close();
 	    // System.out.println("Access Method: " + ad.getAccessMethod());
 	    assertEquals(TestConst.AIA_OCSP_URL, gn.getName().toString());
+	    
 	}
 	catch (Exception exc)
 	{
@@ -339,6 +341,8 @@ public class CertificateServiceTest
 		    }
 		}
 	    }
+	    
+	    asn1is.close();
 	}
 	catch (Exception exc)
 	{
@@ -398,6 +402,8 @@ public class CertificateServiceTest
 		}
 		gns.getNames()[1].getName().toString();
 	    }
+	    
+	    asn1is.close();
 	}
 	catch (Exception exc)
 	{

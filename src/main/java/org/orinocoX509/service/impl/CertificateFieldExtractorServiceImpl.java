@@ -40,7 +40,9 @@ public class CertificateFieldExtractorServiceImpl implements CertificateFieldExt
 
 	try
 	{
-	    DEROctetString derObjectString = (DEROctetString) (new ASN1InputStream(new ByteArrayInputStream(aiaExtensionDER)).readObject());
+	    ASN1InputStream aiaExtensionSeq = new ASN1InputStream(new ByteArrayInputStream(aiaExtensionDER));
+	    DEROctetString derObjectString = (DEROctetString) aiaExtensionSeq.readObject();
+	    aiaExtensionSeq.close();
 	    asn1InputStream = new ASN1InputStream(derObjectString.getOctets());
 	    ASN1Sequence asn1Sequence = (ASN1Sequence) asn1InputStream.readObject();
 	    asn1InputStream.close();
@@ -98,7 +100,9 @@ public class CertificateFieldExtractorServiceImpl implements CertificateFieldExt
 
 	try
 	{
-	    DEROctetString derOctetString = (DEROctetString) (new ASN1InputStream(new ByteArrayInputStream(crldpExtension)).readObject());
+	    ASN1InputStream crldpExtensionSeq = new ASN1InputStream(new ByteArrayInputStream(crldpExtension));
+	    DEROctetString derOctetString = (DEROctetString) crldpExtensionSeq.readObject();
+	    crldpExtensionSeq.close();
 	    asn1InputStream = new ASN1InputStream(derOctetString.getOctets());
 	    ASN1Sequence seq = (ASN1Sequence) asn1InputStream.readObject();
 	    asn1InputStream.close();

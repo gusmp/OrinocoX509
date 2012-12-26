@@ -177,6 +177,8 @@ public class CRLServiceTest
 	    GeneralNames generalNames = (GeneralNames) issuingDistributionPt.getDistributionPoint().getName();
 	    assertEquals(TestConst.CRLDP1_URL1, generalNames.getNames()[0].getName().toString());
 	    assertEquals(TestConst.CRLDP1_URL2, generalNames.getNames()[1].getName().toString());
+	    
+	    asn1is.close();
 	}
 	catch (Exception exc)
 	{
@@ -258,11 +260,13 @@ public class CRLServiceTest
 	    // saveCRL("crl_step2.crl", crl2);
 	    crlNumberASN1 = crl2.getExtensionValue(X509Extension.cRLNumber.toString());
 	    derOStr = (DEROctetString) new ASN1InputStream(new ByteArrayInputStream(crlNumberASN1)).readObject();
+	    asn1is.close();
 	    asn1is = new ASN1InputStream(derOStr.getOctets());
 
 	    BigInteger crlNumber2 = new BigInteger(asn1is.readObject().toString());
 	    // System.out.println("CRL Number 2: " + crlNumber2);
 
+	    asn1is.close();
 	    assertEquals(crlNumber1.intValue() + 1, crlNumber2.intValue());
 	}
 	catch (Exception exc)

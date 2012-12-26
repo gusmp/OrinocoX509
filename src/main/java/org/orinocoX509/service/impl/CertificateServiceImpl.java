@@ -131,7 +131,10 @@ public class CertificateServiceImpl implements CertificateService
 	    certificateProfileService.validateProfile(certificateProfile, certificateValues);
 
 	    PublicKey publicKey = pkcs10Util.getPublicKey(certificateValues.getRequest());
-	    SubjectPublicKeyInfo publicKeyInfo = new SubjectPublicKeyInfo((ASN1Sequence) new ASN1InputStream(new ByteArrayInputStream(validatePublicKey(publicKey, certificateProfile.getKeySize().getValue()))).readObject());
+
+	    ASN1InputStream publicKeyAsn1Seq = new ASN1InputStream(new ByteArrayInputStream(validatePublicKey(publicKey, certificateProfile.getKeySize().getValue())));
+	    SubjectPublicKeyInfo publicKeyInfo = new SubjectPublicKeyInfo((ASN1Sequence) publicKeyAsn1Seq.readObject());
+	    publicKeyAsn1Seq.close();
 
 	    X509v3CertificateBuilder certificateGenerator = new X509v3CertificateBuilder(new X500Name(getIssuer(certificateProfile)), getSerialNumber(), getNotBefore(certificateProfile, certificateValues), getNotAfter(certificateProfile, certificateValues), new X500Name(getSubject(certificateProfile, certificateValues)), publicKeyInfo);
 

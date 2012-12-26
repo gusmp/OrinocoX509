@@ -27,6 +27,5 @@
 
 	<import resource="applicationContext-dao.xml" />
 	<import resource="applicationContext-engine.xml" />
-	<import resource="applicationContext-localCache.xml" />
 
 </beans>

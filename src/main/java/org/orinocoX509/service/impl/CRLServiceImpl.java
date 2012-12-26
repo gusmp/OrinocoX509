@@ -138,6 +138,14 @@ public class CRLServiceImpl implements CRLService
 
 	return (crlGenerator);
     }
+    
+    private SubjectPublicKeyInfo getSubjectPublicKeyInfo() throws IOException
+    {
+	ASN1InputStream subjectPublicKeyInfoAsn1 = new ASN1InputStream(new ByteArrayInputStream(CAKeyService.getCAPublicKey().getEncoded()));
+	SubjectPublicKeyInfo subjectPublicKeyInfo = new SubjectPublicKeyInfo((ASN1Sequence)subjectPublicKeyInfoAsn1.readObject());
+	subjectPublicKeyInfoAsn1.close();
+	return subjectPublicKeyInfo;
+    }
 
     private X509v2CRLBuilder addAuthorityKeyIdentifier(X509v2CRLBuilder crlGenerator, BaseCRLField authorityKeyIdentifierField) throws IOException
     {
@@ -148,16 +156,12 @@ public class CRLServiceImpl implements CRLService
 
 	    if ((akiField.getAuthorityKeyIdentifier() == true) && (akiField.getAuthorityIssuerSerialNumberCertificate() == true))
 	    {
-		SubjectPublicKeyInfo subjectPublicKeyInfo = new SubjectPublicKeyInfo((ASN1Sequence) new ASN1InputStream(new ByteArrayInputStream(CAKeyService.getCAPublicKey().getEncoded())).readObject());
 		GeneralName genName = new GeneralName(new X500Name(CAKeyService.getCACertificate().getIssuerDN().getName()));
-
-		authorityKeyId = new AuthorityKeyIdentifier(subjectPublicKeyInfo, new GeneralNames(genName), CAKeyService.getCACertificate().getSerialNumber());
+		authorityKeyId = new AuthorityKeyIdentifier(getSubjectPublicKeyInfo(), new GeneralNames(genName), CAKeyService.getCACertificate().getSerialNumber());
 	    }
 	    else if (akiField.getAuthorityKeyIdentifier() == true)
 	    {
-		SubjectPublicKeyInfo subjectPublicKeyInfo = new SubjectPublicKeyInfo((ASN1Sequence) new ASN1InputStream(new ByteArrayInputStream(CAKeyService.getCAPublicKey().getEncoded())).readObject());
-
-		authorityKeyId = new AuthorityKeyIdentifier(subjectPublicKeyInfo);
+		authorityKeyId = new AuthorityKeyIdentifier(getSubjectPublicKeyInfo());
 	    }
 	    else if (akiField.getAuthorityIssuerSerialNumberCertificate() == true)
 	    {
