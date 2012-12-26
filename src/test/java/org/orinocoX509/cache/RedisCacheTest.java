@@ -29,7 +29,21 @@ public class RedisCacheTest extends BaseDistributedCacheTest
     public void testCRLCache()
     {
 	// No supported by Redis
-	// RedisTemplate cannot serialize the object sun.security.x509.X509CRLImpl using default Serializer (JdkSerializationRedisSerializer)
+	// RedisTemplate cannot serialize the object
+	// sun.security.x509.X509CRLImpl using default Serializer
+	// (JdkSerializationRedisSerializer)
+    }
+
+    @Override
+    @Test
+    public void testCertificateProfileCache()
+    {
+    }
+
+    @Override
+    @Test
+    public void testCRLProfileCache()
+    {
     }
 
 }

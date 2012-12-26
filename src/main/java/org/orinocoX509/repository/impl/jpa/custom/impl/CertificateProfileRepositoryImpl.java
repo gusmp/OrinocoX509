@@ -30,7 +30,7 @@ public class CertificateProfileRepositoryImpl implements CertificateProfileRepos
 	    if (getProfile(certificateProfile.getProfileName()) != null)
 	    {
 		log.debug("The profile " + certificateProfile.toString() + " already exists");
-		throw new EngineException(EngineErrorCodes.DUPLICATE_PROFILE, "The profile " + certificateProfile.toString() + " alreday exists");
+		throw new EngineException(EngineErrorCodes.DUPLICATE_PROFILE, "The profile " + certificateProfile.toString() + " already exists");
 	    }
 
 	    log.debug("Save profile: " + certificateProfile.toString());

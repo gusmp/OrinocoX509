@@ -22,8 +22,8 @@ public class CacheableCRLMemcachedAspect
     @Autowired
     private MemcachedClient memcachedClient;
 
-    private final String CRL_LABEL = "orinocoX509_crl";
-    private final int RECOVERY_TIMEOUT = 2;
+    private static final String CRL_LABEL = "orinocoX509_crl";
+    private static final int RECOVERY_TIMEOUT = 2;
 
     private static final Logger log = LoggerFactory.getLogger(CacheableCRLMemcachedAspect.class);
 

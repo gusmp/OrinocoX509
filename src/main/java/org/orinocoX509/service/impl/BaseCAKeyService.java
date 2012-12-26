@@ -8,6 +8,9 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.cert.X509Certificate;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import org.orinocoX509.entity.CertificateProfile.KeySizeValues;
 import org.orinocoX509.exception.EngineException;
 import org.orinocoX509.exception.EngineException.EngineErrorCodes;
@@ -15,15 +18,17 @@ import org.orinocoX509.service.CAKeyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Getter
+@Setter
 public abstract class BaseCAKeyService implements CAKeyService
 {
-    protected String KEYSTORE_TYPE;
-    protected String KEYSTORE_PROVIDER;
-    protected String KEYSTORE_PIN;
-    protected String PRIVATE_KEY_ALIAS;
-    protected String PUBLIC_KEY_ALIAS;
-    protected String CA_CERTIFICATE_ALIAS;
-    
+    private String keyStoreType;
+    private String keyStoreProvider;
+    private String keyStorePin;
+    private String privateKeyAlias;
+    private String publicKeyAlias;
+    private String caCertificateAlias;
+
     private static final Logger log = LoggerFactory.getLogger(BaseCAKeyService.class);
 
     protected enum CRYPO_OBJECT
@@ -31,31 +36,33 @@ public abstract class BaseCAKeyService implements CAKeyService
 	CERTIFICATE, PRIVATE_KEY, PUBLIC_KEY
     };
 
+    
     @Override
     public String getProvider()
     {
-	return (this.KEYSTORE_PROVIDER);
+	return (keyStoreProvider);
     }
+
 
     @Override
     public PrivateKey getCAPrivateKey()
     {
-	return ((PrivateKey) getData(PRIVATE_KEY_ALIAS, CRYPO_OBJECT.PRIVATE_KEY));
+	return ((PrivateKey) getData(getPrivateKeyAlias(), CRYPO_OBJECT.PRIVATE_KEY));
     }
 
     @Override
     public PublicKey getCAPublicKey()
     {
-	return ((PublicKey) getData(PUBLIC_KEY_ALIAS, CRYPO_OBJECT.PUBLIC_KEY));
+	return ((PublicKey) getData(getPublicKeyAlias(), CRYPO_OBJECT.PUBLIC_KEY));
     }
 
     @Override
     public X509Certificate getCACertificate()
     {
-	return ((X509Certificate) getData(CA_CERTIFICATE_ALIAS, CRYPO_OBJECT.CERTIFICATE));
+	return ((X509Certificate) getData(getCaCertificateAlias(), CRYPO_OBJECT.CERTIFICATE));
     }
 
-    abstract protected Object getData(String alias, CRYPO_OBJECT objectType);
+    protected abstract Object getData(String alias, CRYPO_OBJECT objectType);
 
     @Override
     public KeyPair generateKeyPair(KeySizeValues keySize)
@@ -63,7 +70,7 @@ public abstract class BaseCAKeyService implements CAKeyService
 	KeyPair keyPair = null;
 	try
 	{
-	    KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA", KEYSTORE_PROVIDER);
+	    KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA", getKeyStoreProvider());
 	    keyPairGenerator.initialize(keySize.getValue());
 	    keyPair = keyPairGenerator.generateKeyPair();
 	}

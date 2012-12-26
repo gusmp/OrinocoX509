@@ -32,23 +32,23 @@ public final class CAKeyServiceGenericHSM extends BaseCAKeyService
     {
 	super();
 	Security.addProvider(provider);
-	this.KEYSTORE_TYPE = keyStoreType;
-	this.KEYSTORE_PROVIDER = keyStoreProvider;
-	this.KEYSTORE_PIN = keyStorePin;
-	this.PRIVATE_KEY_ALIAS = privateKeyAlias;
-	this.PUBLIC_KEY_ALIAS = publicKeyAlias;
-	this.CA_CERTIFICATE_ALIAS = caCertificateAlias;
+	setKeyStoreType(keyStoreType);
+	setKeyStoreProvider(keyStoreProvider);
+	setKeyStorePin(keyStorePin);
+	setPrivateKeyAlias(privateKeyAlias);
+	setPublicKeyAlias(publicKeyAlias);
+	setCaCertificateAlias(caCertificateAlias);
 
 	// load key store
 	try
 	{
-	    store = KeyStore.getInstance(KEYSTORE_TYPE, KEYSTORE_PROVIDER);
+	    store = KeyStore.getInstance(getKeyStoreType(), getKeyStoreProvider());
 	    store.load(null, null);
 	}
 	catch (NoSuchProviderException exc)
 	{
-	    log.error("The cryptographic provider " + KEYSTORE_PROVIDER + " does not exists." + exc.getMessage());
-	    throw new EngineException(EngineErrorCodes.UNKNOWN_CRYPTOGRAPHIC_PROVIDER, "The cryptographic provider " + KEYSTORE_PROVIDER + " does not exists." + exc.getMessage());
+	    log.error("The cryptographic provider " + getKeyStoreProvider() + " does not exists." + exc.getMessage());
+	    throw new EngineException(EngineErrorCodes.UNKNOWN_CRYPTOGRAPHIC_PROVIDER, "The cryptographic provider " + getKeyStoreProvider() + " does not exists." + exc.getMessage());
 	}
 	catch (CertificateException exc)
 	{
@@ -62,8 +62,8 @@ public final class CAKeyServiceGenericHSM extends BaseCAKeyService
 	}
 	catch (KeyStoreException exc)
 	{
-	    log.error("The key store type " + KEYSTORE_TYPE + " is not known." + exc.getMessage());
-	    throw new EngineException(EngineErrorCodes.UNKNOWN_KEYSTORE_TYPE, "The key store type " + KEYSTORE_TYPE + " is not known." + exc.getMessage());
+	    log.error("The key store type " + getKeyStoreType() + " is not known." + exc.getMessage());
+	    throw new EngineException(EngineErrorCodes.UNKNOWN_KEYSTORE_TYPE, "The key store type " + getKeyStoreType() + " is not known." + exc.getMessage());
 	}
 	catch (NoSuchAlgorithmException exc)
 	{
@@ -79,15 +79,15 @@ public final class CAKeyServiceGenericHSM extends BaseCAKeyService
 	{
 	    if (objectType == CRYPO_OBJECT.PRIVATE_KEY)
 	    {
-		return ((PrivateKey) store.getKey(PRIVATE_KEY_ALIAS, KEYSTORE_PIN.toCharArray()));
+		return ((PrivateKey) store.getKey(getPrivateKeyAlias(), getKeyStorePin().toCharArray()));
 	    }
 	    else if (objectType == CRYPO_OBJECT.CERTIFICATE)
 	    {
-		return ((X509Certificate) store.getCertificate(CA_CERTIFICATE_ALIAS));
+		return ((X509Certificate) store.getCertificate(getCaCertificateAlias()));
 	    }
 	    else if (objectType == CRYPO_OBJECT.PUBLIC_KEY)
 	    {
-		return ((PublicKey) store.getKey(PUBLIC_KEY_ALIAS, null));
+		return ((PublicKey) store.getKey(getPublicKeyAlias(), null));
 	    }
 	    else
 	    {
@@ -97,8 +97,8 @@ public final class CAKeyServiceGenericHSM extends BaseCAKeyService
 	}
 	catch (KeyStoreException exc)
 	{
-	    log.error("The key store type " + KEYSTORE_TYPE + " is not known." + exc.getMessage());
-	    throw new EngineException(EngineErrorCodes.UNKNOWN_KEYSTORE_TYPE, "The key store type " + KEYSTORE_TYPE + " is not known." + exc.getMessage());
+	    log.error("The key store type " + getKeyStoreType() + " is not known." + exc.getMessage());
+	    throw new EngineException(EngineErrorCodes.UNKNOWN_KEYSTORE_TYPE, "The key store type " + getKeyStoreType() + " is not known." + exc.getMessage());
 	}
 	catch (UnrecoverableKeyException exc)
 	{
@@ -119,8 +119,8 @@ public final class CAKeyServiceGenericHSM extends BaseCAKeyService
 	{
 	    Certificate certificateChain[] = new Certificate[1];
 	    Arrays.asList(certificate).toArray(certificateChain);
-	    store.setKeyEntry(PRIVATE_KEY_ALIAS, keyPair.getPrivate(), KEYSTORE_PIN.toCharArray(), certificateChain);
-	    store.setCertificateEntry(CA_CERTIFICATE_ALIAS, certificate);
+	    store.setKeyEntry(getPrivateKeyAlias(), keyPair.getPrivate(), getKeyStorePin().toCharArray(), certificateChain);
+	    store.setCertificateEntry(getCaCertificateAlias(), certificate);
 	}
 	catch (KeyStoreException exc)
 	{

@@ -111,6 +111,7 @@ public class CertificateProfile implements Serializable
 
 	field.setCertificateProfile(this);
 	this.fields.add(field);
+
 	return (this.fields);
     }
 

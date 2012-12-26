@@ -96,7 +96,7 @@ public class CRLProfileServiceTest
     @Test
     public void addDoubleProfileTest()
     {
-	String PROFILE_NAME = "addDoubleProfileTest";
+	String PROFILE_NAME = "addDoubleCrlProfileTest";
 	try
 	{
 	    crlProfile = testSupport.createCRLProfile(PROFILE_NAME);

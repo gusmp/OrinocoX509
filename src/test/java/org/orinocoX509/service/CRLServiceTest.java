@@ -303,21 +303,21 @@ public class CRLServiceTest
 
     // These tests require Internet connection
 
-    @Test
+    //@Test
     public void getStatusSerialNumberCRLDPList()
     {
 	CertificateStatusValues certificateStatusValue = crlService.getStatus(TestConst.SERIAL_NUMBER_VALID, getCrlDpList());
 	assertEquals(CertificateStatusValues.V, certificateStatusValue);
     }
 
-    @Test
+    //@Test
     public void getStatusX509Certificate()
     {
 	CertificateStatusValues certificateStatusValue = crlService.getStatus(getCertificate());
 	assertEquals(CertificateStatusValues.V, certificateStatusValue);
     }
 
-    @Test
+    //@Test
     public void getStatusX509CertificateCRLDPList()
     {
 	CertificateStatusValues certificateStatusValue = crlService.getStatus(getCertificate(), getCrlDpList());

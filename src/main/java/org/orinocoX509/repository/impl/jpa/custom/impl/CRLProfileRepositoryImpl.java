@@ -30,8 +30,8 @@ public class CRLProfileRepositoryImpl implements CRLProfileRepositoryCustom
 	{
 	    if (getProfile(crlProfile.getProfileName()) != null)
 	    {
-		log.debug("The profile " + crlProfile.toString() + " alreday exists");
-		throw new EngineException(EngineErrorCodes.DUPLICATE_PROFILE, "The profile " + crlProfile.toString() + " alreday exists");
+		log.debug("The profile " + crlProfile.toString() + " already exists");
+		throw new EngineException(EngineErrorCodes.DUPLICATE_PROFILE, "The profile " + crlProfile.toString() + " already exists");
 	    }
 
 	    log.debug("Save CRL profile: " + crlProfile.toString());

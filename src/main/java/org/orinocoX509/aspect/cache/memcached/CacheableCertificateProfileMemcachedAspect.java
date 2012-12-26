@@ -19,8 +19,8 @@ public class CacheableCertificateProfileMemcachedAspect
 {
     @Autowired
     private MemcachedClient memcachedClient;
-    private final String ENTRY_PREFIX = "orinocoX509_certificate_profile_";
-    private final int RECOVERY_TIMEOUT = 2;
+    private static final String ENTRY_PREFIX = "orinocoX509_certificate_profile_";
+    private static final int RECOVERY_TIMEOUT = 2;
 
     private static final Logger log = LoggerFactory.getLogger(CacheableCertificateProfileMemcachedAspect.class);
 

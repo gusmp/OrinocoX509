@@ -35,13 +35,14 @@ public final class CAKeyServiceSwImpl extends BaseCAKeyService
     {
 	super();
 	Security.addProvider(new BouncyCastleProvider());
-	this.KEYSTORE_TYPE = keyStoreType;
-	this.KEYSTORE_PROVIDER = "BC";
+	setKeyStoreType(keyStoreType);
+	setKeyStoreProvider("BC");
+	
 	this.KEYSTORE_PATH = keyStorePath;
-	this.KEYSTORE_PIN = keyStorePin;
-	this.PRIVATE_KEY_ALIAS = privateKeyAlias;
-	this.PUBLIC_KEY_ALIAS = publicKeyAlias;
-	this.CA_CERTIFICATE_ALIAS = caCertificateAlias;
+	setKeyStorePin(keyStorePin);
+	setPrivateKeyAlias(privateKeyAlias);
+	setPublicKeyAlias(publicKeyAlias);
+	setCaCertificateAlias(caCertificateAlias);
 
 	try
 	{
@@ -58,13 +59,13 @@ public final class CAKeyServiceSwImpl extends BaseCAKeyService
 	}
 	catch (NoSuchProviderException exc)
 	{
-	    log.error("The cryptographic provider " + KEYSTORE_PROVIDER + " does not exists." + exc.getMessage());
-	    throw new EngineException(EngineErrorCodes.UNKNOWN_CRYPTOGRAPHIC_PROVIDER, "The cryptographic provider " + KEYSTORE_PROVIDER + " does not exists." + exc.getMessage());
+	    log.error("The cryptographic provider " + getKeyStoreProvider() + " does not exists." + exc.getMessage());
+	    throw new EngineException(EngineErrorCodes.UNKNOWN_CRYPTOGRAPHIC_PROVIDER, "The cryptographic provider " + getKeyStoreProvider() + " does not exists." + exc.getMessage());
 	}
 	catch (KeyStoreException exc)
 	{
-	    log.error("The key store type " + KEYSTORE_TYPE + " is not known." + exc.getMessage());
-	    throw new EngineException(EngineErrorCodes.UNKNOWN_KEYSTORE_TYPE, "The key store type " + KEYSTORE_TYPE + " is not known." + exc.getMessage());
+	    log.error("The key store type " + getKeyStoreType() + " is not known." + exc.getMessage());
+	    throw new EngineException(EngineErrorCodes.UNKNOWN_KEYSTORE_TYPE, "The key store type " + getKeyStoreType() + " is not known." + exc.getMessage());
 	}
 	catch (CertificateException exc)
 	{
@@ -85,26 +86,26 @@ public final class CAKeyServiceSwImpl extends BaseCAKeyService
 
     private void createKeyStore() throws KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException
     {
-	store = KeyStore.getInstance(KEYSTORE_TYPE);
+	store = KeyStore.getInstance(getKeyStoreType());
 	store.load(null, null);
     }
 
     private void loadKeyStore() throws NoSuchProviderException, KeyStoreException, FileNotFoundException, CertificateException, NoSuchAlgorithmException, IOException
     {
-	FileInputStream fin = null;
+	FileInputStream keyStoreStream = null;
 	try
 	{
-	    store = KeyStore.getInstance(KEYSTORE_TYPE, KEYSTORE_PROVIDER);
-	    FileInputStream keyStoreStream = new FileInputStream(KEYSTORE_PATH);
-	    store.load(keyStoreStream, KEYSTORE_PIN.toCharArray());
+	    store = KeyStore.getInstance(getKeyStoreType(), getKeyStoreProvider());
+	    keyStoreStream = new FileInputStream(KEYSTORE_PATH);
+	    store.load(keyStoreStream, getKeyStorePin().toCharArray());
 	}
 	finally
 	{
-	    if (fin != null)
+	    if (keyStoreStream != null)
 	    {
 		try
 		{
-		    fin.close();
+		    keyStoreStream.close();
 		}
 		catch (Exception exc)
 		{
@@ -121,7 +122,7 @@ public final class CAKeyServiceSwImpl extends BaseCAKeyService
 	{
 	    if (objectType == CRYPO_OBJECT.PRIVATE_KEY)
 	    {
-		return (store.getKey(alias, KEYSTORE_PIN.toCharArray()));
+		return (store.getKey(alias, getKeyStorePin().toCharArray()));
 	    }
 	    else if (objectType == CRYPO_OBJECT.CERTIFICATE)
 	    {
@@ -140,8 +141,8 @@ public final class CAKeyServiceSwImpl extends BaseCAKeyService
 	}
 	catch (KeyStoreException exc)
 	{
-	    log.error("The key store type " + KEYSTORE_TYPE + " is not known." + exc.getMessage());
-	    throw new EngineException(EngineErrorCodes.UNKNOWN_KEYSTORE_TYPE, "The key store type " + KEYSTORE_TYPE + " is not known." + exc.getMessage());
+	    log.error("The key store type " + getKeyStoreType() + " is not known." + exc.getMessage());
+	    throw new EngineException(EngineErrorCodes.UNKNOWN_KEYSTORE_TYPE, "The key store type " + getKeyStoreType() + " is not known." + exc.getMessage());
 	}
 	catch (UnrecoverableKeyException exc)
 	{
@@ -158,14 +159,15 @@ public final class CAKeyServiceSwImpl extends BaseCAKeyService
     @Override
     public void storeCertificateCA(KeyPair keyPair, X509Certificate certificate)
     {
+	FileOutputStream rootCertificate = null;
 	try
 	{
 	    Certificate certificateChain[] = new Certificate[1];
 	    Arrays.asList(certificate).toArray(certificateChain);
-	    store.setKeyEntry(PRIVATE_KEY_ALIAS, keyPair.getPrivate(), KEYSTORE_PIN.toCharArray(), certificateChain);
+	    store.setKeyEntry(getPrivateKeyAlias(), keyPair.getPrivate(), getKeyStorePin().toCharArray(), certificateChain);
 
-	    FileOutputStream rootCertificate = new FileOutputStream(KEYSTORE_PATH);
-	    store.store(rootCertificate, KEYSTORE_PIN.toCharArray());
+	    rootCertificate = new FileOutputStream(KEYSTORE_PATH);
+	    store.store(rootCertificate, getKeyStorePin().toCharArray());
 	    rootCertificate.close();
 	}
 
@@ -188,6 +190,17 @@ public final class CAKeyServiceSwImpl extends BaseCAKeyService
 	{
 	    log.error("Cryptographic algorithm not supported while storing the CA key pair / root certificate." + exc.getMessage());
 	    throw new EngineException(EngineErrorCodes.CRYPTOGRAPHIC_ALGORITHM_NOT_SUPPORTED, "Cryptographic algorithm not supported while storing the CA key pair / root certificate." + exc.getMessage());
+	}
+	finally
+	{
+	    if (rootCertificate != null)
+		try
+		{
+		    rootCertificate.close();
+		}
+		catch (IOException exc)
+		{
+		}
 	}
     }
 }

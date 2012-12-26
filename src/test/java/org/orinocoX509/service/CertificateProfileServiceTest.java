@@ -116,8 +116,7 @@ public class CertificateProfileServiceTest
     {
 	try
 	{
-	    profile = testSupport.createEmptyProfile("addDoubleProfileTest", TestConst.PROFILE_DESCRIPTION);
-	    profile = certificateProfileService.saveProfile(profile);
+	    profile = testSupport.createEmptyProfile("addDoubleFieldTest", TestConst.PROFILE_DESCRIPTION);
 	    profile.addField(new SubjectField(profile, "cn=subject"));
 	    profile.addField(new SubjectField(profile, "cn=subject"));
 	    fail();
@@ -706,10 +705,9 @@ public class CertificateProfileServiceTest
 	profile2 = certificateProfileService.saveProfile(profile2);
 
 	List<CertificateProfile> profileList = certificateProfileService.getProfiles();
+	certificateProfileService.deleteProfile(profile2);
 	assertNotNull(profileList);
 	assertEquals(2, profileList.size());
-	certificateProfileService.deleteProfile(profile2);
-
     }
 
     /*
