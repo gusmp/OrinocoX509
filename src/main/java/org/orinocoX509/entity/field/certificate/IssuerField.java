@@ -30,9 +30,7 @@ public class IssuerField extends BaseCertificateField
 
     public IssuerField(CertificateProfile certificateProfile, String pattern)
     {
-	this.certificateProfile = certificateProfile;
-	this.fieldType = FieldType.ISSUER;
-	this.critical = true;
+	super(certificateProfile, FieldType.ISSUER, true);
 	this.pattern = pattern;
     }
 }

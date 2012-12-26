@@ -20,8 +20,6 @@ public class QCStatementField extends BaseCertificateField
 
     public QCStatementField(CertificateProfile certificateProfile, Boolean critical)
     {
-	this.certificateProfile = certificateProfile;
-	this.fieldType = FieldType.QUALIFIED_CERTIFICATE_STATEMENT;
-	this.critical = critical;
+	super(certificateProfile, FieldType.QUALIFIED_CERTIFICATE_STATEMENT, critical);
     }
 }

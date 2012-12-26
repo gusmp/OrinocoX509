@@ -68,4 +68,12 @@ public abstract class BaseCertificateField implements Serializable
     {
 	this.values = new ArrayList<BaseCertificateFieldValue>(10);
     }
+
+    public BaseCertificateField(CertificateProfile certificateProfile, FieldType fieldType, Boolean critical)
+    {
+	this();
+	this.certificateProfile = certificateProfile;
+	this.fieldType = fieldType;
+	this.critical = critical;
+    }
 }

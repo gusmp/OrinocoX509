@@ -22,7 +22,7 @@ public class DeviceTypeField extends BaseCertificateField
     private static final long serialVersionUID = 952236551092152163L;
 
     @Column(name = "DEVICE_TYPE")
-    String deviceType;
+    private String deviceType;
 
     public DeviceTypeField()
     {
@@ -30,9 +30,7 @@ public class DeviceTypeField extends BaseCertificateField
 
     public DeviceTypeField(CertificateProfile certificateProfile, String deviceType, Boolean critical)
     {
-	this.certificateProfile = certificateProfile;
-	this.fieldType = FieldType.DEVICE_TYPE;
+	super(certificateProfile, FieldType.DEVICE_TYPE, critical);
 	this.deviceType = deviceType;
-	this.critical = critical;
     }
 }

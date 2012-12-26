@@ -68,4 +68,12 @@ public abstract class BaseCRLField implements Serializable
 	this.values = new ArrayList<BaseCRLFieldValue>(1);
     }
 
+    public BaseCRLField(CRLProfile crlProfile, CRLFieldType crlFieldType, Boolean critical)
+    {
+	this();
+	this.crlProfile = crlProfile;
+	this.crlFieldType = crlFieldType;
+	this.critical = critical;
+    }
+
 }

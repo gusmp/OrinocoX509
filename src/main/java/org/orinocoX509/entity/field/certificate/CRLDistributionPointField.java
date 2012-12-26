@@ -20,8 +20,6 @@ public class CRLDistributionPointField extends BaseCertificateField
 
     public CRLDistributionPointField(CertificateProfile certificateProfile, Boolean critical)
     {
-	this.certificateProfile = certificateProfile;
-	this.fieldType = FieldType.CRL_DISTRIBUTION_POINT;
-	this.critical = critical;
+	super(certificateProfile, FieldType.CRL_DISTRIBUTION_POINT,critical);
     }
 }

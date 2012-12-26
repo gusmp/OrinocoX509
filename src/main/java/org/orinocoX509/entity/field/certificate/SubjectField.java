@@ -29,9 +29,7 @@ public class SubjectField extends BaseCertificateField
 
     public SubjectField(CertificateProfile certificateProfile, String pattern)
     {
-	this.certificateProfile = certificateProfile;
-	this.fieldType = FieldType.SUBJECT;
-	this.critical = true;
+	super(certificateProfile, FieldType.SUBJECT, true);
 	this.pattern = pattern;
     }
 }

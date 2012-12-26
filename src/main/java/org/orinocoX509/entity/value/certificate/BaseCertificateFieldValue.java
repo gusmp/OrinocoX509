@@ -39,6 +39,6 @@ public abstract class BaseCertificateFieldValue implements Serializable
 
     @ManyToOne
     @JoinColumn(name = "CERTIFICATE_FIELD_ID")
-    BaseCertificateField certificateField;
+    private BaseCertificateField certificateField;
 
 }

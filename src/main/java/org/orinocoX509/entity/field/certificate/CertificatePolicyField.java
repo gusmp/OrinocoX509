@@ -21,7 +21,7 @@ public class CertificatePolicyField extends BaseCertificateField
     private static final long serialVersionUID = 4086830377044391667L;
 
     @Column(name = "POLICY_OID")
-    String policyOid;
+    private String policyOid;
 
     public CertificatePolicyField()
     {
@@ -29,9 +29,7 @@ public class CertificatePolicyField extends BaseCertificateField
 
     public CertificatePolicyField(CertificateProfile certificateProfile, String policyOid, Boolean critical)
     {
-	this.certificateProfile = certificateProfile;
-	this.fieldType = FieldType.CERTIFICATE_POLICY;
-	this.critical = critical;
+	super(certificateProfile, FieldType.CERTIFICATE_POLICY,critical);
 	this.policyOid = policyOid;
     }
 }

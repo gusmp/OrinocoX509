@@ -30,9 +30,7 @@ public class CRLNumberField extends BaseCRLField implements Serializable
 
     public CRLNumberField(CRLProfile crlProfile, Boolean critical)
     {
-	this.crlFieldType = CRLFieldType.CRL_NUMBER;
-	this.crlProfile = crlProfile;
-	this.critical = critical;
+	super(crlProfile, CRLFieldType.CRL_NUMBER, critical);
 	this.crlNumber = BigInteger.ONE;
     }
 }

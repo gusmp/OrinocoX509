@@ -23,8 +23,7 @@ public class SubjectDirectoryAttributeField extends BaseCertificateField
 
     public SubjectDirectoryAttributeField(CertificateProfile certificateProfile, Boolean critical)
     {
-	this.certificateProfile = certificateProfile;
-	this.fieldType = FieldType.SUBJECT_DIRECTORY_ATTRIBUTE;
-	this.critical = critical;
+	super(certificateProfile, FieldType.SUBJECT_DIRECTORY_ATTRIBUTE, critical);
+
     }
 }

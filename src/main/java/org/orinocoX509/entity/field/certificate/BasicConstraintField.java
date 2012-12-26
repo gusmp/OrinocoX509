@@ -21,10 +21,10 @@ public class BasicConstraintField extends BaseCertificateField
     private static final long serialVersionUID = 9004761888009061829L;
 
     @Column(name = "IS_CA")
-    Boolean isCA;
+    private Boolean isCA;
 
     @Column(name = "PATH_LENGTH")
-    Integer pathLength;
+    private Integer pathLength;
 
     public BasicConstraintField()
     {
@@ -32,10 +32,8 @@ public class BasicConstraintField extends BaseCertificateField
 
     public BasicConstraintField(CertificateProfile certificateProfile, Boolean isCA, Integer pathLength, Boolean critical)
     {
-	this.certificateProfile = certificateProfile;
-	this.fieldType = FieldType.BASIC_CONSTRAINT;
+	super(certificateProfile, FieldType.BASIC_CONSTRAINT, critical);
 	this.isCA = isCA;
 	this.pathLength = pathLength;
-	this.critical = critical;
     }
 }

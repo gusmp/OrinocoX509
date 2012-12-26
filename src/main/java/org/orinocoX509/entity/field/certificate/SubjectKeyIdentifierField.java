@@ -20,8 +20,6 @@ public class SubjectKeyIdentifierField extends BaseCertificateField
 
     public SubjectKeyIdentifierField(CertificateProfile certificateProfile, Boolean critical)
     {
-	this.certificateProfile = certificateProfile;
-	this.fieldType = FieldType.SUBJECT_KEY_IDENTIFIER;
-	this.critical = critical;
+	super(certificateProfile, FieldType.SUBJECT_KEY_IDENTIFIER, critical);
     }
 }

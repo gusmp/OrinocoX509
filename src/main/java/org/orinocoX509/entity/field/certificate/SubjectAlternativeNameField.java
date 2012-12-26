@@ -20,8 +20,6 @@ public class SubjectAlternativeNameField extends BaseCertificateField
 
     public SubjectAlternativeNameField(CertificateProfile certificateProfile, Boolean critical)
     {
-	this.certificateProfile = certificateProfile;
-	this.fieldType = FieldType.SUBJECT_ALTERNATIVE_NAME;
-	this.critical = critical;
+	super(certificateProfile, FieldType.SUBJECT_ALTERNATIVE_NAME, critical);
     }
 }

@@ -27,8 +27,7 @@ public class TimeNextUpdateField extends BaseCRLField implements Serializable
 
     public TimeNextUpdateField(CRLProfile crlProfile, Integer daysNextUpdate)
     {
-	this.crlFieldType = CRLFieldType.TIME_NEXT_UPDATE;
-	this.crlProfile = crlProfile;
+	super(crlProfile, CRLFieldType.TIME_NEXT_UPDATE, true);
 	this.daysNextUpdate = daysNextUpdate;
     }
 }

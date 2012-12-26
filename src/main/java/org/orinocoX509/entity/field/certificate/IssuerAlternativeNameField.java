@@ -21,8 +21,6 @@ public class IssuerAlternativeNameField extends BaseCertificateField
 
     public IssuerAlternativeNameField(CertificateProfile certificateProfile, Boolean critical)
     {
-	this.certificateProfile = certificateProfile;
-	this.fieldType = FieldType.ISSUER_ALTERNATIVE_NAME;
-	this.critical = critical;
+	super(certificateProfile, FieldType.ISSUER_ALTERNATIVE_NAME, critical);
     }
 }

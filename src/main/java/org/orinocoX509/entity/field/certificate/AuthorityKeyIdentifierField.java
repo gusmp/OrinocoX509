@@ -20,8 +20,6 @@ public class AuthorityKeyIdentifierField extends BaseCertificateField
 
     public AuthorityKeyIdentifierField(CertificateProfile certificateProfile, Boolean critical)
     {
-	this.certificateProfile = certificateProfile;
-	this.fieldType = FieldType.AUTHORITY_KEY_IDENTIFIER;
-	this.critical = critical;
+	super(certificateProfile, FieldType.AUTHORITY_KEY_IDENTIFIER, critical);
     }
 }

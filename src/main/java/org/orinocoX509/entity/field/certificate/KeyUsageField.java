@@ -21,8 +21,6 @@ public class KeyUsageField extends BaseCertificateField
 
     public KeyUsageField(CertificateProfile certificateProfile, Boolean critical)
     {
-	this.certificateProfile = certificateProfile;
-	this.fieldType = FieldType.KEY_USAGE;
-	this.critical = critical;
+	super(certificateProfile, FieldType.KEY_USAGE, critical);
     }
 }

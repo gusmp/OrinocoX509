@@ -21,8 +21,6 @@ public class IssuingDistributionPointField extends BaseCRLField implements Seria
 
     public IssuingDistributionPointField(CRLProfile crlProfile, Boolean critical)
     {
-	this.crlProfile = crlProfile;
-	this.crlFieldType = CRLFieldType.ISSUING_DISTRIBUTION_POINT;
-	this.critical = critical;
+	super(crlProfile, CRLFieldType.ISSUING_DISTRIBUTION_POINT, critical);
     }
 }

@@ -21,8 +21,6 @@ public class NetscapeCertificateTypeField extends BaseCertificateField
 
     public NetscapeCertificateTypeField(CertificateProfile certificateProfile, Boolean critical)
     {
-	this.certificateProfile = certificateProfile;
-	this.fieldType = FieldType.NETSCAPE_CERTIFICATE_TYPE;
-	this.critical = critical;
+	super(certificateProfile, FieldType.NETSCAPE_CERTIFICATE_TYPE, critical);
     }
 }

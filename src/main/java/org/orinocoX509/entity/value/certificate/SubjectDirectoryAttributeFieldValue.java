@@ -25,7 +25,7 @@ public class SubjectDirectoryAttributeFieldValue extends BaseCertificateFieldVal
 
 	private final String oid;
 
-	SubjectDirectoryAttributeType(String pOid)
+	private SubjectDirectoryAttributeType(String pOid)
 	{
 	    oid = pOid;
 	}

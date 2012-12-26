@@ -50,15 +50,15 @@ public class CertificateStatus
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "NOT_BEFORE")
-    Date notBefore;
+    private Date notBefore;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "NOT_AFTER")
-    Date notAfter;
+    private Date notAfter;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "LAST_UPDATE")
-    Date lastUpdate;
+    private Date lastUpdate;
 
     public CertificateStatus()
     {

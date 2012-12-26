@@ -20,8 +20,6 @@ public class AuthorityInformationAccessField extends BaseCertificateField
 
     public AuthorityInformationAccessField(CertificateProfile certificateProfile, Boolean critical)
     {
-	this.certificateProfile = certificateProfile;
-	this.fieldType = FieldType.AUTHORITY_INFORMATION_ACCESS;
-	this.critical = critical;
+	super(certificateProfile, FieldType.AUTHORITY_INFORMATION_ACCESS, critical);
     }
 }
