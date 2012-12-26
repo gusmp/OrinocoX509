@@ -43,7 +43,7 @@
 		<org.apache.velocity-version>1.7</org.apache.velocity-version>
 		<net.sf.ehcache-version>2.5.2</net.sf.ehcache-version>
 		<spymemcached-version>2.8.1</spymemcached-version>
-		<org.springframework.data-version>1.0.2.RELEASE</org.springframework.data-version>
+		<org.springframework.data.redis-version>1.0.2.RELEASE</org.springframework.data.redis-version>
 		<org.aspectj-version>1.6.12</org.aspectj-version>
 		<junit-version>4.8.2</junit-version>
 		<eracom-version>1.0.0</eracom-version>
@@ -248,7 +248,7 @@
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-redis</artifactId>
-			<version>${org.springframework.data-version}</version>
+			<version>${org.springframework.data.redis-version}</version>
 		</dependency>
 
 		<!-- Required for Aspects (AOP) -->
