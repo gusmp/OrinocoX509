@@ -41,7 +41,7 @@ public class CertificateProfileServiceImpl implements CertificateProfileService
     public void deleteProfile(CertificateProfile certificateProfile)
     {
 	log.debug("Delete profile " + certificateProfile.toString());
-	certificateProfileRepository.deleteProfile(certificateProfile);
+	certificateProfileRepository.delete(certificateProfile);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class CertificateProfileServiceImpl implements CertificateProfileService
     public CertificateProfile getProfile(CertificateProfile certificateProfile)
     {
 	log.debug("Get profile " + certificateProfile.getProfileId());
-	return (certificateProfileRepository.getProfile(certificateProfile));
+	return certificateProfileRepository.findByProfileIdOrProfileName(certificateProfile.getProfileId(), certificateProfile.getProfileName());
     }
 
     @Override
@@ -123,7 +123,7 @@ public class CertificateProfileServiceImpl implements CertificateProfileService
     @Transactional(readOnly = true)
     public List<CertificateProfile> getProfiles()
     {
-	return (certificateProfileRepository.getProfiles());
+	return  (certificateProfileRepository.findAll());
     }
 
 }

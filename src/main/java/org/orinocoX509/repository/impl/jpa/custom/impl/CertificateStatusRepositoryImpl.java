@@ -1,22 +1,24 @@
-package org.orinocoX509.repository.impl.jpa;
+package org.orinocoX509.repository.impl.jpa.custom.impl;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
+
 import org.orinocoX509.entity.CertificateStatus;
 import org.orinocoX509.entity.CertificateStatus.CertificateStatusValues;
 import org.orinocoX509.repository.CertificateStatusRepository;
+import org.orinocoX509.repository.impl.jpa.custom.CertificateStatusRepositoryCustom;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Repository;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@Repository
-public class CertificateStatusRepositoryImpl implements CertificateStatusRepository
+public class CertificateStatusRepositoryImpl implements CertificateStatusRepositoryCustom
 {
+    @Autowired
+    private CertificateStatusRepository certificateStatusRepository;
+
     @PersistenceContext
     private EntityManager em;
 
@@ -41,24 +43,19 @@ public class CertificateStatusRepositoryImpl implements CertificateStatusReposit
     }
 
     @Override
-    public void deleteStatus(CertificateStatus certificateStatus)
-    {
-	certificateStatus = em.merge(certificateStatus);
-	log.debug("Delete status for certificate: " + certificateStatus.getCertificateSerialNumber());
-	em.remove(certificateStatus);
-    }
-
-    @Override
     public CertificateStatus getStatus(CertificateStatus certificateStatus)
     {
 	// search by serial number
 	try
 	{
 	    log.debug("Search status for certificate: " + certificateStatus.getCertificateSerialNumber());
-	    TypedQuery<CertificateStatus> q = em.createQuery("SELECT cs FROM CertificateStatus cs WHERE cs.certificateSerialNumber= :certificateSerialNumber", CertificateStatus.class);
-	    q.setParameter("certificateSerialNumber", certificateStatus.getCertificateSerialNumber());
-	    log.debug("Search status for certificate: " + certificateStatus.getCertificateSerialNumber() + " OK");
-	    return q.getSingleResult();
+	    CertificateStatus certStatus = certificateStatusRepository.findByCertificateSerialNumber(certificateStatus.getCertificateSerialNumber());
+	    if (certStatus == null)
+	    {
+		throw new NoResultException();
+	    }
+
+	    return certStatus;
 	}
 	catch (NoResultException exc)
 	{
@@ -66,16 +63,6 @@ public class CertificateStatusRepositoryImpl implements CertificateStatusReposit
 	    certificateStatus.setCertificateStatus(CertificateStatusValues.U);
 	    return (certificateStatus);
 	}
-    }
-
-    @Override
-    public List<CertificateStatus> getCertificatesStatus(CertificateStatusValues certificateStatusValue)
-    {
-	log.debug("Search for certificates with status: " + certificateStatusValue);
-	TypedQuery<CertificateStatus> q = em.createQuery("SELECT cs FROM CertificateStatus cs WHERE cs.certificateStatus= :certificateStatusValue", CertificateStatus.class);
-	q.setParameter("certificateStatusValue", certificateStatusValue);
-	log.debug("Search for certificates with status: " + certificateStatusValue + " OK. Results: " + q.getResultList().size());
-	return q.getResultList();
     }
 
 }

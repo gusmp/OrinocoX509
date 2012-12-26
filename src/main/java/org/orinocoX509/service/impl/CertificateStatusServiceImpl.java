@@ -37,7 +37,7 @@ public class CertificateStatusServiceImpl implements CertificateStatusService
     public void deleteStatus(CertificateStatus certificateStatus)
     {
 	log.debug("Delete status for certificate: " + certificateStatus.getCertificateSerialNumber());
-	certificateStatusRepository.deleteStatus(certificateStatus);
+	certificateStatusRepository.delete(certificateStatus);
     }
 
     @Override
@@ -63,6 +63,6 @@ public class CertificateStatusServiceImpl implements CertificateStatusService
     public List<CertificateStatus> getCertificatesStatus(CertificateStatusValues certificateStatusValue)
     {
 	log.debug("Search certificates with status: " + certificateStatusValue);
-	return (certificateStatusRepository.getCertificatesStatus(certificateStatusValue));
+	return (certificateStatusRepository.findByCertificateStatus(certificateStatusValue));
     }
 }

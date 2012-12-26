@@ -4,12 +4,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
+
 import java.security.cert.X509CRL;
 
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.orinocoX509.TestConst;
 import org.orinocoX509.TestSupport;
 import org.orinocoX509.entity.CRLProfile;
@@ -28,45 +27,29 @@ import org.orinocoX509.service.CRLService;
 import org.orinocoX509.service.CertificateProfileService;
 import org.orinocoX509.service.CertificateStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration
-public class DistributedCacheTest
+public abstract class BaseDistributedCacheTest
 {
+    @Autowired
+    protected CRLProfileService crlProfileService;
 
     @Autowired
-    CRLProfileService crlProfileService;
+    protected CertificateStatusService certificateStatusService;
 
     @Autowired
-    CertificateStatusService certificateStatusService;
+    protected TestSupport testSupport;
 
     @Autowired
-    TestSupport testSupport;
+    protected CRLService crlService;
 
     @Autowired
-    CRLService crlService;
+    protected CertificateProfileService certificateProfileService;
 
-    @Autowired
-    CertificateProfileService certificateProfileService;
-
-    private CertificateProfile certificateProfile = null;
-    private CRLProfile crlProfile = null;
-    private CertificateStatus certificateStatus = null;
-
-    @Before
-    public void init()
-    {
-    }
+    protected CertificateProfile certificateProfile = null;
+    protected CRLProfile crlProfile = null;
+    protected CertificateStatus certificateStatus = null;
 
     @Test
-    public void emptyTest()
-    {
-    }
-
-    // Enable this test only if you memcached is up and running! 
-    // @Test
     public void testCRLCache()
     {
 	crlProfile = testSupport.createCRLProfile("testCRLDistributedCache");
@@ -104,7 +87,7 @@ public class DistributedCacheTest
 	}
     }
 
-    // @Test
+    @Test
     public void testCertificateProfileCache()
     {
 	String description = "description_";
@@ -143,7 +126,7 @@ public class DistributedCacheTest
 	certificateProfile = certificateProfileService.getProfile(certificateProfile);
     }
 
-    // @Test
+    @Test
     public void testCRLProfileCache()
     {
 	String description = "description_";
@@ -190,4 +173,5 @@ public class DistributedCacheTest
 	    certificateStatusService.deleteStatus(certificateStatus);
 	}
     }
+
 }

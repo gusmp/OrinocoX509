@@ -1,16 +1,12 @@
 package org.orinocoX509.repository;
 
-import java.util.List;
-
 import org.orinocoX509.entity.CertificateProfile;
+import org.orinocoX509.repository.impl.jpa.custom.CertificateProfileRepositoryCustom;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CertificateProfileRepository
+public interface CertificateProfileRepository extends JpaRepository<CertificateProfile, Integer>, CertificateProfileRepositoryCustom
 {
-    public CertificateProfile saveProfile(CertificateProfile certificateProfile);
+    public CertificateProfile findByProfileName(String profileName);
 
-    public void deleteProfile(CertificateProfile certificateProfile);
-
-    public CertificateProfile getProfile(CertificateProfile certificateProfile);
-
-    public List<CertificateProfile> getProfiles();
+    public CertificateProfile findByProfileIdOrProfileName(Integer profileId, String profileName);
 }

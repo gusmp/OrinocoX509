@@ -70,7 +70,7 @@ public class CertificateProfile implements Serializable
     @Column(name = "PROFILE_ID")
     private Integer profileId;
 
-    @Column(name = "PROFILE_NAME", length = 75)
+    @Column(name = "PROFILE_NAME", unique = true, length = 75)
     private String profileName;
 
     @Column(name = "PROFILE_DESCRIPTION", length = 250)

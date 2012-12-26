@@ -44,7 +44,7 @@ public class CRLProfileServiceImpl implements CRLProfileService
     public void deleteProfile(CRLProfile crlProfile)
     {
 	log.debug("Delete CRL profile " + crlProfile.toString());
-	crlProfileRepository.deleteProfile(crlProfile);
+	crlProfileRepository.delete(crlProfile);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class CRLProfileServiceImpl implements CRLProfileService
     public CRLProfile getProfile(CRLProfile crlProfile)
     {
 	log.debug("Get CRL profile " + crlProfile.getProfileId());
-	return (crlProfileRepository.getProfile(crlProfile));
+	return (crlProfileRepository.findByProfileIdOrProfileName(crlProfile.getProfileId(), crlProfile.getProfileName()));
     }
 
     @Override
@@ -101,7 +101,8 @@ public class CRLProfileServiceImpl implements CRLProfileService
     @Transactional(readOnly = true)
     public List<CRLProfile> getProfiles()
     {
-	return (crlProfileRepository.getProfiles());
+	//return (crlProfileRepository.getProfiles());
+	return (crlProfileRepository.findAll());
     }
 
 }

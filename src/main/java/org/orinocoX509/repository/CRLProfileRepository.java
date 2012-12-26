@@ -1,16 +1,13 @@
 package org.orinocoX509.repository;
 
-import java.util.List;
-
 import org.orinocoX509.entity.CRLProfile;
 
-public interface CRLProfileRepository
+import org.orinocoX509.repository.impl.jpa.custom.CRLProfileRepositoryCustom;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CRLProfileRepository extends JpaRepository<CRLProfile, Integer>, CRLProfileRepositoryCustom
 {
-    public CRLProfile saveProfile(CRLProfile crlProfile);
+    public CRLProfile findByProfileName(String profileName);
 
-    public void deleteProfile(CRLProfile crlProfile);
-
-    public CRLProfile getProfile(CRLProfile crlProfile);
-
-    public List<CRLProfile> getProfiles();
+    public CRLProfile findByProfileIdOrProfileName(Integer profileId, String profileName);
 }

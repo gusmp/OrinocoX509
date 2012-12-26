@@ -29,6 +29,7 @@
 			<item name="Getting started" href="overview/get_started.html" />
 			<item name="Operating over certificates" href="overview/cert_operations.html" />
 			<item name="FAQ" href="overview/faq.html" />
+			<item name="ChangeLog" href="overview/changelog.html" />
 		</menu>
 
 		<menu name="Advanced topics">

@@ -41,7 +41,7 @@ public class CertificateStatus
     @Column(name = "CERTIFICATE_STATUS_ID")
     private Integer certificateStatusId;
 
-    @Column(name = "CERTIFICATE_SERIAL_NUMBER")
+    @Column(name = "CERTIFICATE_SERIAL_NUMBER", unique=true)
     private BigInteger certificateSerialNumber;
 
     @Enumerated(EnumType.STRING)

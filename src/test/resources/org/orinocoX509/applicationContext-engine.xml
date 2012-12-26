@@ -16,7 +16,7 @@
 	<!-- Scan annotations -->
 	<context:component-scan base-package="org.orinocoX509" />
 
-	<!-- This beans are an example about configuring and HSM (Eracom Protect Host) -->
+	<!-- This bean is an example about how to configure an HSM (Eracom Protect Host) -->
 	<!--
 	<bean id="eracomProvider" class="au.com.eracom.crypto.provider.ERACOMProvider" />
 	<bean class="org.orinocoX509.service.impl.hsm.CAKeyServiceGenericHSM">
@@ -31,7 +31,6 @@
 	-->
 
 	<!-- Use this bean if your CA is based on software -->
-	<!-- -->
 	<bean class="org.orinocoX509.service.impl.sw.CAKeyServiceSwImpl">
 		<constructor-arg name="keyStorePath"
 			value="./src/test/resources/testCA.p12" />
@@ -41,6 +40,5 @@
 		<constructor-arg name="publicKeyAlias" value="testca" />
 		<constructor-arg name="caCertificateAlias" value="testca" />
 	</bean>
-	<!-- -->
 
 </beans>

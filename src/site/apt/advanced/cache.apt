@@ -1,6 +1,6 @@
 Cache subsystem
 
-  Out of the box, Orinoco X509 two kinds of second cache level:
+  Out of the box, Orinoco X509 supports two kinds of second cache level:
   
     * <Local cache> provided by EHCache
     

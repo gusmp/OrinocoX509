@@ -192,7 +192,7 @@ public class OrinocoX509EngineTest
 	assertNotNull(certificateInfo.getPemCertificate());
 	serialNumber = certificateInfo.getSerialNumber();
 
-	testSupport.saveCertificate("fullCertificate.cer", certificateInfo.getPemCertificate());
+	//testSupport.saveCertificate("fullCertificate.cer", certificateInfo.getPemCertificate());
 
 	CertificateStatus certificateStatus = engine.getCertificateStatus(certificateInfo.getSerialNumber());
 	assertEquals(certificateInfo.getSerialNumber(), certificateStatus.getCertificateSerialNumber());
