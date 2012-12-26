@@ -5,7 +5,9 @@ import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
+import java.security.Provider;
 import java.security.PublicKey;
+import java.security.Security;
 import java.security.cert.X509Certificate;
 
 import lombok.Getter;
@@ -35,6 +37,17 @@ public abstract class BaseCAKeyService implements CAKeyService
     {
 	CERTIFICATE, PRIVATE_KEY, PUBLIC_KEY
     };
+    
+    public BaseCAKeyService(String keyStoreType, String keyStorePin, String privateKeyAlias, String publicKeyAlias, String caCertificateAlias, String keyStoreProvider, Provider provider)
+    {
+	this.keyStoreType = keyStoreType;
+	this.keyStorePin = keyStorePin;
+	this.privateKeyAlias = privateKeyAlias;
+	this.publicKeyAlias = publicKeyAlias;
+	this.caCertificateAlias = caCertificateAlias;
+	this.keyStoreProvider = keyStoreProvider;
+	Security.addProvider(provider);
+    }
 
     
     @Override

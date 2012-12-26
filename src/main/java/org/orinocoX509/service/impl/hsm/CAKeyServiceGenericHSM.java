@@ -9,7 +9,6 @@ import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
 import java.security.Provider;
 import java.security.PublicKey;
-import java.security.Security;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
@@ -30,14 +29,7 @@ public final class CAKeyServiceGenericHSM extends BaseCAKeyService
 
     public CAKeyServiceGenericHSM(Provider provider, String keyStoreType, String keyStoreProvider, String keyStorePin, String privateKeyAlias, String publicKeyAlias, String caCertificateAlias)
     {
-	super();
-	Security.addProvider(provider);
-	setKeyStoreType(keyStoreType);
-	setKeyStoreProvider(keyStoreProvider);
-	setKeyStorePin(keyStorePin);
-	setPrivateKeyAlias(privateKeyAlias);
-	setPublicKeyAlias(publicKeyAlias);
-	setCaCertificateAlias(caCertificateAlias);
+	super(keyStoreType,keyStorePin,privateKeyAlias,publicKeyAlias,caCertificateAlias,keyStoreProvider, provider);
 
 	// load key store
 	try

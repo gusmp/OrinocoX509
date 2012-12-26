@@ -10,7 +10,6 @@ import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
-import java.security.Security;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
@@ -33,16 +32,8 @@ public final class CAKeyServiceSwImpl extends BaseCAKeyService
 
     public CAKeyServiceSwImpl(String keyStorePath, String keyStoreType, String keyStorePin, String privateKeyAlias, String publicKeyAlias, String caCertificateAlias)
     {
-	super();
-	Security.addProvider(new BouncyCastleProvider());
-	setKeyStoreType(keyStoreType);
-	setKeyStoreProvider("BC");
-	
+	super(keyStoreType, keyStorePin, privateKeyAlias, publicKeyAlias, caCertificateAlias,"BC", new BouncyCastleProvider());
 	this.KEYSTORE_PATH = keyStorePath;
-	setKeyStorePin(keyStorePin);
-	setPrivateKeyAlias(privateKeyAlias);
-	setPublicKeyAlias(publicKeyAlias);
-	setCaCertificateAlias(caCertificateAlias);
 
 	try
 	{
