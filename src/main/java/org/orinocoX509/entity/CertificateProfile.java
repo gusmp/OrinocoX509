@@ -66,7 +66,7 @@ public class CertificateProfile implements Serializable
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "CertificateProfileIdGenerator")
-    @SequenceGenerator(name = "CertificateProfileIdGenerator", sequenceName = "CERTIFICATE_PROFILE_ID_SEQUENCE")
+    @SequenceGenerator(name = "CertificateProfileIdGenerator", sequenceName = "OX509_CERTIFICATE_PROFILE_ID_SEQUENCE")
     @Column(name = "PROFILE_ID")
     private Integer profileId;
 

@@ -31,7 +31,7 @@ public abstract class BaseCRLFieldValue implements Serializable
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "CRLFieldValueIdGenerator")
-    @SequenceGenerator(name = "CRLFieldValueIdGenerator", sequenceName = "CRL_FIELD_VALUE_ID_SEQUENCE")
+    @SequenceGenerator(name = "CRLFieldValueIdGenerator", sequenceName = "OX509_CRL_FIELD_VALUE_ID_SEQUENCE")
     @Column(name = "CRL_FIELD_VALUE_ID")
     private Long crlFieldValueId;
 

@@ -39,7 +39,7 @@ public abstract class BaseCertificateField implements Serializable
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "CertificateFieldIdGenerator")
-    @SequenceGenerator(name = "CertificateFieldIdGenerator", sequenceName = "CERTIFICATE_FIELD_ID_SEQUENCE")
+    @SequenceGenerator(name = "CertificateFieldIdGenerator", sequenceName = "OX509_CERTIFICATE_FIELD_ID_SEQUENCE")
     @Column(name = "CERTIFICATE_FIELD_ID")
     private Long certificateFieldId;
 

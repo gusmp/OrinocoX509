@@ -37,7 +37,7 @@ public class CertificateStatus
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "CertificateStatusIdGenerator")
-    @SequenceGenerator(name = "CertificateStatusIdGenerator", sequenceName = "CERTIFICATE_STATUS_ID_SEQUENCE")
+    @SequenceGenerator(name = "CertificateStatusIdGenerator", sequenceName = "OX509_CERTIFICATE_STATUS_ID_SEQUENCE")
     @Column(name = "CERTIFICATE_STATUS_ID")
     private Integer certificateStatusId;
 

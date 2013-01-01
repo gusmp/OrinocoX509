@@ -33,7 +33,7 @@ public class CRLProfile implements Serializable
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "CRLProfileIdGenerator")
-    @SequenceGenerator(name = "CRLProfileIdGenerator", sequenceName = "CRL_PROFILE_ID_SEQUENCE")
+    @SequenceGenerator(name = "CRLProfileIdGenerator", sequenceName = "OX509_CRL_PROFILE_ID_SEQUENCE")
     @Column(name = "PROFILE_ID")
     private Integer profileId;
 
