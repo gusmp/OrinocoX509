@@ -20,7 +20,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "CRL_CRL_FIELD_VALUE")
+@Table(name = "OX509_CRL_CRL_FIELD_VALUE")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "CRL_FIELD_VALUE_TYPE", discriminatorType = DiscriminatorType.INTEGER)
 @Getter

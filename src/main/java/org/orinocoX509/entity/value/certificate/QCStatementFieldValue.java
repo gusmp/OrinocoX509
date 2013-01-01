@@ -11,7 +11,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "CER_QUALIFIED_CERTIFICATE_STATEMENT_FIELD_VALUE")
+@Table(name = "OX509_CER_QUALIFIED_CERTIFICATE_STATEMENT_FIELD_VALUE")
 @Getter
 @Setter
 @DiscriminatorValue(value = DiscriminatorValues.QUALIFIED_CERTIFICATE_STATEMENT)

@@ -14,7 +14,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "CRL_ISSUING_DISTRIBUTION_POINT_FIELD_VALUE")
+@Table(name = "OX509_CRL_ISSUING_DISTRIBUTION_POINT_FIELD_VALUE")
 @Getter
 @Setter
 @DiscriminatorValue(value = CRLDiscriminatorValues.ISSUING_DISTRIBUTION_POINT)
@@ -29,7 +29,7 @@ public class IssuingDistributionPointFieldValue extends BaseCRLFieldValue implem
     private boolean onlyContainsCACerts;
 
     @ElementCollection
-    @CollectionTable(name = "CRL_ISSUING_DISTRIBUTION_POINT_FIELDS_VALUE_URLS", joinColumns = @JoinColumn(name = "CRL_FIELD_VALUE_ID"))
+    @CollectionTable(name = "OX509_CRL_ISSUING_DISTRIBUTION_POINT_FIELDS_VALUE_URLS", joinColumns = @JoinColumn(name = "CRL_FIELD_VALUE_ID"))
     @Column(name = "CRL_URL")
     private List<String> values;
 

@@ -12,7 +12,7 @@ import org.orinocoX509.entity.CertificateProfile;
 import org.orinocoX509.entity.consts.DiscriminatorValues;
 
 @Entity
-@Table(name = "CER_DEVICE_TYPE_FIELD")
+@Table(name = "OX509_CER_DEVICE_TYPE_FIELD")
 @DiscriminatorValue(value = DiscriminatorValues.DEVICE_TYPE)
 @Getter
 @Setter

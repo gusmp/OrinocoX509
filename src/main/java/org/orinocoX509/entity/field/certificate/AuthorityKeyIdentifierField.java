@@ -8,7 +8,7 @@ import org.orinocoX509.entity.CertificateProfile;
 import org.orinocoX509.entity.consts.DiscriminatorValues;
 
 @Entity
-@Table(name = "CER_AUTHORITY_KEY_IDENTIFIER")
+@Table(name = "OX509_CER_AUTHORITY_KEY_IDENTIFIER")
 @DiscriminatorValue(value = DiscriminatorValues.AUTHORITY_KEY_IDENTIFIER)
 public class AuthorityKeyIdentifierField extends BaseCertificateField
 {

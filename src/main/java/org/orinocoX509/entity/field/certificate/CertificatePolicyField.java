@@ -12,7 +12,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "CER_CERTIFICATE_POLICY_FIELD")
+@Table(name = "OX509_CER_CERTIFICATE_POLICY_FIELD")
 @DiscriminatorValue(value = DiscriminatorValues.CERTIFICATE_POLICY)
 @Getter
 @Setter

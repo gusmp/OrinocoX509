@@ -12,7 +12,7 @@ import org.orinocoX509.entity.CRLProfile;
 import org.orinocoX509.entity.consts.CRLDiscriminatorValues;
 
 @Entity
-@Table(name = "CRL_AUTHORITY_KEY_IDENTIFIER_FIELD")
+@Table(name = "OX509_CRL_AUTHORITY_KEY_IDENTIFIER_FIELD")
 @DiscriminatorValue(value = CRLDiscriminatorValues.AUTHORITY_KEY_IDENTIFIER)
 @Getter
 @Setter

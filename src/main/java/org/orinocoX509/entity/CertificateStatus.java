@@ -20,7 +20,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "CER_CERTIFICATE_STATUS")
+@Table(name = "OX509_CER_CERTIFICATE_STATUS")
 @Getter
 @Setter
 @ToString

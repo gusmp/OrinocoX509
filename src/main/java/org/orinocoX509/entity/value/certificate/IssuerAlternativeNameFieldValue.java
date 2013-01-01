@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "CER_ISSUER_ALTERNATIVE_NAME_FIELD_VALUE")
+@Table(name = "OX509_CER_ISSUER_ALTERNATIVE_NAME_FIELD_VALUE")
 @Getter
 @Setter
 @DiscriminatorValue(value = DiscriminatorValues.ISSUER_ALTERNATIVE_NAME)

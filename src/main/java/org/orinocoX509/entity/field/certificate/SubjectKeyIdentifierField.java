@@ -8,7 +8,7 @@ import org.orinocoX509.entity.CertificateProfile;
 import org.orinocoX509.entity.consts.DiscriminatorValues;
 
 @Entity
-@Table(name = "CER_SUBJECT_KEY_IDENTIFIER_FIELD")
+@Table(name = "OX509_CER_SUBJECT_KEY_IDENTIFIER_FIELD")
 @DiscriminatorValue(value = DiscriminatorValues.SUBJECT_KEY_IDENTIFIER)
 public class SubjectKeyIdentifierField extends BaseCertificateField
 {

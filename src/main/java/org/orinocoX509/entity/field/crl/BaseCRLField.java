@@ -27,7 +27,7 @@ import org.orinocoX509.entity.CRLProfile;
 import org.orinocoX509.entity.value.crl.BaseCRLFieldValue;
 
 @Entity
-@Table(name = "CRL_CRL_FIELD")
+@Table(name = "OX509_CRL_CRL_FIELD")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "CRL_FIELD_TYPE", discriminatorType = DiscriminatorType.INTEGER)
 @Getter

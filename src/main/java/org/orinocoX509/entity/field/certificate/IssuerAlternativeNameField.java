@@ -8,7 +8,7 @@ import org.orinocoX509.entity.CertificateProfile;
 import org.orinocoX509.entity.consts.DiscriminatorValues;
 
 @Entity
-@Table(name = "CER_ISSUER_ALTERNATIVE_NAME_FIELD")
+@Table(name = "OX509_CER_ISSUER_ALTERNATIVE_NAME_FIELD")
 @DiscriminatorValue(value = DiscriminatorValues.ISSUER_ALTERNATIVE_NAME)
 public class IssuerAlternativeNameField extends BaseCertificateField
 {

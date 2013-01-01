@@ -11,7 +11,7 @@ import org.orinocoX509.entity.CRLProfile;
 import org.orinocoX509.entity.consts.CRLDiscriminatorValues;
 
 @Entity
-@Table(name = "CRL_TIME_NEXT_UPDATE_FIELD")
+@Table(name = "OX509_CRL_TIME_NEXT_UPDATE_FIELD")
 @DiscriminatorValue(value = CRLDiscriminatorValues.TIME_NEXT_UPDATE)
 @Getter
 @Setter

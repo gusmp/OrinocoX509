@@ -28,7 +28,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "CER_CERTIFICATE_FIELD")
+@Table(name = "OX509_CER_CERTIFICATE_FIELD")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "CERTIFICATE_FIELD_TYPE", discriminatorType = DiscriminatorType.INTEGER)
 @Getter

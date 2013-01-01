@@ -13,7 +13,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "CER_NETSCAPE_CERTIFICATE_TYPE_FIELD_VALUE")
+@Table(name = "OX509_CER_NETSCAPE_CERTIFICATE_TYPE_FIELD_VALUE")
 @Getter
 @Setter
 @DiscriminatorValue(value = DiscriminatorValues.NETSCAPE_CERTIFICATE_TYPE)

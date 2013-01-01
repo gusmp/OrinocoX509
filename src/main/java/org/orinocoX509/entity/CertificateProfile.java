@@ -26,7 +26,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "CER_CERTIFICATE_PROFILE")
+@Table(name = "OX509_CER_CERTIFICATE_PROFILE")
 @Getter
 @Setter
 @ToString

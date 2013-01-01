@@ -16,7 +16,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "CER_CRL_DISTRIBUTION_POINT_FIELD_VALUE")
+@Table(name = "OX509_CER_CRL_DISTRIBUTION_POINT_FIELD_VALUE")
 @Getter
 @Setter
 @DiscriminatorValue(value = DiscriminatorValues.CRL_DISTRIBUTION_POINT)
@@ -25,7 +25,7 @@ public class CRLDistributionPointFieldValue extends BaseCertificateFieldValue
     private static final long serialVersionUID = 4895122831481352494L;
 
     @ElementCollection
-    @CollectionTable(name = "CER_CRL_DISTRIBUTION_POINT_FIELDS_VALUE_URLS", joinColumns = @JoinColumn(name = "CERTIFICATE_FIELD_VALUE_ID"))
+    @CollectionTable(name = "OX509_CER_CRL_DISTRIBUTION_POINT_FIELDS_VALUE_URLS", joinColumns = @JoinColumn(name = "CERTIFICATE_FIELD_VALUE_ID"))
     @Column(name = "CRL_URL")
     private List<String> values;
 

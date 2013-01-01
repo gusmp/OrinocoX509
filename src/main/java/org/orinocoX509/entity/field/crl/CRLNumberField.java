@@ -13,7 +13,7 @@ import org.orinocoX509.entity.CRLProfile;
 import org.orinocoX509.entity.consts.CRLDiscriminatorValues;
 
 @Entity
-@Table(name = "CRL_CRL_NUMBER_FIELD")
+@Table(name = "OX509_CRL_CRL_NUMBER_FIELD")
 @DiscriminatorValue(value = CRLDiscriminatorValues.CRL_NUMBER)
 @Getter
 @Setter

@@ -23,7 +23,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "CRL_CRL_PROFILE")
+@Table(name = "OX509_CRL_CRL_PROFILE")
 @Getter
 @Setter
 @ToString

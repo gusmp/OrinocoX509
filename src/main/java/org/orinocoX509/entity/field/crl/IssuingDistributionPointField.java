@@ -9,7 +9,7 @@ import org.orinocoX509.entity.CRLProfile;
 import org.orinocoX509.entity.consts.CRLDiscriminatorValues;
 
 @Entity
-@Table(name = "CRL_ISSUING_DISTRIBUTION_POINT_FIELD")
+@Table(name = "OX509_CRL_ISSUING_DISTRIBUTION_POINT_FIELD")
 @DiscriminatorValue(value = CRLDiscriminatorValues.ISSUING_DISTRIBUTION_POINT)
 public class IssuingDistributionPointField extends BaseCRLField implements Serializable
 {

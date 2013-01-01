@@ -8,7 +8,7 @@ import org.orinocoX509.entity.CertificateProfile;
 import org.orinocoX509.entity.consts.DiscriminatorValues;
 
 @Entity
-@Table(name = "CER_QUALIFIED_CERTIFICATE_STATEMENT_FIELD")
+@Table(name = "OX509_CER_QUALIFIED_CERTIFICATE_STATEMENT_FIELD")
 @DiscriminatorValue(value = DiscriminatorValues.QUALIFIED_CERTIFICATE_STATEMENT)
 public class QCStatementField extends BaseCertificateField
 {

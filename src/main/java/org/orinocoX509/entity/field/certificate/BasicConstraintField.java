@@ -12,7 +12,7 @@ import org.orinocoX509.entity.CertificateProfile;
 import org.orinocoX509.entity.consts.DiscriminatorValues;
 
 @Entity
-@Table(name = "CER_BASIC_CONSTRAINT_FIELD")
+@Table(name = "OX509_CER_BASIC_CONSTRAINT_FIELD")
 @DiscriminatorValue(value = DiscriminatorValues.BASIC_CONSTRAINT)
 @Getter
 @Setter

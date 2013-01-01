@@ -8,7 +8,7 @@ import org.orinocoX509.entity.CertificateProfile;
 import org.orinocoX509.entity.consts.DiscriminatorValues;
 
 @Entity
-@Table(name = "CER_NETSCAPE_CERTIFICATE_TYPE_FIELD")
+@Table(name = "OX509_CER_NETSCAPE_CERTIFICATE_TYPE_FIELD")
 @DiscriminatorValue(value = DiscriminatorValues.NETSCAPE_CERTIFICATE_TYPE)
 public class NetscapeCertificateTypeField extends BaseCertificateField
 {

@@ -11,7 +11,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "CER_SUBJECT_DIRECTORY_ATTRIBUTE_FIELD_VALUE")
+@Table(name = "OX509_CER_SUBJECT_DIRECTORY_ATTRIBUTE_FIELD_VALUE")
 @Getter
 @Setter
 @DiscriminatorValue(value = DiscriminatorValues.SUBJECT_DIRECTORY_ATTRIBUTE)

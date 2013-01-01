@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import org.orinocoX509.entity.consts.DiscriminatorValues;
 
 @Entity
-@Table(name = "CER_ISSUER_FIELD_VALUE")
+@Table(name = "OX509_CER_ISSUER_FIELD_VALUE")
 @DiscriminatorValue(value = DiscriminatorValues.ISSUER)
 public class IssuerFieldValue extends KeyValueFieldValue
 {

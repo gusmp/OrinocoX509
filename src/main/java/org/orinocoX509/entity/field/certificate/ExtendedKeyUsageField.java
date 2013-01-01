@@ -8,7 +8,7 @@ import org.orinocoX509.entity.CertificateProfile;
 import org.orinocoX509.entity.consts.DiscriminatorValues;
 
 @Entity
-@Table(name = "CER_EXTENDED_KEY_USAGE_FIELD")
+@Table(name = "OX509_CER_EXTENDED_KEY_USAGE_FIELD")
 @DiscriminatorValue(value = DiscriminatorValues.EXTENDED_KEY_USAGE)
 public class ExtendedKeyUsageField extends BaseCertificateField
 {

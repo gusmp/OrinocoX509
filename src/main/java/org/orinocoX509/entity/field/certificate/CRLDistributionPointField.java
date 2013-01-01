@@ -8,7 +8,7 @@ import org.orinocoX509.entity.CertificateProfile;
 import org.orinocoX509.entity.consts.DiscriminatorValues;
 
 @Entity
-@Table(name = "CER_CRL_DISTRIBUTION_POINT_FIELD")
+@Table(name = "OX509_CER_CRL_DISTRIBUTION_POINT_FIELD")
 @DiscriminatorValue(value = DiscriminatorValues.CRL_DISTRIBUTION_POINT)
 public class CRLDistributionPointField extends BaseCertificateField
 {
