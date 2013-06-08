@@ -32,7 +32,7 @@ public final class CAKeyServiceSwImpl extends BaseCAKeyService
 
     public CAKeyServiceSwImpl(String keyStorePath, String keyStoreType, String keyStorePin, String privateKeyAlias, String publicKeyAlias, String caCertificateAlias)
     {
-	super(keyStoreType, keyStorePin, privateKeyAlias, publicKeyAlias, caCertificateAlias,"BC", new BouncyCastleProvider());
+	super(keyStoreType, keyStorePin, privateKeyAlias, publicKeyAlias, caCertificateAlias, "BC", new BouncyCastleProvider());
 	this.KEYSTORE_PATH = keyStorePath;
 
 	try

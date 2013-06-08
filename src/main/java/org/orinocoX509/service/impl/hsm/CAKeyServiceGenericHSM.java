@@ -29,7 +29,7 @@ public final class CAKeyServiceGenericHSM extends BaseCAKeyService
 
     public CAKeyServiceGenericHSM(Provider provider, String keyStoreType, String keyStoreProvider, String keyStorePin, String privateKeyAlias, String publicKeyAlias, String caCertificateAlias)
     {
-	super(keyStoreType,keyStorePin,privateKeyAlias,publicKeyAlias,caCertificateAlias,keyStoreProvider, provider);
+	super(keyStoreType, keyStorePin, privateKeyAlias, publicKeyAlias, caCertificateAlias, keyStoreProvider, provider);
 
 	// load key store
 	try

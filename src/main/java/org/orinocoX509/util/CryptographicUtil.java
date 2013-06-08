@@ -18,7 +18,7 @@ public class CryptographicUtil
     {
 	return (derToX509Certificate(base64Util.base64ByteDecode(certificate)));
     }
-    
+
     public X509Certificate derToX509Certificate(byte[] certificate) throws CertificateException
     {
 
