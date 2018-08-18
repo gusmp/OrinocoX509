@@ -1,0 +1,559 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>OrinocoX509 - </title>
+    <style type="text/css" media="all">
+      @import url("../css/maven-base.css");
+      @import url("../css/maven-theme.css");
+      @import url("../css/site.css");
+    </style>
+    <link rel="stylesheet" href="../css/print.css" type="text/css" media="print" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+      </head>
+  <body class="composite">
+    <div id="banner">
+                  <a href="" id="bannerLeft">
+    
+            Orinoco X509 Engine
+    
+            </a>
+                    <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+            
+  
+    
+            <div class="xleft">
+          
+                <a href="../overview/introduction.html">Orinoco X509</a>
+                  </div>
+            <div class="xright">      
+  
+
+  
+    
+            
+  
+    
+             Last Published: 2012-12-26
+              &nbsp;| Version: 0.0.2
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+            
+  
+    
+                   <h5>Overview</h5>
+            <ul>
+              
+    <li class="none">
+                    <a href="../overview/introduction.html">What is Orinoco X509?</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../overview/before_starting.html">Before start</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../overview/get_started.html">Getting started</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../overview/cert_operations.html">Operating over certificates</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../overview/faq.html">FAQ</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../overview/changelog.html">ChangeLog</a>
+          </li>
+          </ul>
+              <h5>Advanced topics</h5>
+            <ul>
+              
+    <li class="none">
+              <strong>Certificate profile and extensions in detail</strong>
+        </li>
+              
+    <li class="none">
+                    <a href="../advanced/crl_detail.html">CRL profile and extensions in detail</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../advanced/cert_set_values.html">Issuing a certificate in detail</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../advanced/cache.html">Cache subsystem</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../advanced/hsm.html">HSM support</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../advanced/va.html">Orinoco X509 as a VA</a>
+          </li>
+          </ul>
+              <h5>Extending Orinoco X509</h5>
+            <ul>
+              
+    <li class="none">
+                    <a href="../development/requirements.html">Requirements</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../development/compile.html">Compile</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../development/structure.html">Project structure</a>
+          </li>
+          </ul>
+              <h5>Project Documentation</h5>
+            <ul>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+                    <a href="../project-info.html">Project Information</a>
+                </li>
+          </ul>
+                                                 
+                        
+                        
+            <a href="../../../.." title="Maven" class="poweredBy">
+                            <img alt="Maven" src="../images/logos/maven-feather.png" />
+            </a>
+                               
+  
+
+  
+    
+            
+  
+    
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        <div class="section"><h2>Certificate profile and extensions in detail</h2>
+<div class="section"><h3>Introduction</h3>
+<p>The main class to work with certificate profiles is <i>CertificateProfile</i>. This class is the container for all the field required and values or patters as it could be see in the different fields examples.</p>
+<p>Because one CA can issue more than one type of certificates (personal, for application and so on) it is possible to save as many profile as it was required. However, all of them will be signed by the same private key.</p>
+<p>An instance of the class <i>OrinocoX509Engine</i> is created by the dependency injection for you. This class have all the methods for saving, updating or deleting profiles. </p>
+</div>
+<div class="section"><h3>Create the profile</h3>
+<p>The class to create certificate profiles is <i>CertificateProfile</i>. This class requires 4 parameters in its constructor:</p>
+<ul><li>Profile name. Must be unique</li>
+<li>Profile description</li>
+<li>Period of validity (in years)</li>
+<li>Key size valid to issue a certificate. This parameter is important, because any request whose key do not meet this size will be rejected.</li>
+</ul>
+<div class="source"><pre>CertificateProfile certificateProfile = 
+  new CertificateProfile(&quot; My profile&quot;, &quot;Profile description&quot;, 4, KeySizeValues.SIZE_1024);
+</pre>
+</div>
+</div>
+<div class="section"><h3>How to add fields</h3>
+<p>To add fields in a certificate profile use the method <i>addField</i> of the class <i>CertificateProfile</i>. Any class whose base class is <i>CertificateField</i> can be used for that purpose.</p>
+<p>The fields supported by Orinoco are:</p>
+<ul><li>Authority information access</li>
+<li>Authority key identifier</li>
+<li>Basic Constraints</li>
+<li>Certificate policy</li>
+<li>Crl distribution point</li>
+<li>Device type</li>
+<li>Extended key usage</li>
+<li>Issuer (Required)</li>
+<li>Issuer Alternative name</li>
+<li>Key Usage</li>
+<li>Netscape certificate type</li>
+<li>Qualified certificate statement</li>
+<li>Subject (Required) </li>
+<li>Subject alternative name</li>
+<li>Subject directory attributes (COUNTRY_OF_CITIZENSHIP and COUNTRY_OF_RESIDENCE only)</li>
+<li>Subject key identifier</li>
+</ul>
+<p>Most of them are optional. However, Issuer and subject are <b>compulsory</b>. Next section will give a close approach of each of them.</p>
+<div class="section"><h4>Authority information access</h4>
+<div class="source"><pre>CertificateField authorityInformationAccess = 
+  new AuthorityInformationAccessField(certificateProfile, false);
+
+// Add the url of the OCSP
+authorityInformationAccess.addValue(
+  new AuthorityInformationAccessFieldValue(AIAType.ID_AD_OCSP,&quot;my ocsp url&quot;));
+
+// Add the url of the CRL
+authorityInformationAccess.addValue(
+  new AuthorityInformationAccessFieldValue(AIAType.ID_AD_CA_ISSUERS, &quot;my crl url&quot;));
+
+certificateProfile.addField(authorityInformationAccess);
+</pre>
+</div>
+</div>
+<div class="section"><h4>Authority key identifier</h4>
+<div class="source"><pre>CertificateField authorityKeyIdentifier 
+  = new AuthorityKeyIdentifierField(certificateProfile, false);
+
+// Add the key identifier of the CA public key 
+authorityKeyIdentifier.addValue(
+  new AuthorityKeyIdentifierFieldValue(AuthorityKeyIdentifierType.KEY_IDENTIFIER));
+
+// Add the subject and serial number of the CA certificate
+authorityKeyIdentifier.addValue(
+  new AuthorityKeyIdentifierFieldValue(AuthorityKeyIdentifierType.AUTH_CERT_ISSUER_AUTH_CERT_SERIAL_NUMBER));
+
+certificateProfile.addField(authorityKeyIdentifier);
+</pre>
+</div>
+</div>
+<div class="section"><h4>Basic Constraints</h4>
+<div class="source"><pre>
+// if isCA is false, the path length constraint is not taken into account
+CertificateField basicConstraint = 
+  new BasicConstraintField(certificateProfile, false, 0, false);
+
+profile.addField(basicConstraint);
+
+</pre>
+</div>
+</div>
+<div class="section"><h4>Certificate policy</h4>
+<div class="source"><pre>// OID for the certificate
+CertificateField certificatePolicy = 
+  new CertificatePolicyField(certificateProfile, oid, false);
+
+// Url with the policy information
+certificatePolicy.addValue(
+  new CertificatePolicyFieldValue(CertificatePolicyType.CPS,
+    &quot;http://my.url.for/certificate_policy&quot;));
+
+// User notice
+certificatePolicy.addValue(
+  new CertificatePolicyFieldValue(CertificatePolicyType.USER_NOTICE, &quot;my user notice&quot;));
+
+certificateProfile.addField(certificatePolicy);
+</pre>
+</div>
+</div>
+<div class="section"><h4>Crl distribution point</h4>
+<div class="source"><pre>CertificateField crlDistributionPoint = 
+  new CRLDistributionPointField(certificateProfile, false);
+
+// First crl distribution point with two url's
+crlDistributionPoint.addValue(
+  new CRLDistributionPointFieldValue(
+    Arrays.asList(&quot;url 1 crl dist. point 1&quot;, &quot;url 2 crl dist. point 1&quot;)));
+
+// Second crl distribution point with two url's
+crlDistributionPoint.addValue(
+  new CRLDistributionPointFieldValue(
+    Arrays.asList(&quot;url 1 crl dist. point 2&quot;, &quot;url 2 crl dist. point 2&quot;)));
+
+certificateProfile.addField(crlDistributionPoint);
+</pre>
+</div>
+</div>
+<div class="section"><h4>Device type</h4>
+<div class="source"><pre>CertificateField deviceType = 
+  new DeviceTypeField(certificateProfile, &quot;my device type description&quot;, false);
+
+certificateProfile.addField(deviceType);
+</pre>
+</div>
+</div>
+<div class="section"><h4>Extended key usage</h4>
+<div class="source"><pre>CertificateField extendedKeyUsageField = new ExtendedKeyUsageField(certificateProfile, false);
+
+// Add my uses as required.
+// Possible values are in ExtendedKeyUsageType enumeration
+extendedKeyUsageField.addValue(
+  new ExtendedKeyUsageFieldValue(ExtendedKeyUsageType.ID_KP_CODE_SIGNING));	
+
+extendedKeyUsageField.addValue(
+  new ExtendedKeyUsageFieldValue(ExtendedKeyUsageType.ID_KP_IPSEC_IKE));
+
+certificateProfile.addField(extendedKeyUsageField);
+</pre>
+</div>
+</div>
+<div class="section"><h4>Issuer (Required)</h4>
+<div class="source"><pre>CertificateField issuer = new IssuerField(certificateProfile, &quot;C=ES, 
+  ST=Barcelona, 
+  L=Badalona, 
+  OU=CA Subordinada de primer nivel, 
+  OU=ENTERPRISE.CV, 
+  CN=testCA&quot;);
+certificateProfile.addField(issuer);
+</pre>
+</div>
+</div>
+<div class="section"><h4>Issuer Alternative name</h4>
+<div class="source"><pre>CertificateField issuerAlternativeName = 
+  new IssuerAlternativeNameField(certificateProfile, false);
+
+issuerAlternativeName.addValue(
+  new IssuerAlternativeNameFieldValue(AlternativeNameType.RFC822NAME, &quot;my email address&quot;));
+
+issuerAlternativeName.addValue(
+  new IssuerAlternativeNameFieldValue(AlternativeNameType.DIRECTORY_NAME, 
+    &quot;cn=my directory name&quot;));
+
+certificateProfile.addField(issuerAlternativeName);
+</pre>
+</div>
+</div>
+<div class="section"><h4>Key Usage</h4>
+<div class="source"><pre>CertificateField keyUsageField = new KeyUsageField(certificateProfile, true);
+
+// Add the key usages for the certificate
+// The usages available are given by KeyUsageType enumeration
+keyUsageField.addValue(new KeyUsageFieldValue(KeyUsageType.CRL_SIGN));
+keyUsageField.addValue(new KeyUsageFieldValue(KeyUsageType.DIGITAL_SIGNATURE));
+certificateProfile.addField(keyUsageField);
+</pre>
+</div>
+</div>
+<div class="section"><h4>Netscape certificate type</h4>
+<div class="source"><pre>CertificateField netscapeCertificateTypeField = 
+  new NetscapeCertificateTypeField(certificateProfile, false);
+
+// Add the Netscape cert types for the certificate
+// The types available are given by NetscapeCertificateTypeType enumeration
+netscapeCertificateTypeField.addValue(
+  new NetscapeCertificateTypeFieldValue(NetscapeCertificateTypeType.OBJECT_SIGNING));
+
+netscapeCertificateTypeField.addValue(
+  new NetscapeCertificateTypeFieldValue(NetscapeCertificateTypeType.SMIME));
+
+certificateProfile.addField(netscapeCertificateTypeField);
+</pre>
+</div>
+</div>
+<div class="section"><h4>Qualified certificate statement</h4>
+<div class="source"><pre>CertificateField qcStatements = new QCStatementField(certificateProfile, false);
+
+// Add as many Qyalified certificate statements as you need 
+qcStatements.addValue(new QCStatementFieldValue(QCStatementType.ID_QCS_PKIXQCSYNTAX_V1));
+qcStatements.addValue(
+  new QCStatementFieldValue(QCStatementType.ID_ETSI_QCS_LIMITE_VALUE,&quot;EUR&quot;, 200));
+
+certificateProfile.addField(qcStatements);
+</pre>
+</div>
+</div>
+<div class="section"><h4>Subject (Required)</h4>
+<div class="source"><pre>CertificateField subject = new SubjectField(profile, &quot;C=$country, 
+  OU=$ou2, 
+  OU=$ou1, 
+  SURNAME=$surname, 
+  GIVENNAME=$given_name, 
+  serialnumber=$serial_number, 
+  CN=$cn&quot;);
+certificateProfile.addField(subject);
+</pre>
+</div>
+<p>See the subjection <i>Patterns expressions</i> in this section to learn more about patterns.</p>
+</div>
+<div class="section"><h4>Subject alternative name</h4>
+<div class="source"><pre>CertificateField subjectAlternativeName = 
+  new SubjectAlternativeNameField(certificateProfile, false);
+
+subjectAlternativeName.addValue(
+  new SubjectAlternativeNameFieldValue(AlternativeNameType.RFC822NAME));
+
+subjectAlternativeName.addValue(
+  new SubjectAlternativeNameFieldValue(AlternativeNameType.DIRECTORY_NAME, 
+  &quot;C=ES, O=Organization, OU=Organizational Unit, SN=$serial_number, CN=$cn&quot;));
+
+certificateProfile.addField(subjectAlternativeName);
+</pre>
+</div>
+</div>
+<div class="section"><h4>Subject directory attributes</h4>
+<div class="source"><pre>CertificateField subjectDirectoryAttributes = 
+  new SubjectDirectoryAttributeField(certificateProfile, false);
+
+subjectDirectoryAttributes.addValue(
+  new SubjectDirectoryAttributeFieldValue(
+    SubjectDirectoryAttributeType.COUNTRY_OF_CITIZENSHIP, &quot;ES&quot;));
+subjectDirectoryAttributes.addValue(
+  new SubjectDirectoryAttributeFieldValue(
+    SubjectDirectoryAttributeType.COUNTRY_OF_RESIDENCE, &quot;UK&quot;));
+
+certificateProfile.addField(subjectDirectoryAttributes);
+
+</pre>
+</div>
+</div>
+<div class="section"><h4>Subject key identifier</h4>
+<div class="source"><pre>CertificateField subjectKeyIdentifier = 
+  new SubjectKeyIdentifierField(certificateProfile, false);
+
+certificateProfile.addField(subjectKeyIdentifier);
+</pre>
+</div>
+</div>
+</div>
+<div class="section"><h3>Patterns expressions</h3>
+<p>Some fields such as subject can not be fixed from the profile. That is the reason why it is required to build an expression with place holders (started with the symbol <i>$</i>). This expression can be any valid Velocity template allowing you to include flow control structures.</p>
+<p>Said that it is important to keep in mind that subject must be a directory name. Valid fields are:</p>
+<ul><li>BUSINESS_CATEGORY</li>
+<li>businesscategory</li>
+<li>c</li>
+<li>C</li>
+<li>cn</li>
+<li>CN</li>
+<li>COUNTRY_OF_CITIZENSHIP</li>
+<li>COUNTRY_OF_RESIDENCE</li>
+<li>countryofcitizenship</li>
+<li>countryofresidence</li>
+<li>DATE_OF_BIRTH</li>
+<li>dateofbirth</li>
+<li>DC</li>
+<li>dc</li>
+<li>dn</li>
+<li>DN_QUALIFIER</li>
+<li>e</li>
+<li>EmailAddress</li>
+<li>emailaddress</li>
+<li>GENDER</li>
+<li>gender</li>
+<li>GENERATION</li>
+<li>generation</li>
+<li>GIVENNAME</li>
+<li>givenname</li>
+<li>INITIALS</li>
+<li>initials</li>
+<li>l</li>
+<li>L</li>
+<li>NAME</li>
+<li>name</li>
+<li>NAME_AT_BIRTH</li>
+<li>nameofbirth</li>
+<li>o</li>
+<li>O</li>
+<li>ou</li>
+<li>OU</li>
+<li>PLACE_OF_BIRTH</li>
+<li>placeofbirth</li>
+<li>POSTAL_ADDRESS</li>
+<li>POSTAL_CODE</li>
+<li>postaladdress</li>
+<li>postalcode</li>
+<li>PSEUDONYM</li>
+<li>pseudonym</li>
+<li>serialnumber</li>
+<li>SN</li>
+<li>sn</li>
+<li>ST</li>
+<li>st</li>
+<li>STREET</li>
+<li>street</li>
+<li>SURNAME</li>
+<li>surname</li>
+<li>t</li>
+<li>T</li>
+<li>TELEPHONE_NUMBER</li>
+<li>telephonenumber</li>
+<li>UID</li>
+<li>uid</li>
+<li>UNIQUE_IDENTIFIER</li>
+<li>uniqueidentifier</li>
+<li>UnstructuredAddress</li>
+<li>unstructuredaddress</li>
+<li>UnstructuredName</li>
+<li>unstructuredname</li>
+</ul>
+</div>
+<div class="section"><h3>Delete a profile</h3>
+<p>Delete a profile (and all its fields) can be done by the method <i>deleteCertificateProfile</i> from the <i>OrinocoX509Engine</i> object.</p>
+<div class="source"><pre>engine.deleteCertificateProfile(certificateProfile);
+</pre>
+</div>
+</div>
+<div class="section"><h3>Modify a profile</h3>
+<p>Adding and modifying uses the same method <i>saveCertificateProfile</i> from <i>OrinocoX509Engine</i> object.</p>
+<div class="source"><pre>engine.saveCertificateProfile(certificateProfile);
+</pre>
+</div>
+</div>
+</div>
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2012
+    
+          GUS technologies
+          
+  
+
+  
+    
+            
+  
+    
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

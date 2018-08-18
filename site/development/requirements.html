@@ -1,0 +1,232 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>OrinocoX509 - </title>
+    <style type="text/css" media="all">
+      @import url("../css/maven-base.css");
+      @import url("../css/maven-theme.css");
+      @import url("../css/site.css");
+    </style>
+    <link rel="stylesheet" href="../css/print.css" type="text/css" media="print" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+      </head>
+  <body class="composite">
+    <div id="banner">
+                  <a href="" id="bannerLeft">
+    
+            Orinoco X509 Engine
+    
+            </a>
+                    <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+            
+  
+    
+            <div class="xleft">
+          
+                <a href="../overview/introduction.html">Orinoco X509</a>
+                  </div>
+            <div class="xright">      
+  
+
+  
+    
+            
+  
+    
+             Last Published: 2012-12-26
+              &nbsp;| Version: 0.0.2
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+            
+  
+    
+                   <h5>Overview</h5>
+            <ul>
+              
+    <li class="none">
+                    <a href="../overview/introduction.html">What is Orinoco X509?</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../overview/before_starting.html">Before start</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../overview/get_started.html">Getting started</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../overview/cert_operations.html">Operating over certificates</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../overview/faq.html">FAQ</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../overview/changelog.html">ChangeLog</a>
+          </li>
+          </ul>
+              <h5>Advanced topics</h5>
+            <ul>
+              
+    <li class="none">
+                    <a href="../advanced/cert_detail.html">Certificate profile and extensions in detail</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../advanced/crl_detail.html">CRL profile and extensions in detail</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../advanced/cert_set_values.html">Issuing a certificate in detail</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../advanced/cache.html">Cache subsystem</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../advanced/hsm.html">HSM support</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../advanced/va.html">Orinoco X509 as a VA</a>
+          </li>
+          </ul>
+              <h5>Extending Orinoco X509</h5>
+            <ul>
+              
+    <li class="none">
+              <strong>Requirements</strong>
+        </li>
+              
+    <li class="none">
+                    <a href="../development/compile.html">Compile</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../development/structure.html">Project structure</a>
+          </li>
+          </ul>
+              <h5>Project Documentation</h5>
+            <ul>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+                    <a href="../project-info.html">Project Information</a>
+                </li>
+          </ul>
+                                                 
+                        
+                        
+            <a href="../../../.." title="Maven" class="poweredBy">
+                            <img alt="Maven" src="../images/logos/maven-feather.png" />
+            </a>
+                               
+  
+
+  
+    
+            
+  
+    
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        <div class="section"><h2>Requirements</h2>
+<p>Compiling Orinoco X509 from source code requires the following dependencies:</p>
+<ul><li><a class="externalLink" href="http://www.maven.org"> Maven 2</a> or above.</li>
+<li><a class="externalLink" href="http://www.oracle.com/"> Java 1.6</a> or better.</li>
+<li><a class="externalLink" href="http://www.oracle.com/"> Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files</a>. Otherwise the Java virtual machine can only deal with minor key sizes.</li>
+<li>JDBC driver for your database. </li>
+<li>Database. Orinoco X509 uses EclipseLink to store the required data. The list of databases supported can be found <a class="externalLink" href="http://wiki.eclipse.org/EclipseLink/FAQ/JPA"> here.</a><ul><li>Database user.</li>
+<li>Database password.</li>
+<li>Schema.</li>
+<li>Permission for creating objects.</li>
+</ul>
+</li>
+<li>(Optional). If you plan to use Orinoco in a cluster environment and want to enable the second level of cache, <a href="#memcached.org"> Memcached</a> is required. </li>
+</ul>
+<p>In case you use an HSM, it is mandatory to install the JCA (Java Cryptographic API) libraries. Check the HSM manufacture to get further details about how to do this. </p>
+</div>
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2012
+    
+          GUS technologies
+          
+  
+
+  
+    
+            
+  
+    
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

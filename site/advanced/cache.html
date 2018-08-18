@@ -1,0 +1,322 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>OrinocoX509 - </title>
+    <style type="text/css" media="all">
+      @import url("../css/maven-base.css");
+      @import url("../css/maven-theme.css");
+      @import url("../css/site.css");
+    </style>
+    <link rel="stylesheet" href="../css/print.css" type="text/css" media="print" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+      </head>
+  <body class="composite">
+    <div id="banner">
+                  <a href="" id="bannerLeft">
+    
+            Orinoco X509 Engine
+    
+            </a>
+                    <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+            
+  
+    
+            <div class="xleft">
+          
+                <a href="../overview/introduction.html">Orinoco X509</a>
+                  </div>
+            <div class="xright">      
+  
+
+  
+    
+            
+  
+    
+             Last Published: 2012-12-26
+              &nbsp;| Version: 0.0.2
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+            
+  
+    
+                   <h5>Overview</h5>
+            <ul>
+              
+    <li class="none">
+                    <a href="../overview/introduction.html">What is Orinoco X509?</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../overview/before_starting.html">Before start</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../overview/get_started.html">Getting started</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../overview/cert_operations.html">Operating over certificates</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../overview/faq.html">FAQ</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../overview/changelog.html">ChangeLog</a>
+          </li>
+          </ul>
+              <h5>Advanced topics</h5>
+            <ul>
+              
+    <li class="none">
+                    <a href="../advanced/cert_detail.html">Certificate profile and extensions in detail</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../advanced/crl_detail.html">CRL profile and extensions in detail</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../advanced/cert_set_values.html">Issuing a certificate in detail</a>
+          </li>
+              
+    <li class="none">
+              <strong>Cache subsystem</strong>
+        </li>
+              
+    <li class="none">
+                    <a href="../advanced/hsm.html">HSM support</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../advanced/va.html">Orinoco X509 as a VA</a>
+          </li>
+          </ul>
+              <h5>Extending Orinoco X509</h5>
+            <ul>
+              
+    <li class="none">
+                    <a href="../development/requirements.html">Requirements</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../development/compile.html">Compile</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../development/structure.html">Project structure</a>
+          </li>
+          </ul>
+              <h5>Project Documentation</h5>
+            <ul>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+                    <a href="../project-info.html">Project Information</a>
+                </li>
+          </ul>
+                                                 
+                        
+                        
+            <a href="../../../.." title="Maven" class="poweredBy">
+                            <img alt="Maven" src="../images/logos/maven-feather.png" />
+            </a>
+                               
+  
+
+  
+    
+            
+  
+    
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        <div class="section"><h2>Cache subsystem</h2>
+<p>Out of the box, Orinoco X509 supports two kinds of second cache level:</p>
+<ul><li><i>Local cache</i> provided by EHCache</li>
+<li><i>Distributed cache</i> provided by MemCached</li>
+</ul>
+<p>The decision to choose one of another depends on your infrastructure:</p>
+<ul><li>If Orinoco X509 only runs in only one node both caches can be used</li>
+<li>If Orinoco X509 runs in a cluster environments, it is to say, there are more than one node, MemCached is the <b>only</b> option. Using EHache will make your nodes out of sync. Imagine for a moment one node revoke a certificate. Its cache will be updated but not the ones of the other nodes. Future CRL request can answer different CRL according to which node receives the request</li>
+</ul>
+<div class="section"><h3>Local Cache</h3>
+<p>Enabling the local cache is as simple as:</p>
+<div class="source"><pre>
+&lt;!-- Scan annotations --&gt;
+&lt;cache:annotation-driven /&gt;
+	
+&lt;!--  EH cache configuration --&gt;
+&lt;bean id=&quot;cacheManager&quot; class=&quot;org.springframework.cache.ehcache.EhCacheCacheManager&quot; 
+  p:cache-manager-ref=&quot;ehcache&quot; /&gt;
+	
+&lt;bean id=&quot;ehcache&quot; class=&quot;org.springframework.cache.ehcache.EhCacheManagerFactoryBean&quot; 
+  p:config-location=&quot;classpath:ehcache.xml&quot; p:shared=&quot;true&quot;  /&gt;
+
+</pre>
+</div>
+<p>Notice we have configured but it still remains the configuration of the cache itself. To do that it is required to create the file <i>eh-cache.xml</i> in which all cache are configured. Create an empty text file in your <i>resources</i> folder and paste the following configuration. </p>
+<div class="source"><pre>
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+
+&lt;ehcache&gt;
+	
+  &lt;diskStore path=&quot;java.io.tmpdir&quot;/&gt;
+
+  &lt;defaultCache 
+    maxEntriesLocalHeap=&quot;10000&quot;
+    eternal=&quot;true&quot;
+    timeToIdleSeconds=&quot;0&quot;
+    timeToLiveSeconds=&quot;0&quot;
+    overflowToDisk=&quot;true&quot;
+    maxEntriesLocalDisk=&quot;10000000&quot;
+    diskPersistent=&quot;false&quot;
+    diskExpiryThreadIntervalSeconds=&quot;120&quot;
+    memoryStoreEvictionPolicy=&quot;LRU&quot; /&gt;
+	
+  &lt;cache name=&quot;crlCache&quot; 
+    maxEntriesLocalHeap=&quot;5&quot;
+    eternal=&quot;true&quot;
+    diskPersistent=&quot;false&quot;
+    memoryStoreEvictionPolicy=&quot;LRU&quot; /&gt;
+
+  &lt;cache name=&quot;certificateProfile&quot; 
+    maxEntriesLocalHeap=&quot;20&quot;
+    eternal=&quot;true&quot;
+    diskPersistent=&quot;false&quot;
+    memoryStoreEvictionPolicy=&quot;LRU&quot; /&gt;
+	
+  &lt;cache name=&quot;crlProfile&quot; 
+    maxEntriesLocalHeap=&quot;20&quot;
+    eternal=&quot;true&quot;
+    diskPersistent=&quot;false&quot;
+    memoryStoreEvictionPolicy=&quot;LRU&quot; /&gt;
+
+&lt;/ehcache&gt;
+
+</pre>
+</div>
+<p>This settings should work fine in most environments. It might be possible to do minor adjustments. </p>
+</div>
+<div class="section"><h3>Distributed Cache</h3>
+<p>Adding support for distributed cache is as simple as add the following lines in your context and define the MemCached servers.</p>
+<p><b>NOTE:</b> Before starting Orinoco X509 check your MemCached servers are up and running. </p>
+<div class="source"><pre>
+&lt;aop:aspectj-autoproxy /&gt;
+	
+&lt;bean id=&quot;memcachedClient&quot; class=&quot;net.spy.memcached.spring.MemcachedClientFactoryBean&quot;&gt;
+  &lt;property name=&quot;servers&quot; 
+      value=&quot;__MEMCACHED_SERVER_1__:__PORT_1__, ... __MEMCACHED_SERVER_N__:__PORT_N__&quot;/&gt;
+  &lt;property name=&quot;protocol&quot; value=&quot;BINARY&quot;/&gt;
+  &lt;property name=&quot;transcoder&quot;&gt;
+    &lt;bean class=&quot;net.spy.memcached.transcoders.SerializingTranscoder&quot;&gt;
+      &lt;property name=&quot;compressionThreshold&quot; value=&quot;1024&quot;/&gt;
+    &lt;/bean&gt;
+  &lt;/property&gt;
+  &lt;property name=&quot;opTimeout&quot; value=&quot;1000&quot;/&gt;
+  &lt;property name=&quot;timeoutExceptionThreshold&quot; value=&quot;1998&quot;/&gt;
+  &lt;property name=&quot;hashAlg&quot;&gt;
+    &lt;!-- Based on MD5 --&gt;
+    &lt;value type=&quot;net.spy.memcached.DefaultHashAlgorithm&quot;&gt;KETAMA_HASH&lt;/value&gt;
+  &lt;/property&gt;
+  &lt;property name=&quot;locatorType&quot; value=&quot;CONSISTENT&quot;/&gt; 
+  &lt;property name=&quot;failureMode&quot; value=&quot;Redistribute&quot;/&gt;
+  &lt;property name=&quot;useNagleAlgorithm&quot; value=&quot;false&quot;/&gt;
+&lt;/bean&gt;
+	
+&lt;!-- Enable CRL cache --&gt;
+&lt;bean class=&quot;org.orinocoX509.aspect.cache.memcached.CacheableCRLMemcachedAspect&quot; /&gt;
+	
+&lt;!-- Enable cache for CRL profiles --&gt;
+&lt;bean class=&quot;org.orinocoX509.aspect.cache.memcached.CacheableCertificateProfileMemcachedAspect&quot; /&gt;
+	
+&lt;!-- Enable cache for certificate profiles --&gt;
+&lt;bean class=&quot;org.orinocoX509.aspect.cache.memcached.CacheableCRLProfileMemcachedAspect&quot; /&gt;
+	
+</pre>
+</div>
+</div>
+</div>
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2012
+    
+          GUS technologies
+          
+  
+
+  
+    
+            
+  
+    
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

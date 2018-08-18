@@ -1,0 +1,261 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>OrinocoX509 - </title>
+    <style type="text/css" media="all">
+      @import url("../css/maven-base.css");
+      @import url("../css/maven-theme.css");
+      @import url("../css/site.css");
+    </style>
+    <link rel="stylesheet" href="../css/print.css" type="text/css" media="print" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+      </head>
+  <body class="composite">
+    <div id="banner">
+                  <a href="" id="bannerLeft">
+    
+            Orinoco X509 Engine
+    
+            </a>
+                    <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+            
+  
+    
+            <div class="xleft">
+          
+                <a href="../overview/introduction.html">Orinoco X509</a>
+                  </div>
+            <div class="xright">      
+  
+
+  
+    
+            
+  
+    
+             Last Published: 2012-12-26
+              &nbsp;| Version: 0.0.2
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+            
+  
+    
+                   <h5>Overview</h5>
+            <ul>
+              
+    <li class="none">
+                    <a href="../overview/introduction.html">What is Orinoco X509?</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../overview/before_starting.html">Before start</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../overview/get_started.html">Getting started</a>
+          </li>
+              
+    <li class="none">
+              <strong>Operating over certificates</strong>
+        </li>
+              
+    <li class="none">
+                    <a href="../overview/faq.html">FAQ</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../overview/changelog.html">ChangeLog</a>
+          </li>
+          </ul>
+              <h5>Advanced topics</h5>
+            <ul>
+              
+    <li class="none">
+                    <a href="../advanced/cert_detail.html">Certificate profile and extensions in detail</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../advanced/crl_detail.html">CRL profile and extensions in detail</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../advanced/cert_set_values.html">Issuing a certificate in detail</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../advanced/cache.html">Cache subsystem</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../advanced/hsm.html">HSM support</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../advanced/va.html">Orinoco X509 as a VA</a>
+          </li>
+          </ul>
+              <h5>Extending Orinoco X509</h5>
+            <ul>
+              
+    <li class="none">
+                    <a href="../development/requirements.html">Requirements</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../development/compile.html">Compile</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../development/structure.html">Project structure</a>
+          </li>
+          </ul>
+              <h5>Project Documentation</h5>
+            <ul>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+                    <a href="../project-info.html">Project Information</a>
+                </li>
+          </ul>
+                                                 
+                        
+                        
+            <a href="../../../.." title="Maven" class="poweredBy">
+                            <img alt="Maven" src="../images/logos/maven-feather.png" />
+            </a>
+                               
+  
+
+  
+    
+            
+  
+    
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        <div class="section"><h2>Operating over certificates</h2>
+<p>Once a certificate has been issued by the method <i>OrinocoX509Engine.generateCertificate</i> the certificate has the status of valid. Certificates can be in the following status:</p>
+<ul><li>Valid: The certificated can be used. This is the status after generating it</li>
+<li>Suspended: The certificate is not valid (appear in CRL or OCSP request as invalid) but it id possible to become valid again </li>
+<li>Revoked: The certificate is invalid and there is not way to make it valid. It is a definitive state</li>
+<li>Expired: The certificate is invalid, because the validity period is out of date </li>
+</ul>
+<div class="section"><h3>Get the status of the certificate</h3>
+<p>Get the status of a certificate is as easy as use the method <i>OrinocoX509Engine.getCertificateStatus</i> with the serial of the certificate.</p>
+<div class="source"><pre>@Autowired
+OrinocoX509Engine engine;
+
+...
+
+// Get the status
+CertificateStatus certificateStatus = engine.getCertificateStatus(certificateSerialNumber);
+
+// Status is in certificateStatus property
+certificateStatus.getCertificateStatus();
+</pre>
+</div>
+<p>This method returns an <i>CertificateStatus</i> object. The most important method is <i>getCertificateStatus</i> which returns a <i>CertificateStatusValues</i> value. The possible values are:</p>
+<ul><li>V for valid</li>
+<li>R for revoked</li>
+<li>S for suspended</li>
+<li>U for unknown</li>
+<li>E for expired</li>
+</ul>
+</div>
+<div class="section"><h3>Suspend a certificate</h3>
+<div class="source"><pre>engine.suspendCertificate(certificateSerialNumber);
+</pre>
+</div>
+</div>
+<div class="section"><h3>Restore a certificate</h3>
+<div class="source"><pre>engine.restoreCertificate(certificateSerialNumber);
+</pre>
+</div>
+</div>
+<div class="section"><h3>Revoke a certificate</h3>
+<div class="source"><pre>engine.revokeCertificate(certificateSerialNumber);
+</pre>
+</div>
+</div>
+</div>
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2012
+    
+          GUS technologies
+          
+  
+
+  
+    
+            
+  
+    
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

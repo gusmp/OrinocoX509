@@ -1,0 +1,15 @@
+<!-- START SNIPPET: compile -->
+mvn clean package	
+<!-- END SNIPPET: compile -->
+
+<!-- START SNIPPET: compile_no_tests -->
+mvn clean package -DskipTests=true	
+<!-- END SNIPPET: compile_no_tests -->
+
+<!-- START SNIPPET: install -->
+mvn install -DskipTests=true
+<!-- END SNIPPET: install -->
+
+<!-- START SNIPPET: site -->
+mvn clean site:site -DskipTests=true
+<!-- END SNIPPET: site -->

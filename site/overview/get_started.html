@@ -1,0 +1,539 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>OrinocoX509 - </title>
+    <style type="text/css" media="all">
+      @import url("../css/maven-base.css");
+      @import url("../css/maven-theme.css");
+      @import url("../css/site.css");
+    </style>
+    <link rel="stylesheet" href="../css/print.css" type="text/css" media="print" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+      </head>
+  <body class="composite">
+    <div id="banner">
+                  <a href="" id="bannerLeft">
+    
+            Orinoco X509 Engine
+    
+            </a>
+                    <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+            
+  
+    
+            <div class="xleft">
+          
+                <a href="../overview/introduction.html">Orinoco X509</a>
+                  </div>
+            <div class="xright">      
+  
+
+  
+    
+            
+  
+    
+             Last Published: 2012-12-26
+              &nbsp;| Version: 0.0.2
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+            
+  
+    
+                   <h5>Overview</h5>
+            <ul>
+              
+    <li class="none">
+                    <a href="../overview/introduction.html">What is Orinoco X509?</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../overview/before_starting.html">Before start</a>
+          </li>
+              
+    <li class="none">
+              <strong>Getting started</strong>
+        </li>
+              
+    <li class="none">
+                    <a href="../overview/cert_operations.html">Operating over certificates</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../overview/faq.html">FAQ</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../overview/changelog.html">ChangeLog</a>
+          </li>
+          </ul>
+              <h5>Advanced topics</h5>
+            <ul>
+              
+    <li class="none">
+                    <a href="../advanced/cert_detail.html">Certificate profile and extensions in detail</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../advanced/crl_detail.html">CRL profile and extensions in detail</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../advanced/cert_set_values.html">Issuing a certificate in detail</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../advanced/cache.html">Cache subsystem</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../advanced/hsm.html">HSM support</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../advanced/va.html">Orinoco X509 as a VA</a>
+          </li>
+          </ul>
+              <h5>Extending Orinoco X509</h5>
+            <ul>
+              
+    <li class="none">
+                    <a href="../development/requirements.html">Requirements</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../development/compile.html">Compile</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../development/structure.html">Project structure</a>
+          </li>
+          </ul>
+              <h5>Project Documentation</h5>
+            <ul>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+                    <a href="../project-info.html">Project Information</a>
+                </li>
+          </ul>
+                                                 
+                        
+                        
+            <a href="../../../.." title="Maven" class="poweredBy">
+                            <img alt="Maven" src="../images/logos/maven-feather.png" />
+            </a>
+                               
+  
+
+  
+    
+            
+  
+    
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        <div class="section"><h2>Get started</h2>
+<div class="section"><h3>Add Orinoco X509 in your project</h3>
+<p>If you use maven just add the dependency. This dependency will work if you have add Orinoco X509 in your local maven repository as it is show <a href="../development/compile.html"> here</a></p>
+<div class="source"><pre>&lt;dependency&gt; 
+  &lt;groupId&gt;org&lt;/groupId&gt;
+  &lt;artifactId&gt;orinocoX509&lt;/artifactId&gt;
+  &lt;version&gt;0.0.1&lt;/version&gt;
+&lt;/dependency&gt;
+</pre>
+</div>
+<p>In case of not using Maven add Orinoco X509 dependency and the required described in <a href="../dependencies.html"> Project Information -&gt; Dependencies</a></p>
+</div>
+<div class="section"><h3>Prepare the context</h3>
+<p>Create an empty application context like this:</p>
+<div class="source"><pre>
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot; 
+	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+	xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+	xmlns:tx=&quot;http://www.springframework.org/schema/tx&quot;
+	xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot;
+	xmlns:cache=&quot;http://www.springframework.org/schema/cache&quot;
+	xmlns:p=&quot;http://www.springframework.org/schema/p&quot;
+	xsi:schemaLocation=&quot;
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/cache 
+		http://www.springframework.org/schema/cache/spring-cache.xsd
+		&quot;&gt;
+		
+	&lt;!-- Database support --&gt;
+	
+	&lt;!-- Orinoco x509 configuration --&gt;
+	
+	&lt;!-- Second level of cache --&gt;
+	
+&lt;/beans&gt;
+</pre>
+</div>
+<p>The former code has all the namespaces but not very useful.</p>
+</div>
+<div class="section"><h3>Add database support</h3>
+<p>First, add the configuration required to communicate with a database. Next snippet shows an example about how configure the database.</p>
+<div class="source"><pre>
+&lt;!-- Pool db connections --&gt;
+&lt;bean id=&quot;datasource&quot; class=&quot;com.mchange.v2.c3p0.ComboPooledDataSource&quot; 
+    destroy-method=&quot;close&quot;&gt;
+  &lt;property name=&quot;driverClass&quot; value=&quot;__DB_JDBC_DRIVER__&quot; /&gt; 
+  &lt;property name=&quot;jdbcUrl&quot; value=&quot;__DB_URL__&quot; /&gt;
+  &lt;property name=&quot;user&quot; value=&quot;__DB_USER__&quot; /&gt;
+  &lt;property name=&quot;password&quot; value=&quot;__DB_PASSWORD__&quot; /&gt;
+  &lt;property name=&quot;minPoolSize&quot; value=&quot;5&quot; /&gt;
+&lt;/bean&gt;
+	
+ 
+&lt;!-- Entity manager factory --&gt;
+&lt;bean id=&quot;entityManagerFactory&quot; 
+  class=&quot;org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean&quot;&gt;
+  &lt;property name=&quot;jpaVendorAdapter&quot;&gt;
+    &lt;bean class=&quot;org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter&quot;&gt;
+      &lt;property name=&quot;showSql&quot; value=&quot;false&quot; /&gt;
+    &lt;/bean&gt;
+  &lt;/property&gt;
+  &lt;property name=&quot;packagesToScan&quot; value=&quot;org.orinocoX509.entity&quot; /&gt;
+  &lt;property name=&quot;persistenceUnitName&quot; value=&quot;persistenceUnit&quot; /&gt; 
+  &lt;property name=&quot;dataSource&quot; ref=&quot;datasource&quot;/&gt;
+  &lt;property name=&quot;jpaPropertyMap&quot;&gt;
+    &lt;props&gt;
+      &lt;prop key=&quot;eclipselink.weaving&quot;&gt;false&lt;/prop&gt;
+      &lt;prop key=&quot;eclipselink.ddl-generation&quot;&gt;create-tables&lt;/prop&gt;
+				
+      &lt;!--  no cache --&gt;
+      &lt;prop key=&quot;eclipselink.cache.shared.default&quot;&gt;false&lt;/prop&gt;
+      &lt;prop key=&quot;eclipselink.cache.size.default&quot;&gt;0&lt;/prop&gt;
+      &lt;prop key=&quot;eclipselink.cache.type.default&quot;&gt;none&lt;/prop&gt;
+    &lt;/props&gt;
+  &lt;/property&gt;
+&lt;/bean&gt;
+    
+&lt;!-- Transaction manager  --&gt;
+&lt;bean id=&quot;transactionManager&quot; class=&quot;org.springframework.orm.jpa.JpaTransactionManager&quot;&gt;
+  &lt;property name=&quot;entityManagerFactory&quot; ref=&quot;entityManagerFactory&quot;/&gt;
+&lt;/bean&gt;
+	
+&lt;!-- Scan annotations --&gt;
+&lt;tx:annotation-driven transaction-manager=&quot;transactionManager&quot; /&gt;
+
+</pre>
+</div>
+<p>Keep in mind, this configuration assumes you create the connection not being injected from the container. This is up to you and it is shown as example. Remember to change the place holders with your own data.</p>
+<p>The first time set the property <i>eclipselink.ddl-generation</i> with the value <i>true</i> to create the tables. Later on, you should set to <i>false</i>. </p>
+</div>
+<div class="section"><h3>Configure the engine</h3>
+<p>It is needed to create some classes. This job is done for you by Spring adding the following line into your context:</p>
+<div class="source"><pre>&lt;context:component-scan base-package=&quot;org.orinocoX509&quot; /&gt;
+</pre>
+</div>
+<p>Now specify where the private key is located either in software or in a HSM. </p>
+<div class="section"><h4>Software environment</h4>
+<p>If the private key of your CA is in software add the following lines:</p>
+<div class="source"><pre>&lt;bean class=&quot;org.orinocoX509.service.impl.sw.CAKeyServiceSwImpl&quot;&gt;
+  &lt;constructor-arg name=&quot;keyStorePath&quot; value=&quot;__PATH_CERTIFICATE__&quot; /&gt;
+  &lt;constructor-arg name=&quot;keyStoreType&quot; value=&quot;__CERTIFICATE_TYPE__&quot; /&gt;
+  &lt;constructor-arg name=&quot;keyStorePin&quot; value=&quot;__CERTIFICATE_PIN__&quot; /&gt;
+  &lt;constructor-arg name=&quot;privateKeyAlias&quot; value=&quot;__ALIAS_PRIVATE_KEY__&quot; /&gt;
+  &lt;constructor-arg name=&quot;publicKeyAlias&quot; value=&quot;__ALIAS_PUBLIC_KEY__&quot; /&gt;
+  &lt;constructor-arg name=&quot;caCertificateAlias&quot; value=&quot;__ALIAS_CERTIFICATE__&quot; /&gt;
+&lt;/bean&gt;
+</pre>
+</div>
+<p>Notice that:</p>
+<ul><li><i>keyStoreType</i> is the type of the certificate. Normally, <i>PKCS12</i> or <i>JKS</i></li>
+<li><i>privateKeyAlias, publicKeyAlias, caCertificateAlias</i> can be the same in all cases</li>
+</ul>
+</div>
+<div class="section"><h4>HSM integration</h4>
+<p>In real environments where security is a must, the use of HSM is required by law (at least in Spain). See the section <a href="../advanced/hsm.html"> HSM support</a> to which and how to use HSM with Orinoco X509. </p>
+</div>
+</div>
+<div class="section"><h3>Second cache level subsystem</h3>
+<p>Adding a second cache level is <b>not</b> compulsory. Therefore, you can skip it safely although it is highly recommended. See <a href="../advanced/cache.html"> cache subsystem</a> for getting the details about how activate it.</p>
+</div>
+<div class="section"><h3>Create a certificate profile</h3>
+<p>Before issuing a certificate, you need to define which fields and what information will be included in it. The class to create certificate profile is, as it can not in other way, <i>CertificateProfile</i>. Instantiating this class requires:</p>
+<ul><li>Profile name</li>
+<li>Profile description</li>
+<li>Duration of the certificate (in years)</li>
+<li>Key size</li>
+</ul>
+<p>Once create, you can add the compulsory fields issuer and subject. Issuer normally is a fixed string while subject is a pattern whose place holders will be replaced by the concrete data of the owner of the certificate.</p>
+<p>Later on, you can add as many extension as you need, if you want to add any of course. Next code show all these steps.</p>
+<div class="source"><pre>
+@Autowired
+OrinocoX509Engine engine;
+
+...
+
+// Create the certificate profile
+CertificateProfile profile = new CertificateProfile(&quot;My profile&quot;,&quot;Profile Description&quot;,4, 1024);
+
+// Create and add the subject and issuer
+CertificateField subject = new SubjectField(profile, 
+  &quot;C=$country, OU=$ou2, OU=$ou1, SURNAME=$surname, GIVENNAME=$given_name, 
+   serialnumber=$serial_number, CN=$cn&quot;);
+
+// fixed literal
+CertificateField issuer = new IssuerField(profile, 
+  &quot;C=ES, ST=Barcelona, L=Badalona, 
+   OU=CA Subordinada de primer nivel, OU=ENTERPRISE.CV, CN=testCA&quot;);
+profile.addField(subject);
+profile.addField(issuer);
+
+// Add KeyUsage extension
+CertificateField keyUsageField = new KeyUsageField(profile, true);
+keyUsageField.addValue(new KeyUsageFieldValue(KeyUsageType.CRL_SIGN));
+keyUsageField.addValue(new KeyUsageFieldValue(KeyUsageType.DIGITAL_SIGNATURE));
+profile.addField(keyUsageField);
+
+// Save the profile
+engine.saveCertificateProfile(profile);
+</pre>
+</div>
+<p>See the section <a href="../advanced/cert_detail.html"> Certificate profile and extensions in detail</a> for further details.</p>
+</div>
+<div class="section"><h3>Dealing with certificates</h3>
+<p>Once the certificate profile is configured you can issue certificates. The main steps are:</p>
+<ul><li>Get it (in case you do not already have the profile)</li>
+<li>Define the data to be used in the process of creation. For example, the personal data of the owner of the certificate such as their name</li>
+<li>Generate it</li>
+</ul>
+<p>See next code. </p>
+<div class="source"><pre>
+@Autowired
+OrinocoX509Engine engine;
+
+...
+
+// Find the certificate profile
+CertificateProfile profile = new CertificateProfile();
+profile.setProfileName(__PROFILE_NAME__); 
+profile = engine.getCertificateProfile(profile);
+
+// Set the required data
+CertificateValues values = new CertificateValues();
+values.setRequest(__PKCS10_REQUEST__);
+		
+Map&lt;FieldType,Map&lt;String,String&gt;&gt; values = new HashMap&lt;FieldType, Map&lt;String,String&gt;&gt;(1);
+
+// Subject values
+Map&lt;String,String&gt; subjectValues = new HashMap&lt;String, String&gt;(7);
+		
+subjectValues.put(&quot;country&quot;, &quot;ES&quot;);
+subjectValues.put(&quot;ou2&quot;, &quot;My Organizational Unit 2&quot;);
+subjectValues.put(&quot;ou1&quot;, &quot;My Organizational Unit 1&quot;);
+subjectValues.put(&quot;surname&quot;, &quot;surname&quot;);
+subjectValues.put(&quot;given_name&quot;, &quot;name&quot;);
+subjectValues.put(&quot;serial_number&quot;, &quot;00000000H&quot;);		
+subjectValues.put(&quot;cn&quot;, &quot;name surname&quot;);
+		
+values.put(FieldType.SUBJECT, subjectValues);
+
+// Issuer and KeyUsage do not required parameters
+// due to are provide by the certificate profile  
+
+// Issue the certificate
+CertificateInfo certificateInfo = engine.generateCertificate(profile, values);
+
+// You can save your certificate to disk saving 
+// the content of certificateInfo.getPemCertificate() 
+
+</pre>
+</div>
+<p>See the section <a href="../advanced/cert_set_values.html"> Issuing a certificate in detail</a> for more details.</p>
+</div>
+<div class="section"><h3>Create a crl profile</h3>
+<p>Create a crl profile follows the same steps we did for certificate profile. In this case, the main class is <i>CRLProfile</i>. The same principles for certificate profiles can be applied to CRL profiles:</p>
+<ul><li>Create the profile</li>
+<li>Add the required fields (optional)</li>
+<li>Save it</li>
+</ul>
+<p>Next code shows all these points.</p>
+<div class="source"><pre>
+@Autowired
+CRLProfileService  crlProfileService;
+
+...
+
+// create the profile
+// Revoked certificates longer than 60 days will be evicted from CRL
+CRLProfile crlProfile = new CRLProfile(&quot;My CRL profile&quot;, &quot;Profile description&quot;, 60);
+
+// add the CRL Number field
+crlProfile.addField(new CRLNumberField(crlProfile, false));
+
+// Save it
+crlProfileService.saveProfile(crlProfile);
+
+</pre>
+</div>
+<p>See the section <a href="../advanced/crl_detail.html"> CRL profile and extensions in detail</a> for a full explanation.</p>
+</div>
+<div class="section"><h3>Issue a crl</h3>
+<p>To issue an CRL just call the method <i>generateCRL</i> from <i>OrinocoX509Engine</i> instance. </p>
+<div class="source"><pre>
+import java.security.cert.X509CRL;
+...
+
+@Autowired
+OrinocoX509Engine engine;
+...
+
+X509CRL crl = crlService.generateCRL(crlProfile);
+
+</pre>
+</div>
+<p>In comparison to issuing certificates there is not possibility to send values.</p>
+</div>
+<div class="section"><h3>Generate your own root</h3>
+<p>Until now, what we have been doing is use another certificate as a root to generate the end user certificates. OrincoX509 let you create your root certificate and use it without the need to use an external one. First you need to define the profile of the root certificate as was described before. Once created you only need to call the method <i>generateCACertificate</i> instead of <i>generateCertificate</i>. </p>
+<div class="source"><pre>
+CertificateProfile profile = new CertificateProfile(&quot;caProfile&quot;, &quot;caProfile Description&quot;, TestConst.PROFILE_YEARS, TestConst.PROFILE_KEY_SIZE);
+BaseCertificateField subject = new SubjectField(profile, TestConst.ISSUER_PATTERN);
+BaseCertificateField issuer = new IssuerField(profile, TestConst.ISSUER_PATTERN);
+profile.addField(subject);
+profile.addField(issuer);
+
+// Basic constraint
+BaseCertificateField basicConstraint = new BasicConstraintField(profile, true, 0, false);
+profile.addField(basicConstraint);
+
+// Certificate Policy
+BaseCertificateField certificatePolicy = new CertificatePolicyField(profile, TestConst.POLICY_OID, false);
+certificatePolicy.addValue(new CertificatePolicyFieldValue(CertificatePolicyType.CPS, TestConst.CPS));
+certificatePolicy.addValue(new CertificatePolicyFieldValue(CertificatePolicyType.USER_NOTICE, TestConst.USER_NOTICE));
+profile.addField(certificatePolicy);
+
+// CRL Distribution Point
+BaseCertificateField crlDistributionPoint = new CRLDistributionPointField(profile, false);
+crlDistributionPoint.addValue(new CRLDistributionPointFieldValue(Arrays.asList(TestConst.CRLDP1_URL1, TestConst.CRLDP1_URL2)));
+crlDistributionPoint.addValue(new CRLDistributionPointFieldValue(Arrays.asList(TestConst.CRLDP2_URL1, TestConst.CRLDP2_URL2)));
+profile.addField(crlDistributionPoint);
+
+// Issuer Alternative Name
+BaseCertificateField issuerAlternativeName = new IssuerAlternativeNameField(profile, false);
+issuerAlternativeName.addValue(new IssuerAlternativeNameFieldValue(AlternativeNameType.RFC822NAME, TestConst.IAN_RFC822NAME_VALUE));
+profile.addField(issuerAlternativeName);
+
+// Key Usage
+BaseCertificateField keyUsageField = new KeyUsageField(profile, true);
+keyUsageField.addValue(new KeyUsageFieldValue(KeyUsageType.KEY_CERT_SIGN));
+keyUsageField.addValue(new KeyUsageFieldValue(KeyUsageType.CRL_SIGN));
+profile.addField(keyUsageField);
+
+// Subject alternative Name
+BaseCertificateField subjectAlternativeName = new SubjectAlternativeNameField(profile, false);
+subjectAlternativeName.addValue(new SubjectAlternativeNameFieldValue(AlternativeNameType.RFC822NAME));
+profile.addField(subjectAlternativeName);
+
+// Subject Key Identifier
+BaseCertificateField subjectKeyIdentifier = new SubjectKeyIdentifierField(profile, false);
+profile.addField(subjectKeyIdentifier);
+
+// Values
+CertificateValuesBean values = new CertificateValuesBean();
+
+Map&lt;String, String&gt; subjectAltNameValues = new HashMap&lt;String, String&gt;(2);
+subjectAltNameValues.put(&quot;RFC822NAME&quot;, &quot;mail@cadomain.com&quot;);
+values.getValues().put(FieldType.SUBJECT_ALTERNATIVE_NAME, subjectAltNameValues);
+
+// Generate certificate
+// In this case a key pair will be created. That is why the key size is required when creating the root certificate
+CertificateInfoBean certificateInfo = engine.generateCACertificate(profile, values, KeySizeValues.SIZE_1024);
+
+</pre>
+</div>
+</div>
+</div>
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2012
+    
+          GUS technologies
+          
+  
+
+  
+    
+            
+  
+    
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

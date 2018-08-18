@@ -1,0 +1,16 @@
+<!-- START SNIPPET: hsm_general -->
+
+<bean id="jcaProvider" class="provider_class" />
+ 
+<bean class="org.orinocoX509.service.impl.hsm.CAKeyServiceGenericHSM">
+  <constructor-arg name="provider" ref="jcaProvider" />
+  <constructor-arg name="keyStoreType" value="key store type" />
+  <constructor-arg name="keyStoreProvider" value="key store provider" />
+  <constructor-arg name="keyStorePin" value="your pin" />
+  <constructor-arg name="privateKeyAlias" value="private key alias" />
+  <constructor-arg name="publicKeyAlias" value="public key alias" />
+  <constructor-arg name="caCertificateAlias" value="ca certificate alias" />
+</bean>
+	
+<!-- END SNIPPET: hsm_general -->
+
